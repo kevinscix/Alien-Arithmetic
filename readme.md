@@ -1,5 +1,5 @@
 
-# Asteroid Name Placeholder
+# Alien Arithmetic
 
 ## FAQ
 

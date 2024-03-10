@@ -1,19 +1,21 @@
 #Emily & Andy
 from datascore import DataScore
 from pydantic import BaseModel
-from typing import Dict
+from typing import Dict, Optional
+import csv
 
 #object to get all the data in csv file and logic
 
 class Scoreboard(BaseModel):
+
   #total players
-  numberPlayer : int
-  userType : int
-  Board : list[DataScore]
+  numberPlayer : Optional[int] = None
+  userType : Optional[int] = None
 
   #current player
-  score : int
-  currentPlayer : DataScore
+  score : Optional[int] = None
+
+  # currentPlayer : DataScore
 
   #returns 0 if user is true or 1 if user is false
   def isPlayer(self):
@@ -25,15 +27,41 @@ class Scoreboard(BaseModel):
       return True
 
   def showScores(self):
-    print(self.Board)
+    print(self.board)
 
   def getPlayer(self, name : str) -> DataScore:
+    score = self.board[name]
+    print(score)
+    return score
+
+  def loadScore(self) -> None:
     pass
 
   #this should just store the current player store and data.
-  def storeScore(self, player : DataScore) -> None:
-    pass
+  def storeScore(self, player : DataScore,  filename: str = ".\src\database.csv") -> None:
+    print(player.fields())
+    with open(filename, "a") as fileObj:
+      writer = csv.writer(fileObj)
+      writer.writerow(player.fields())
 
+
+if __name__ == "__main__":
+  print("Test case for scoreboard.")
+
+  board = Scoreboard()
+
+
+  AndyScore = DataScore(
+    name="Andy",
+    highScore=100,
+    questionsCompleted=5,
+    incorrectAmt=10,
+    correctAmt=30,
+    overallGrade=40,
+    loggedIn=True
+  )
+
+  board.storeScore(player=AndyScore)
 
 
 

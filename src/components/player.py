@@ -1,20 +1,25 @@
 #Kevin
+import pygame
+
 class Player:
+    health : int
+    points : int
+
     def __init__(self):
-        self.health = 0
+        self.health = 100
         self.points = 0
 
     def damage(self):
-        pass
+        self.health -= 0 #placeholder for damage amount
 
     def getHealth(self):
-        pass
+        return self.health
 
-    def addPoints(self, points):
-        pass
+    def addPoints(self, addPoints : int):
+        self.points += addPoints
 
-    def setPoints(self, points):
-       pass
+    def setPoints(self, points : int):
+       self.points = points
 
     def move(self):
         pass

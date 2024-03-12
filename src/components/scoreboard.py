@@ -67,6 +67,9 @@ if __name__ == "__main__":
 
   board.storeScore(player=AndyScore)
 
-
+# load info 
+  # each row - data score class, andy score: every element per row - create a data score for each row
+  # improve score
+  # load and store
 
 

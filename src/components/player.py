@@ -1,5 +1,4 @@
 #Kevin
-import pygame
 
 class Player:
     health : int
@@ -20,6 +19,3 @@ class Player:
 
     def setPoints(self, points : int):
        self.points = points
-
-    def move(self):
-        pass

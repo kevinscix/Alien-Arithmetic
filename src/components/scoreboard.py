@@ -14,10 +14,12 @@ class Scoreboard(BaseModel):
 
   #current player
   score : Optional[int] = None
+
+  #currentPlayer : DataScore
   board : Optional[DataScore] = None
   # currentPlayer : DataScore
 
-  #returns 0 if user is true or 1 if user is false
+  #returns 0 if user is true or 1 if user is false 
   def isPlayer(self):
     if self.userType == 1:
       return True
@@ -65,6 +67,9 @@ if __name__ == "__main__":
 
   board.storeScore(player=AndyScore)
 
-
+# load info 
+  # each row - data score class, andy score: every element per row - create a data score for each row
+  # improve score
+  # load and store
 
 

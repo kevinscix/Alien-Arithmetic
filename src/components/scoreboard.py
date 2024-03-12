@@ -15,9 +15,9 @@ class Scoreboard(BaseModel):
   #current player
   score : Optional[int] = None
 
-  # currentPlayer : DataScore
+  #currentPlayer : DataScore
 
-  #returns 0 if user is true or 1 if user is false
+  #returns 0 if user is true or 1 if user is false 
   def isPlayer(self):
     if self.userType == 1:
       return True

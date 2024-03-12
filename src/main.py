@@ -1,6 +1,10 @@
 #pygame game loop template from pydocs
 import pygame
-import sys
+from components.asteroid import Asteroid
+from components.datascore import DataScore
+from components.media import Media
+from components.player import Player
+from components.scoreboard import ScoreBoard
 
 # pygame setup
 pygame.init()
@@ -18,15 +22,12 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    # fill the screen with a color to wipe away anything from last frame
+    """substitute this with the media class later on returning the images"""
     screen.fill("black")
-
     pygame.draw.circle(screen, "red", player_pos, 40)
 
 
-    """
-    make sure to implement movement restriction to specific area of the screen later on
-    """
+    """make sure to implement movement restriction to specific area of the screen later on """
     keys = pygame.key.get_pressed()
     # WASD key movement
     if keys[pygame.K_w]:
@@ -49,9 +50,9 @@ while running:
 
     # mouse movement  
     if pygame.mouse.get_focused():
-        mouse_delta = pygame.mouse.get_rel()
-        player_pos.x += mouse_delta[0]
-        player_pos.y += mouse_delta[1]
+        mouseMovement = pygame.mouse.get_rel()
+        player_pos.x += mouseMovement[0]
+        player_pos.y += mouseMovement[1]
 
     # flip() the display to put your work on screen
     pygame.display.flip()

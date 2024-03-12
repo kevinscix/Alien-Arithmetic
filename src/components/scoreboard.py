@@ -16,6 +16,8 @@ class Scoreboard(BaseModel):
   score : Optional[int] = None
 
   #currentPlayer : DataScore
+  board : Optional[DataScore] = None
+  # currentPlayer : DataScore
 
   #returns 0 if user is true or 1 if user is false 
   def isPlayer(self):
@@ -34,9 +36,12 @@ class Scoreboard(BaseModel):
     print(score)
     return score
 
+  #load Score function load into -> self.board so data -> datascore -> append board
   def loadScore(self) -> None:
     pass
 
+
+  #this code can be written better without the extra rows -> look for a better lib or smth online
   #this should just store the current player store and data.
   def storeScore(self, player : DataScore,  filename: str = ".\src\database.csv") -> None:
     print(player.fields())
@@ -49,7 +54,6 @@ if __name__ == "__main__":
   print("Test case for scoreboard.")
 
   board = Scoreboard()
-
 
   AndyScore = DataScore(
     name="Andy",

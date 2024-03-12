@@ -47,10 +47,11 @@ while running:
     if keys[pygame.K_RIGHT]:
         player_pos.x += 300 * dt
 
-    # mouse movement
+    # mouse movement  
     if pygame.mouse.get_focused():
-        player_pos.x, player_pos.y = pygame.mouse.get_pos()
-
+        mouse_delta = pygame.mouse.get_rel()
+        player_pos.x += mouse_delta[0]
+        player_pos.y += mouse_delta[1]
 
     # flip() the display to put your work on screen
     pygame.display.flip()

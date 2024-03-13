@@ -17,7 +17,9 @@ class Scoreboard(BaseModel):
 
   #currentPlayer : DataScore
   board : Optional[DataScore] = None
-  # currentPlayer : DataScore
+
+  # currentPlayer : DataScore --
+  board : Dict[str, DataScore] = {}
 
   #returns 0 if user is true or 1 if user is false 
   def isPlayer(self):
@@ -27,9 +29,16 @@ class Scoreboard(BaseModel):
   def isInstructor(self):
     if self.userType == 0:
       return True
+    
+  # A different way?
+  # def showScores(self):
+  #   for name, score in self.board.items():
+  #     print(f"Name: {name}, Score: {score}")
 
   def showScores(self):
     print(self.board)
+
+  
 
   def getPlayer(self, name : str) -> DataScore:
     score = self.board[name]

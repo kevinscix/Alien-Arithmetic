@@ -30,7 +30,7 @@ class Scoreboard(BaseModel):
     if self.userType == 0:
       return True
     
-  # A different way?
+  # A different way --
   # def showScores(self):
   #   for name, score in self.board.items():
   #     print(f"Name: {name}, Score: {score}")
@@ -38,7 +38,14 @@ class Scoreboard(BaseModel):
   def showScores(self):
     print(self.board)
 
-  
+  # A different way --
+  # def getPlayer(self, name : str) -> DataScore:
+  #       score = self.board.get(name)
+  #       if score:
+  #           print(score)
+  #       else:
+  #           print(f"No player with the name {name} found.")
+  #       return score
 
   def getPlayer(self, name : str) -> DataScore:
     score = self.board[name]
@@ -49,6 +56,23 @@ class Scoreboard(BaseModel):
   def loadScore(self) -> None:
     pass
 
+  # a different way --
+  # load Score function load into -> self.board so data -> datascore -> append board
+  # def loadScore(self, filename: str = ".\src\database.csv") -> None:
+  #       with open(filename, "r") as fileObj:
+  #           reader = csv.reader(fileObj)
+  #           for row in reader:
+  #               name, highScore, questionsCompleted, incorrectAmt, correctAmt, overallGrade, loggedIn = row
+  #               score = DataScore(
+  #                   name=name,
+  #                   highScore=int(highScore),
+  #                   questionsCompleted=int(questionsCompleted),
+  #                   incorrectAmt=int(incorrectAmt),
+  #                   correctAmt=int(correctAmt),
+  #                   overallGrade=int(overallGrade),
+  #                   loggedIn=bool(loggedIn)
+  #               )
+  #               self.board[name] = score
 
   #this code can be written better without the extra rows -> look for a better lib or smth online
   #this should just store the current player store and data.
@@ -64,6 +88,13 @@ if __name__ == "__main__":
 
   board = Scoreboard()
 
+  # Load scores from the CSV file
+  board.loadScore()
+
+  # Display scores
+  board.showScores()
+
+  # Example of adding a new score and storing it in the CSV file
   AndyScore = DataScore(
     name="Andy",
     highScore=100,
@@ -75,10 +106,4 @@ if __name__ == "__main__":
   )
 
   board.storeScore(player=AndyScore)
-
-# load info 
-  # each row - data score class, andy score: every element per row - create a data score for each row
-  # improve score
-  # load and store
-
-
+  

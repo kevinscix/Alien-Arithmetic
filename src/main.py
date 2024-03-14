@@ -25,8 +25,18 @@ def quit_game():
     print("Quitting the game...")
     running = False
 
+def highscore_game():
+    pass
+
+def tutorial_game():
+    pass
+
+def load_game():
+    pass
+
+
 # Create the GUI
-gui = GameGUI(screen, start_game, quit_game)
+gui = GameGUI(screen, start_game, quit_game, highscore_game, tutorial_game, load_game)
 
 player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
 player = Player()

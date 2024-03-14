@@ -3,12 +3,12 @@
 import random
 
 class asteroid():
-    maxAsteroid : int 
-    minAsteroid : int
-    numberOfAsteroids : int
+    maxAsteroid : int = 50
+    minAsteroid : int = 20
+    numberOfAsteroids : int = 15
 
 
-    def __init__(self, firstOp, secondOp, aAnswer, mode) -> None:
+    def __init__(self, firstOp, secondOp, mode) -> None:
         self.firstOp = random.randint(self.minAsteroid, self.maxAsteroid)
         self.secondOp = random.randint(self.minAsteroid, self.maxAsteroid)
         self.qAnswer = firstOp + secondOp   # correct answer to question, this needs to change to reflect mode
@@ -45,15 +45,15 @@ class asteroid():
         # for loop -1 the number of asteroids 
         # rnd int if not answer and not in asteroid 
         # store value in the array
-
+        correctAnswer = self.createAnswer()
+        print(correctAnswer)
+        self.asteroidArr.append(correctAnswer)
         # for loop that creates an incorrect answer for each asteroid
         for i in range(0, self.numberOfAsteroids - 1):
             x = random.randint(self.minAsteroid, self.maxAsteroid)
-            while x == self.qAnswer:
+            while x in self.asteroidArr:
                 x = random.randint(self.minAsteroid, self.maxAsteroid)
-            self.asteroidArr[i] = random.randint(self.minAsteroid, self.maxAsteroid)
-
-
+            self.asteroidArr.append(x)
 
 
     # def move() -> None:
@@ -62,8 +62,13 @@ class asteroid():
    # def destroy() -> None:
         # make asteriod dissapear
 
-    def isCorrect(self) -> bool:
-        if self.aAnswer == self.qAnswer:
-            return True
-        else:
-            return False
+    # def isCorrect(self) -> bool:
+    #     if self.aAnswer == self.qAnswer:
+    #         return True
+    #     else:
+    #         return False
+        
+if __name__ == "__main__":
+    ass = asteroid(3, 5, 1)
+    ass.generateAsteroids()
+    print(ass.asteroidArr)

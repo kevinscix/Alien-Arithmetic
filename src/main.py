@@ -38,8 +38,8 @@ def load_game():
 # Create the GUI
 gui = GameGUI(screen, start_game, quit_game, highscore_game, tutorial_game, load_game)
 
-player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
-player = Player()
+player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2 + screen.get_height() / 3)
+
 
 #border for sprite ie like out of bounds since sprite can go out of screen
 #changes to the movement needs to be made
@@ -62,22 +62,22 @@ while running:
     keys = pygame.key.get_pressed()
     # WASD key movement
     if keys[pygame.K_w]:
-        player_pos.y -= player.getSpeed() * dt
+        player_pos.y -= 300 * dt
     if keys[pygame.K_s]:
-        player_pos.y += player.getSpeed() * dt
+        player_pos.y += 300 * dt
     if keys[pygame.K_a]:
-        player_pos.x -= player.getSpeed() * dt
+        player_pos.x -= 300 * dt
     if keys[pygame.K_d]:
-        player_pos.x += player.getSpeed() * dt
+        player_pos.x += 300 * dt
     # arrow key movement
     if keys[pygame.K_UP]:
-        player_pos.y -= player.getSpeed() * dt  
+        player_pos.y -= 300 * dt  
     if keys[pygame.K_DOWN]:
-        player_pos.y += player.getSpeed() * dt
+        player_pos.y += 300* dt
     if keys[pygame.K_LEFT]:
-        player_pos.x -= player.getSpeed() * dt
+        player_pos.x -= 300 * dt
     if keys[pygame.K_RIGHT]:
-        player_pos.x += player.getSpeed() * dt
+        player_pos.x += 300 * dt
 
     # mouse movement  
     # if pygame.mouse.get_focused():
@@ -98,10 +98,6 @@ while running:
         """make sure to implement movement restriction to specific area of the screen later on """
         keys = pygame.key.get_pressed()
         # WASD key movement
-        if keys[pygame.K_w]:
-            player_pos.y -= 300 * dt
-        if keys[pygame.K_s]:
-            player_pos.y += 300 * dt
         if keys[pygame.K_a]:
             player_pos.x -= 300 * dt
         if keys[pygame.K_d]:
@@ -117,10 +113,10 @@ while running:
             player_pos.x += 300 * dt
 
         # mouse movement  
-        if pygame.mouse.get_focused():
-            mouseMovement = pygame.mouse.get_rel()
-            player_pos.x += mouseMovement[0]
-            player_pos.y += mouseMovement[1]
+        # if pygame.mouse.get_focused():
+        #     mouseMovement = pygame.mouse.get_rel()
+        #     player_pos.x += mouseMovement[0]
+        #     player_pos.y += mouseMovement[1]
 
     # flip() the display to put your work on screen
     pygame.display.flip()

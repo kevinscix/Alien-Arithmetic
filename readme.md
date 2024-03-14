@@ -16,6 +16,7 @@ cmd : "git clone https://repo.csd.uwo.ca/scm/compsci2212_w2024/group55.git"
 Install Requirements (assumming you have pip since we all did 1026)
 cmd : "pip install -r requirements.txt"
 
+
 You're ready to start coding!
 
 If you have conflicts reach out and I'll help create a virtual envoirnment. You guys shouldn't have any since most of you have not done a lot of python programming so it should be fine.

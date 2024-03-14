@@ -1,13 +1,8 @@
 import pygame
-<<<<<<< HEAD
 from module.gameGUI import GameGUI
-
 
 MENU = 0
 GAME = 1
-=======
-from components import *
->>>>>>> 07d8b005c3e5143c5e8a99846018c39427bdd55d
 
 # pygame setup
 pygame.init()

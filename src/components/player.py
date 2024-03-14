@@ -8,12 +8,12 @@ class Player(BaseModel):
 
     # initialize the player attributes with 100 health and 0 points
     def __init__(self):
-        self.health = 100
+        self.health = 3
         self.points = 0
 
     # decreases the health of the player
     def damage(self):
-        self.health -= 0 #placeholder for damage amount
+        self.health -= 1
 
     # returns the health of the player
     def getHealth(self):

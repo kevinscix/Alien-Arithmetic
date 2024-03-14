@@ -35,7 +35,6 @@ player = Player()
 #changes to the movement needs to be made
 #follow the game loop pattern a little bettert
 
-
 while running:
     # poll for events
     # pygame.QUIT event means the user clicked X to close your window

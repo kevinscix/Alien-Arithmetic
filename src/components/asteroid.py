@@ -14,7 +14,7 @@ class asteroid():
         self.qAnswer = firstOp + secondOp   # correct answer to question
         self.xPosition = 0
         self.yPosition = 0
-        self.aAnswer = random.randint(self.minAsteroid, self.maxAsteroid)        # answer that the asteroid will display
+       # self.aAnswer = random.randint(self.minAsteroid, self.maxAsteroid)        # answer that the asteroid will display
         self.asteroidArr = []
 
     # def createOp1() -> None:
@@ -29,13 +29,20 @@ class asteroid():
 
 
     def generateAsteroids(self):
-        pass
+        
         #generate the first correct answer
         #[answer]
         #generate the rest of the incorrect answers
         # for loop -1 the number of asteroids 
         # rnd int if not answer and not in asteroid 
         # store value in the array
+
+        # for loop that creates an incorrect answer for each asteroid
+        for i in range(0, self.numberOfAsteroids - 1):
+            x = random.randint(self.minAsteroid, self.maxAsteroid)
+            while x == self.qAnswer:
+                x = random.randint(self.minAsteroid, self.maxAsteroid)
+            self.asteroidArr[i] = random.randint(self.minAsteroid, self.maxAsteroid)
 
 
 

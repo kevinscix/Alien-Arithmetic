@@ -116,8 +116,8 @@ if __name__ == "__main__":
   #   - adds dataScore to the board dict of Scoreboard (using player as the key)
   
   # displayingscores
-    # - showScores interates over each item in the board dict
-    # - print each players name and their DataScore
+  #   - showScores interates over each item in the board dict
+  #   - print each players name and their DataScore
   
   # retriving the score
   #   - get player takes a players name as an input

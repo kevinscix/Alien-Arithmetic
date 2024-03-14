@@ -5,7 +5,6 @@ from typing import Dict, Optional
 import csv
 
 #object to get all the data in csv file and logic
-
 class Scoreboard(BaseModel):
 
   #total players
@@ -30,7 +29,6 @@ class Scoreboard(BaseModel):
     if self.userType == 0:
       return True
     
-  # A different way --
   def showScores(self):
     for name, score in self.board.items():
       print(f"Name: {name}, Score: {score}")
@@ -38,7 +36,6 @@ class Scoreboard(BaseModel):
   # def showScores(self):
   #   print(self.board)
 
-  # A different way --
   def getPlayer(self, name : str) -> DataScore:
         score = self.board.get(name)
         if score:
@@ -52,12 +49,6 @@ class Scoreboard(BaseModel):
   #   print(score)
   #   return score
 
-  #load Score function load into -> self.board so data -> datascore -> append board
-  # def loadScore(self) -> None:
-  #   pass
-
-  # a different way --
-  # load Score function load into -> self.board so data -> datascore -> append board
   def loadScore(self, filename: str = ".\src\database.csv") -> None:
         with open(filename, "r") as fileObj:
             reader = csv.reader(fileObj)
@@ -74,14 +65,16 @@ class Scoreboard(BaseModel):
                 )
                 self.board[name] = score
 
-  #this code can be written better without the extra rows -> look for a better lib or smth online
-  #this should just store the current player store and data.
+  #load Score function load into -> self.board so data -> datascore -> append board
+  # def loadScore(self) -> None:
+  #   pass
+
+  #stores the current player store and data.
   def storeScore(self, player : DataScore,  filename: str = ".\src\database.csv") -> None:
     print(player.fields())
     with open(filename, "a") as fileObj:
       writer = csv.writer(fileObj)
       writer.writerow(player.fields())
-
 
 if __name__ == "__main__":
   print("Test case for scoreboard.")

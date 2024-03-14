@@ -8,14 +8,15 @@ class asteroid():
     numberOfAsteroids : int
 
 
-    def __init__(self, firstOp, secondOp, aAnswer) -> None:
+    def __init__(self, firstOp, secondOp, aAnswer, mode) -> None:
         self.firstOp = random.randint(self.minAsteroid, self.maxAsteroid)
         self.secondOp = random.randint(self.minAsteroid, self.maxAsteroid)
-        self.qAnswer = firstOp + secondOp   # correct answer to question
+        self.qAnswer = firstOp + secondOp   # correct answer to question, this needs to change to reflect mode
         self.xPosition = 0
         self.yPosition = 0
        # self.aAnswer = random.randint(self.minAsteroid, self.maxAsteroid)        # answer that the asteroid will display
         self.asteroidArr = []
+        self.mode = mode        # 1 for addition, 2 for subtraction, 3 for multiplication
 
     # def createOp1() -> None:
     #     self.firstOp = random.randint(0, 9) # figure out range
@@ -24,7 +25,15 @@ class asteroid():
     #     self.secondOp = random.randint(0, 9)
 
     def createAnswer(self) -> int:
-        qAnswer = self.firstOp + self.secondOp
+        if self.mode == 1:
+            # addition
+            qAnswer = self.firstOp + self.secondOp
+        elif self.mode == 2:
+            # subtraction
+            qAnswer = self.firstOp - self.secondOp
+        else:
+            # multiplication
+            qAnswer = self.firstOp * self.secondOp
         return qAnswer
 
 

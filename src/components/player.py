@@ -1,5 +1,7 @@
 #Kevin
-class Player:
+from pydantic import BaseModel
+
+class Player(BaseModel):
     # health and points of the player
     health : int
     points : int

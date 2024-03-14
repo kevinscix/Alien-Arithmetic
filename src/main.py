@@ -1,9 +1,13 @@
 import pygame
+<<<<<<< HEAD
 from module.gameGUI import GameGUI
 
 
 MENU = 0
 GAME = 1
+=======
+from components import *
+>>>>>>> 07d8b005c3e5143c5e8a99846018c39427bdd55d
 
 # pygame setup
 pygame.init()
@@ -29,6 +33,11 @@ def quit_game():
 gui = GameGUI(screen, start_game, quit_game)
 
 player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
+
+#border for sprite ie like out of bounds since sprite can go out of screen
+#changes to the movement needs to be made
+#follow the game loop pattern a little bettert
+
 
 while running:
     # poll for events

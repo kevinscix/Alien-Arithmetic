@@ -1,10 +1,6 @@
 #pygame game loop template from pydocs
 import pygame
-from components.asteroid import Asteroid
-from components.datascore import DataScore
-from components.media import Media
-from components.player import Player
-from components.scoreboard import ScoreBoard
+from components import *
 
 # pygame setup
 pygame.init()
@@ -14,6 +10,11 @@ running = True
 dt = 0
 
 player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
+
+#border for sprite ie like out of bounds since sprite can go out of screen
+#changes to the movement needs to be made
+#follow the game loop pattern a little bettert
+
 
 while running:
     # poll for events

@@ -10,13 +10,16 @@ class Player(BaseModel):
 
     # initialize the player attributes with 100 health and 0 points
     def __init__(self):
-        self.health = 100
+        self.health = 3
         self.points = 0
         self.speed = 300
 
     # decreases the health of the player
     def damage(self) -> None:
         self.health -= 0 #placeholder for damage amount
+
+    def damage(self):
+        self.health -= 1
 
     # returns the health of the player
     def getHealth(self) -> int:

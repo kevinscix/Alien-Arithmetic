@@ -10,7 +10,6 @@ class GameGUI:
         self.load_callback = load_callback
         self.tutorial_callback = tutorial_callback
         self.highscores_callback = highscores_callback
-
         self.quit_callback = quit_callback
         self.ui = Group()
         
@@ -40,7 +39,7 @@ class GameGUI:
         self.btn_tutorial = button.ButtonText(
             "Tutorial", 
             tutorial_callback, 
-            rect_color=(145, 92, 85),  # Orange color
+            # rect_color=(145, 92, 85),  # Orange color
             fixed_width=200, 
             border_radius=10, 
             text_align="center", 

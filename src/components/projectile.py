@@ -29,13 +29,10 @@ class Projectile:
     def updateFire(self):
         pass
 
-    def collisionDetect(self):
-        pass
-
     #might need
-    def collisionDetect(self, enemyX, enemyY):
-        # Detect collision between the projectile and an enemy
-        distance = math.sqrt((enemyX - self.projX) ** 2 + (enemyY - self.projY) ** 2)
+    def collisionDetect(self, asteroidX, asteroidY):
+        # Detect collision between the projectile and an asteroid
+        distance = math.sqrt((asteroidX - self.projX) ** 2 + (asteroidY - self.projY) ** 2)
         if distance < 27:  # Adjust the collision distance as needed
             return True
         else:

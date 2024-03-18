@@ -3,20 +3,32 @@
 import random
 
 class asteroid():
+    # Class-level attributes
     maxAsteroid : int = 50
     minAsteroid : int = 20
     numberOfAsteroids : int = 15
 
 
+    # Constructor method
     def __init__(self, firstOp, secondOp, mode) -> None:
+
+        # Generate random operands within specified range
         self.firstOp = random.randint(self.minAsteroid, self.maxAsteroid)
         self.secondOp = random.randint(self.minAsteroid, self.maxAsteroid)
+
+        # Calculate and set the correct answer to the question
         self.qAnswer = firstOp + secondOp   # correct answer to question, this needs to change to reflect mode
+
+        # Initialize position
         self.xPosition = 0
         self.yPosition = 0
+
+        # Initialize array to store asteroid values
        # self.aAnswer = random.randint(self.minAsteroid, self.maxAsteroid)        # answer that the asteroid will display
         self.asteroidArr = []
-        self.mode = mode        # 1 for addition, 2 for subtraction, 3 for multiplication
+
+        # Store the mode of the asteroid (1 for addition, 2 for subtraction, 3 for multiplication)
+        self.mode = mode     
 
     # def createOp1() -> None:
     #     self.firstOp = random.randint(0, 9) # figure out range
@@ -24,6 +36,7 @@ class asteroid():
     # def createOp2() -> None:
     #     self.secondOp = random.randint(0, 9)
 
+    # Method to create correct answer based on the mode
     def createAnswer(self) -> int:
         if self.mode == 1:
             # addition
@@ -37,6 +50,7 @@ class asteroid():
         return qAnswer
 
 
+    # Method to generate asteroids with correct and incorrect answers
     def generateAsteroids(self):
         
         #generate the first correct answer
@@ -51,6 +65,7 @@ class asteroid():
         # for loop that creates an incorrect answer for each asteroid
         for i in range(0, self.numberOfAsteroids - 1):
             x = random.randint(self.minAsteroid, self.maxAsteroid)
+            # Ensure the incorrect answer is not a duplicate of the correct answer
             while x in self.asteroidArr:
                 x = random.randint(self.minAsteroid, self.maxAsteroid)
             self.asteroidArr.append(x)
@@ -68,7 +83,11 @@ class asteroid():
     #     else:
     #         return False
         
+    
 if __name__ == "__main__":
-    ass = asteroid(3, 5, 1)
+    # Create an instance of the asteroid class
+    ass = asteroid(3, 5, 1)  # Example operands: 3, 5; Mode: Addition (1)
+    # Generate asteroids with correct and incorrect answers
     ass.generateAsteroids()
+    # Print the array containing asteroid values
     print(ass.asteroidArr)

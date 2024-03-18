@@ -105,6 +105,9 @@ while running:
 
     elif game_state == LEVELSELECT:
         pass
+    
+    else:
+        print("Error: Invalid game state")
 
     # flip() the display to put your work on screen
     pygame.display.flip()

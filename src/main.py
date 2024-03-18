@@ -104,11 +104,6 @@ while running:
             Player.trajectory()
 
     elif game_state == LEVELSELECT:
-        if keys[pygame.K_SPACE] or keys[pygame.K_SPACE] or keys[pygame.K_KP_ENTER]:
-            Player.trajectory()
-        change2 = 5
-        change = 2
-
         pass
     
     else:

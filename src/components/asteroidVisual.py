@@ -1,6 +1,6 @@
 import asteroid
 
-class asteroidVisual(asteroid):
+class asteroidVisual(asteroid): # causes an error with module when asteroid is in the brackets
 
     speed : int = 10    # how many pixels the asteroid will move by each loop, not final
     size : int
@@ -14,8 +14,8 @@ class asteroidVisual(asteroid):
 
     # moves the asteroid down by the speed
     # somewhere there will need to be a loop that calls this until the question is answered
-    def move(speed) -> None:
-        yPos = yPos - speed
+    def move(self) -> None:
+        self.yPos = self.yPos - self.speed
 
     # returns the angle that the asteroid sprite will be displayed at
     # this is so each asteroid will look different
@@ -28,8 +28,8 @@ class asteroidVisual(asteroid):
         return self.size
     
     # returns the position of the asteroid in the for [x, y]
-    def getPos(self, yPos) -> list:
-        position = [self.xPos, yPos]
+    def getPos(self) -> list:
+        position = [self.xPos, self.yPos]
         return position
     
 
@@ -39,7 +39,11 @@ class asteroidVisual(asteroid):
 
 if __name__ == "__main__":
     ass1 = asteroidVisual(90, 50, 3)
-   # ass1.move
-   # ass1.move
-    pos = ass1.getPos
-    print(pos[0])
+    pos = ass1.getPos()
+    print(pos)
+    ass1.move()
+    ass1.move()
+    pos2 = ass1.getPos()
+    print(pos2)
+    print(ass1.getSize())
+    print(ass1.getAngle())

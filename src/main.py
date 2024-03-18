@@ -2,13 +2,14 @@ import pygame
 from components.player import Player
 from module.gameGUI import GameGUI
 from components.media import Media
+import os
 
 MENU = 0
 GAME = 1
 
 # pygame setup
 pygame.init()
-screen = pygame.display.set_mode((1920, 1080), pygame.FULLSCREEN)
+screen = pygame.display.set_mode((1920, 1080))
 clock = pygame.time.Clock()
 running = True
 dt = 0
@@ -71,7 +72,7 @@ while running:
         script_dir = os.path.dirname(__file__)  # __file__ is the path to the current script
 
         # Go up one level from 'script_dir' to 'src' and then into the 'Images' directory
-        mainTitleImagePath = os.path.join(script_dir, "..", "Images", "mainPage.png")
+        mainTitleImagePath = os.path.join(script_dir, "..", "src", "components", "Images", "mainPage.png")
 
         # Normalize the path to remove any '..'
         mainTitleImage = os.path.normpath(mainTitleImagePath)

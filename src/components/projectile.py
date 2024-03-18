@@ -1,10 +1,6 @@
 from player import *
 import pygame
-
-#added
-import random
 import math
-from pygame import mixer
 
 class Projectile:
 

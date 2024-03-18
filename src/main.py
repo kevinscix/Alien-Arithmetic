@@ -6,6 +6,7 @@ import os
 
 MENU = 0
 GAME = 1
+LEVELSELECT = 2
 
 # pygame setup
 pygame.init()
@@ -97,6 +98,9 @@ while running:
             player_pos.x -= 300 * dt
         if keys[pygame.K_RIGHT]:
             player_pos.x += 300 * dt
+
+    elif game_state == LEVELSELECT:
+
 
     # flip() the display to put your work on screen
     pygame.display.flip()

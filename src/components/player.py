@@ -13,6 +13,7 @@ class Player(BaseModel):
         self.health = 3
         self.points = 0
         self.speed = 300
+        
 
     # decreases the health of the player
     def damage(self) -> None:

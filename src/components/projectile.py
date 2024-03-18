@@ -36,6 +36,7 @@ class Projectile:
     def collisionDetect(self):
         pass
 
+    #might need
     def collision_detect(self, enemyX, enemyY):
         # Detect collision between the projectile and an enemy
         distance = math.sqrt((enemyX - self.projX) ** 2 + (enemyY - self.projY) ** 2)

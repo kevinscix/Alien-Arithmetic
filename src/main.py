@@ -66,7 +66,15 @@ while running:
     if game_state == MENU:
         # Handle GUI events and draw the menu
         gui.handle_events(events)
-        mainTitleImage = "group55/src/components/Images/mainPage.png"
+        # mainTitleImage = "group55/src/components/Images/mainPage.png"
+        # Get the directory of the script
+        script_dir = os.path.dirname(__file__)  # __file__ is the path to the current script
+
+        # Go up one level from 'script_dir' to 'src' and then into the 'Images' directory
+        mainTitleImagePath = os.path.join(script_dir, "..", "Images", "mainPage.png")
+
+        # Normalize the path to remove any '..'
+        mainTitleImage = os.path.normpath(mainTitleImagePath)
         mainTitle = Media(mainTitleImage)
         mainTitle.drawBackground(screen)
         gui.draw()

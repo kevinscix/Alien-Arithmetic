@@ -49,17 +49,7 @@ class Scoreboard(BaseModel):
   #   print(score)
   #   return score
 
-<<<<<<< HEAD
   def loadScore(self, filename: str = ".\src\database.csv") -> None:
-=======
-  #load Score function load into -> self.board so data -> datascore -> append board
-  # def loadScore(self) -> None:
-  #   pass
-
-  # a different way --
-  # load Score function load into -> self.board so data -> datascore -> append board
-  def loadScore(self, filename: str = "./src/database.csv") -> None:
->>>>>>> 50a9faec9c04c08baea44e2ea413887b2a261f81
         with open(filename, "r") as fileObj:
             reader = csv.reader(fileObj)
             for row in reader:
@@ -75,18 +65,12 @@ class Scoreboard(BaseModel):
                 )
                 self.board[score.name] = score
 
-<<<<<<< HEAD
   #load Score function load into -> self.board so data -> datascore -> append board
   # def loadScore(self) -> None:
   #   pass
 
   #stores the current player store and data.
   def storeScore(self, player : DataScore,  filename: str = ".\src\database.csv") -> None:
-=======
-  #this code can be written better without the extra rows -> look for a better lib or smth online
-  #this should just store the current player store and data.
-  def storeScore(self, player : DataScore,  filename: str = "./src/database.csv") -> None:
->>>>>>> 50a9faec9c04c08baea44e2ea413887b2a261f81
     print(player.fields())
     with open(filename, "a") as fileObj:
       writer = csv.writer(fileObj)

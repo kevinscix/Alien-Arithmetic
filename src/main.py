@@ -104,7 +104,9 @@ while running:
             Player.trajectory()
 
     elif game_state == LEVELSELECT:
-        change = 1
+        change2 = 5
+        change = 2
+
         pass
     
     else:

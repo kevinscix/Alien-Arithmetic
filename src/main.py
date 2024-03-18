@@ -98,6 +98,10 @@ while running:
         if keys[pygame.K_RIGHT]:
             player_pos.x += 300 * dt
 
+        # projectile input
+        if keys[pygame.K_SPACE] or keys[pygame.K_SPACE] or keys[pygame.K_KP_ENTER]:
+            Player.trajectory()
+
     # flip() the display to put your work on screen
     pygame.display.flip()
 

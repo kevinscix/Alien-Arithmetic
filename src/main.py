@@ -104,6 +104,7 @@ while running:
             Player.trajectory()
 
     elif game_state == LEVELSELECT:
+        change = 1
         pass
 
     # flip() the display to put your work on screen

@@ -39,3 +39,19 @@ class Player(BaseModel):
     #for later implementation to save player specific information
     def save(self) -> None:
         pass
+
+        # missile methods
+
+    # ready is the status of the missile (cooldown system)
+    
+    # the user's input will trigger this method
+    # it will check the ready variable
+    # if ready, it will fire a missile
+    # missile will despawn once it is 100px off the screen
+    def trajectory(self):
+        if self.ready == True:
+            self.ready = False
+            Projectile.trajectory(self)
+        else:
+            # if missile isn't ready, nothing happens :)
+            pass

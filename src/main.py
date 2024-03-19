@@ -1,6 +1,8 @@
 import pygame
 from components.player import Player
-from components.gameGUI import GameGUI
+from module.gameGUI import GameGUI
+from components.media import Media
+from components.projectile import Projectile
 import os
 
 MENU = 0
@@ -9,7 +11,7 @@ LEVELSELECT = 2
 
 # pygame setup
 pygame.init()
-screen = pygame.display.set_mode((800, 600))
+screen = pygame.display.set_mode((1920, 1080))
 clock = pygame.time.Clock()
 running = True
 dt = 0
@@ -18,7 +20,9 @@ game_state = MENU  # Start with the menu
 
 # Callback functions for GUI
 def start_game():
-    pass
+    global game_state
+    game_state = GAME  # This changes the game state to the game screen
+    print("Starting the game...")
 
 def quit_game():
     global running
@@ -34,18 +38,9 @@ def tutorial_game():
 def load_game():
     pass
 
-def studentLogin_game():
-    global game_state
-    game_state = GAME  # This changes the game state to the game screen
-    print("Starting the game...")
-
-def teacherLogin_game():
-    pass
-
-
 
 # Create the GUI
-gui = GameGUI(screen, start_game, quit_game, highscore_game, tutorial_game, load_game, studentLogin_game, teacherLogin_game)
+gui = GameGUI(screen, start_game, quit_game, highscore_game, tutorial_game, load_game)
 
 player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2 + screen.get_height() / 3)
 
@@ -66,6 +61,9 @@ while running:
             if event.key == pygame.K_ESCAPE:  # Press Escape to quit
                 running = False
 
+    """substitute this with the media class later on returning the images"""
+    screen.fill("blue")
+    pygame.draw.circle(screen, "red", player_pos, 40)
 
 
     if game_state == MENU:
@@ -74,25 +72,18 @@ while running:
         # mainTitleImage = "group55/src/components/Images/mainPage.png"
         # Get the directory of the script
         script_dir = os.path.dirname(__file__)  # __file__ is the path to the current script
+
         # Go up one level from 'script_dir' to 'src' and then into the 'Images' directory
         mainTitleImagePath = os.path.join(script_dir, "..", "src", "components", "Images", "mainPage.png")
+
         # Normalize the path to remove any '..'
         mainTitleImage = os.path.normpath(mainTitleImagePath)
-        background_image = pygame.image.load(mainTitleImage)
-        background_image = pygame.transform.scale(background_image, (screen.get_width(), screen.get_height()))
-        screen.blit(background_image, (0, 0))
+        mainTitle = Media(mainTitleImage)
+        mainTitle.drawBackground(screen)
         gui.draw()
-        
     elif game_state == GAME:
         # Main game logic and rendering
-        script_dir = os.path.dirname(__file__)  # __file__ is the path to the current script
-        # Go up one level from 'script_dir' to 'src' and then into the 'Images' directory
-        gamplay1path = os.path.join(script_dir, "..", "src", "components", "Images", "mainPage.png")
-        # Normalize the path to remove any '..'
-        gameplay1 = os.path.normpath(gamplay1path)
-        gameplay1_image = pygame.image.load(gameplay1)
-        gameplay1_image = pygame.transform.scale(background_image, (screen.get_width(), screen.get_height()))
-        screen.blit(gameplay1_image, (0, 0))
+        screen.fill("black")
         """substitute this with the media class later on returning the images"""
         pygame.draw.circle(screen, "red", (int(player_pos.x), int(player_pos.y)), 40)
 
@@ -111,7 +102,7 @@ while running:
 
         # projectile input
         if keys[pygame.K_SPACE] or keys[pygame.K_SPACE] or keys[pygame.K_KP_ENTER]:
-            Player.trajectory()
+            Player.shoot()
 
     elif game_state == LEVELSELECT:
         pass
@@ -121,6 +112,18 @@ while running:
 
     # flip() the display to put your work on screen
     pygame.display.flip()
+
+    # handle collisions and update the projectile movement
+        
+    # -----===== LUCA'S SHIT =====----- 
+
+    # for asteroid in asteroids:
+    #     if projectile.collisionDetect(asteroid.xPosition, asteroid.yPosition):
+    #         pass # handle asteroid collisions
+
+    Projectile.updateFire()
+
+    # -----===== END OF LUCA'S SHIT =====----- 
 
 
     # limits FPS to 60

@@ -1,6 +1,6 @@
 import pygame
 from components.player import Player
-from module.gameGUI import GameGUI
+from components.gameGUI import GameGUI
 import os
 
 MENU = 0

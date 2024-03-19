@@ -1,18 +1,38 @@
 import pygame
 from PygameUIKit import Group, button
 
-W = 1280
-H = 720
 class GameGUI:
-    def __init__(self, window, start_callback, quit_callback, load_callback, tutorial_callback, highscores_callback):
+    def __init__(self, window, start_callback, quit_callback, load_callback, tutorial_callback, highscores_callback, studentLogin_callback, teacherLogin_callback):
         self.window = window
         self.start_callback = start_callback
         self.load_callback = load_callback
         self.tutorial_callback = tutorial_callback
         self.highscores_callback = highscores_callback
         self.quit_callback = quit_callback
+        self.studentLogin_callback = studentLogin_callback
+        self.teacherLogin_callback = teacherLogin_callback
         self.ui = Group()
         
+       # Student Login button
+        self.btn_studentLogin = button.ButtonText(
+            "Student Login", 
+            studentLogin_callback, 
+            fixed_width=200, 
+            border_radius=10, 
+            text_align="center", 
+            ui_group=self.ui
+        )
+        
+        # Teacher Login button
+        self.btn_teacherLogin = button.ButtonText(
+            "Teacher login", 
+            teacherLogin_callback, 
+            fixed_width=200,  
+            border_radius=10, 
+            text_align="center", 
+            ui_group=self.ui
+        )
+
        # Start button
         self.btn_start = button.ButtonText(
             "Start", 
@@ -75,22 +95,29 @@ class GameGUI:
 
     def draw(self):
         button_spacing = 60
-        start_y = H // 2 - (button_spacing * 2)  # Start drawing from this y-coordinate
+        start_y = self.window.get_height() // 2 - (button_spacing * 2)  # Start drawing from this y-coordinate
 
-        # Start button
-        self.btn_start.draw(self.window, *self.btn_start.surface.get_rect(center=(W // 2, start_y)).topleft)
+        # Student login button
+        self.btn_studentLogin.draw(self.window, *self.btn_studentLogin.surface.get_rect(center = (self.window.get_width() // 2 - 150, self.window.get_height() - 150)).topleft)
 
-        # Load Game button
-        self.btn_load.draw(self.window, *self.btn_load.surface.get_rect(center=(W // 2, start_y + button_spacing)).topleft)
+        # Teacher Login button
+        self.btn_teacherLogin.draw(self.window, *self.btn_teacherLogin.surface.get_rect(center = (self.window.get_width() // 2 + 150, self.window.get_height() - 150)).topleft)
 
-        # Tutorial button
-        self.btn_tutorial.draw(self.window, *self.btn_tutorial.surface.get_rect(center=(W // 2, start_y + button_spacing * 2)).topleft)
 
-        # Highscores button
-        self.btn_highscores.draw(self.window, *self.btn_highscores.surface.get_rect(center=(W // 2, start_y + button_spacing * 3)).topleft)
+        # # Start button
+        # self.btn_start.draw(self.window, *self.btn_start.surface.get_rect(center=(self.window.get_width() // 2, start_y)).topleft)
 
-        # Quit button
-        self.btn_quit.draw(self.window, *self.btn_quit.surface.get_rect(center=(W // 2, start_y + button_spacing * 4)).topleft)
+        # # Load Game button
+        # self.btn_load.draw(self.window, *self.btn_load.surface.get_rect(center=(self.window.get_width() // 2, start_y + button_spacing)).topleft)
+
+        # # Tutorial button
+        # self.btn_tutorial.draw(self.window, *self.btn_tutorial.surface.get_rect(center=(self.window.get_width() // 2, start_y + button_spacing * 2)).topleft)
+
+        # # Highscores button
+        # self.btn_highscores.draw(self.window, *self.btn_highscores.surface.get_rect(center=(self.window.get_width() // 2, start_y + button_spacing * 3)).topleft)
+
+        # # Quit button
+        # self.btn_quit.draw(self.window, *self.btn_quit.surface.get_rect(center=(self.window.get_width() // 2, start_y + button_spacing * 4)).topleft)
         
     def start(self):
         self.start_callback()
@@ -106,3 +133,9 @@ class GameGUI:
 
     def quit(self):
         self.quit_callback()
+
+    def studentLogin(self):
+        self.studentLogin_callback()
+
+    def teacherLogin(self):
+        self.teacherLogin_callback()

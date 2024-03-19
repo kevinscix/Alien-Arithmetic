@@ -18,9 +18,7 @@ game_state = MENU  # Start with the menu
 
 # Callback functions for GUI
 def start_game():
-    global game_state
-    game_state = GAME  # This changes the game state to the game screen
-    print("Starting the game...")
+    pass
 
 def quit_game():
     global running
@@ -36,9 +34,18 @@ def tutorial_game():
 def load_game():
     pass
 
+def studentLogin_game():
+    global game_state
+    game_state = GAME  # This changes the game state to the game screen
+    print("Starting the game...")
+
+def teacherLogin_game():
+    pass
+
+
 
 # Create the GUI
-gui = GameGUI(screen, start_game, quit_game, highscore_game, tutorial_game, load_game)
+gui = GameGUI(screen, start_game, quit_game, highscore_game, tutorial_game, load_game, studentLogin_game, teacherLogin_game)
 
 player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2 + screen.get_height() / 3)
 

@@ -74,7 +74,6 @@ class GameGUI:
             self.ui.handle_event(event)
 
     def draw(self):
-        self.window.fill((0, 0, 0))
         button_spacing = 60
         start_y = H // 2 - (button_spacing * 2)  # Start drawing from this y-coordinate
 

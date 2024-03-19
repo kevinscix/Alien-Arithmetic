@@ -1,7 +1,6 @@
 import pygame
 from components.player import Player
 from module.gameGUI import GameGUI
-from components.media import Media
 import os
 
 MENU = 0
@@ -10,7 +9,7 @@ LEVELSELECT = 2
 
 # pygame setup
 pygame.init()
-screen = pygame.display.set_mode((1920, 1080))
+screen = pygame.display.set_mode((800, 600))
 clock = pygame.time.Clock()
 running = True
 dt = 0
@@ -60,9 +59,6 @@ while running:
             if event.key == pygame.K_ESCAPE:  # Press Escape to quit
                 running = False
 
-    """substitute this with the media class later on returning the images"""
-    screen.fill("blue")
-    pygame.draw.circle(screen, "red", player_pos, 40)
 
 
     if game_state == MENU:
@@ -71,18 +67,25 @@ while running:
         # mainTitleImage = "group55/src/components/Images/mainPage.png"
         # Get the directory of the script
         script_dir = os.path.dirname(__file__)  # __file__ is the path to the current script
-
         # Go up one level from 'script_dir' to 'src' and then into the 'Images' directory
         mainTitleImagePath = os.path.join(script_dir, "..", "src", "components", "Images", "mainPage.png")
-
         # Normalize the path to remove any '..'
         mainTitleImage = os.path.normpath(mainTitleImagePath)
-        mainTitle = Media(mainTitleImage)
-        mainTitle.drawBackground(screen)
+        background_image = pygame.image.load(mainTitleImage)
+        background_image = pygame.transform.scale(background_image, (screen.get_width(), screen.get_height()))
+        screen.blit(background_image, (0, 0))
         gui.draw()
+        
     elif game_state == GAME:
         # Main game logic and rendering
-        screen.fill("black")
+        script_dir = os.path.dirname(__file__)  # __file__ is the path to the current script
+        # Go up one level from 'script_dir' to 'src' and then into the 'Images' directory
+        gamplay1path = os.path.join(script_dir, "..", "src", "components", "Images", "mainPage.png")
+        # Normalize the path to remove any '..'
+        gameplay1 = os.path.normpath(gamplay1path)
+        gameplay1_image = pygame.image.load(gameplay1)
+        gameplay1_image = pygame.transform.scale(background_image, (screen.get_width(), screen.get_height()))
+        screen.blit(gameplay1_image, (0, 0))
         """substitute this with the media class later on returning the images"""
         pygame.draw.circle(screen, "red", (int(player_pos.x), int(player_pos.y)), 40)
 

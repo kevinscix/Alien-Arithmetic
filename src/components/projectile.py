@@ -45,51 +45,7 @@ class Projectile:
             return False
         
 
-# Initialize Pygame
-pygame.init()
 
-# Set up the screen
-screenWidth = 800 #alter to screen width
-screenHeight = 600 #alter to screen width
-screen = pygame.display.set_mode((screenWidth, screenHeight))
-pygame.display.set_caption("Alien Arthmetic")
-
-player = Player()
-projectile = Projectile()
-
-# Game loop
-running = True
-while running:
-    screen.fill((0, 0, 0))
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE and not projectile.fired:
-                # Fire projectile when spacebar is pressed
-                projectile.fire()
-                projectile.trajectory(player)
-
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_LEFT]:
-        player.move_left()
-    if keys[pygame.K_RIGHT]:
-        player.move_right()
-
-    # Update projectile
-    projectile.updateFire()
-
-    # Draw player
-    player.draw(screen)
-
-    # Draw projectile
-    if projectile.fired:
-        pygame.draw.rect(screen, (255, 255, 255), (projectile.projX, projectile.projY, 5, 10))
-
-    pygame.display.flip()
-
-pygame.quit()
 
 
 

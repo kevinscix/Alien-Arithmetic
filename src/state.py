@@ -1,5 +1,13 @@
 from pydantic import BaseModel
 import json
+from components.scoreboard import Scoreboard
+from typing import List
+
+
+
+#this file represents the possible states which these objects should have
+#save state is all possible states a "save/player should have"
+#scoreboard state handles all the possible state for all users.
 
 #should handle the state of the saves
 #handle the interface, player?
@@ -54,13 +62,31 @@ class SaveState(SaveModel, State):
      return "{} with a score of {}.".format(self.name, self.score)
   pass
 
+import os
+#scoreboard state -> should have just one txt file
+class ScoreboardState(Scoreboard, State):
+
+
+  def loadScore(self):
+    txt_files = []
+    database : List[SaveState]  = []
+    for root, dirs, files in os.walk("."):
+        for file in files:
+            if file.endswith(".txt"):
+                print(file)
+                database.append(SaveState.model_validate_json(self.load_settings(file)))
+                txt_files.append(os.path.join(root, file))
+    print(database)
+    return database
+  pass
 
 
 if __name__ == "__main__":
   print("Test cases for DataScore model")
   state = State()
 
-
+  
+  #Player example data
   AndyPlayer = SaveState(
     name="Andy",
     score=40,
@@ -86,25 +112,24 @@ if __name__ == "__main__":
     loggedIn=False
     )
 
-
-
+  #how saving workings and loading..
   EmptyPlayer.save_settings(AndyPlayer.model_dump_json(), "AndyPlayer.txt")
   EmptyPlayer.save_settings(EmptyPlayer.model_dump_json(), "EmptyPlayer.txt")
   data = EmptyPlayer.load_settings("EmptyPlayer.txt")
   andy = EmptyPlayer.load_settings("AndyPlayer.txt")
+
   if data:
     Player : SaveState = EmptyPlayer.model_validate_json(data)
     AndyPlaye : SaveState = EmptyPlayer.model_validate_json(andy)
     print(Player)
     print(AndyPlayer)
 
-
-
-  # print(Player.model_dump_json() , Player.name)
-  #testing the load function
-  # jsonD = state.load_settings("Andy.txt")
-  # Player : SaveState = EmptyPlayer.model_validate_json(jsonD)
-  # print(Player.model_dump_json() , Player.name)
+  #example of loading all the save states using the information
+  board = ScoreboardState()
+  scoreboard : List[SaveState]= board.loadScore()
+  for score in scoreboard:
+    print(score)
+  
 
 
 

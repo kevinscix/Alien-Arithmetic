@@ -51,7 +51,7 @@ pygame.init()
 # Set up the screen
 screenWidth = 800 #alter to screen width
 screenHeight = 600 #alter to screen width
-screen = pygame.display.set_mode((screen_width, screen_height))
+screen = pygame.display.set_mode((screenWidth, screenHeight))
 pygame.display.set_caption("Alien Arthmetic")
 
 player = Player()

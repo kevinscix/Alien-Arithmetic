@@ -1,7 +1,6 @@
 import pygame
 from components.player import Player
-from module.gameGUI import GameGUI
-from components.media import Media
+from components.gameGUI import GameGUI
 from components.projectile import Projectile
 import os
 
@@ -11,7 +10,7 @@ LEVELSELECT = 2
 
 # pygame setup
 pygame.init()
-screen = pygame.display.set_mode((1920, 1080))
+screen = pygame.display.set_mode((800, 600))
 clock = pygame.time.Clock()
 running = True
 dt = 0
@@ -20,9 +19,7 @@ game_state = MENU  # Start with the menu
 
 # Callback functions for GUI
 def start_game():
-    global game_state
-    game_state = GAME  # This changes the game state to the game screen
-    print("Starting the game...")
+    pass
 
 def quit_game():
     global running
@@ -38,9 +35,17 @@ def tutorial_game():
 def load_game():
     pass
 
+def studentLogin_game():
+    global game_state
+    game_state = GAME  # This changes the game state to the game screen
+    print("Starting the game...")
+
+def teacherLogin_game():
+    pass
+
 
 # Create the GUI
-gui = GameGUI(screen, start_game, quit_game, highscore_game, tutorial_game, load_game)
+gui = GameGUI(screen, start_game, quit_game, highscore_game, tutorial_game, load_game, studentLogin_game, teacherLogin_game)
 
 player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2 + screen.get_height() / 3)
 
@@ -61,9 +66,7 @@ while running:
             if event.key == pygame.K_ESCAPE:  # Press Escape to quit
                 running = False
 
-    """substitute this with the media class later on returning the images"""
-    screen.fill("blue")
-    pygame.draw.circle(screen, "red", player_pos, 40)
+
 
 
     if game_state == MENU:
@@ -78,12 +81,21 @@ while running:
 
         # Normalize the path to remove any '..'
         mainTitleImage = os.path.normpath(mainTitleImagePath)
-        mainTitle = Media(mainTitleImage)
-        mainTitle.drawBackground(screen)
+        background_image = pygame.image.load(mainTitleImage)
+        background_image = pygame.transform.scale(background_image, (screen.get_width(), screen.get_height()))
+        screen.blit(background_image, (0, 0))
         gui.draw()
+        
     elif game_state == GAME:
         # Main game logic and rendering
-        screen.fill("black")
+        script_dir = os.path.dirname(__file__)  # __file__ is the path to the current script
+        # Go up one level from 'script_dir' to 'src' and then into the 'Images' directory
+        gamplay1path = os.path.join(script_dir, "..", "src", "components", "Images", "mainPage.png")
+        # Normalize the path to remove any '..'
+        gameplay1 = os.path.normpath(gamplay1path)
+        gameplay1_image = pygame.image.load(gameplay1)
+        gameplay1_image = pygame.transform.scale(background_image, (screen.get_width(), screen.get_height()))
+        screen.blit(gameplay1_image, (0, 0))
         """substitute this with the media class later on returning the images"""
         pygame.draw.circle(screen, "red", (int(player_pos.x), int(player_pos.y)), 40)
 

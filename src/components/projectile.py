@@ -1,5 +1,4 @@
 from components.player import *
-from src.main import *
 import pygame
 import math
 

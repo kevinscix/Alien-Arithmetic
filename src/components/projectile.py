@@ -8,7 +8,7 @@ class Projectile:
         # projImg = pygame.image.load('standard bullet 32.png') for later
         
         # by default, the proj is on the edge of the screen, will change when fired
-        self.projX = 0 # x-coordinate of the projectile
+        self.projX  = 0 # x-coordinate of the projectile
         self.projY = 0 # y-coordinate of the projectile
 
         # the number of pixels the proj moves per frame

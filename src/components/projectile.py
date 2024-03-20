@@ -15,8 +15,6 @@ class Projectile:
         self.projY_change = 1 # speed of the projectile
         self.fired = False
 
-
-    # 
     def trajectory(self, Player):
 
         # Set the initial position of the projectile to be just above the player
@@ -46,6 +44,7 @@ class Projectile:
             return True
         else:
             return False
+
 
 
 

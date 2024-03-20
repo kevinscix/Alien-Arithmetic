@@ -1,14 +1,18 @@
 #Emily & Andy
-from datascore import DataScore
+from components.datascore import DataScore
 from pydantic import BaseModel
 from typing import Dict, Optional
-import csv
 
-#object to get all the data in csv file and logic
+
+#we should clarify the logic for this file, it doesnt really make senses now
+#I reread what we wrote here
+
+#model representation of what the scoreboard 
 class Scoreboard(BaseModel):
 
   #total players
   numberPlayer : Optional[int] = None
+
   userType : Optional[int] = None
 
   #current player
@@ -48,58 +52,6 @@ class Scoreboard(BaseModel):
   #   score = self.board[name]
   #   print(score)
   #   return score
-
-  def loadScore(self, filename: str = ".\src\database.csv") -> None:
-        with open(filename, "r") as fileObj:
-            reader = csv.reader(fileObj)
-            for row in reader:
-              if row:
-                score = DataScore(
-                    name=row[0],
-                    highScore=row[1],
-                    questionsCompleted=row[2],
-                    incorrectAmt=row[3],
-                    correctAmt=row[4],
-                    overallGrade=row[5],
-                    loggedIn=row[6]
-                )
-                self.board[score.name] = score
-
-  #load Score function load into -> self.board so data -> datascore -> append board
-  # def loadScore(self) -> None:
-  #   pass
-
-  #stores the current player store and data.
-  def storeScore(self, player : DataScore,  filename: str = ".\src\database.csv") -> None:
-    print(player.fields())
-    with open(filename, "a") as fileObj:
-      writer = csv.writer(fileObj)
-      writer.writerow(player.fields())
-
-if __name__ == "__main__":
-  print("Test case for scoreboard.")
-
-  board = Scoreboard()
-
-  # Load scores from the CSV file
-  board.loadScore()
-
-  # # Display scores
-  board.showScores()
-
-  # # Example of adding a new score and storing it in the CSV file
-  AndyScore = DataScore(
-    name="Andy",
-    highScore=100,
-    questionsCompleted=5,
-    incorrectAmt=10,
-    correctAmt=30,
-    overallGrade=40,
-    loggedIn=True
-  )
-
-  board.storeScore(player=AndyScore)
-  
 
 
 # added/what it does - 

@@ -1,4 +1,5 @@
 #Kevin
+from components.projectile import Projectile
 from pydantic import BaseModel
 from typing import Optional
 
@@ -13,7 +14,7 @@ class Player(BaseModel):
         self.health = 3
         self.points = 0
         self.speed = 300
-        
+        self.ready = True
 
     # decreases the health of the player
     def damage(self) -> None:
@@ -40,7 +41,7 @@ class Player(BaseModel):
     def save(self) -> None:
         pass
 
-        # missile methods
+    # missile methods
 
     # ready is the status of the missile (cooldown system)
     
@@ -48,7 +49,7 @@ class Player(BaseModel):
     # it will check the ready variable
     # if ready, it will fire a missile
     # missile will despawn once it is 100px off the screen
-    def trajectory(self):
+    def shoot(self):
         if self.ready == True:
             self.ready = False
             Projectile.trajectory(self)

@@ -1,6 +1,7 @@
 import pygame
 from components.player import Player
 from components.gameGUI import GameGUI
+from components.projectile import Projectile
 import os
 
 MENU = 0
@@ -43,7 +44,6 @@ def teacherLogin_game():
     pass
 
 
-
 # Create the GUI
 gui = GameGUI(screen, start_game, quit_game, highscore_game, tutorial_game, load_game, studentLogin_game, teacherLogin_game)
 
@@ -68,14 +68,17 @@ while running:
 
 
 
+
     if game_state == MENU:
         # Handle GUI events and draw the menu
         gui.handle_events(events)
         # mainTitleImage = "group55/src/components/Images/mainPage.png"
         # Get the directory of the script
         script_dir = os.path.dirname(__file__)  # __file__ is the path to the current script
+
         # Go up one level from 'script_dir' to 'src' and then into the 'Images' directory
         mainTitleImagePath = os.path.join(script_dir, "..", "src", "components", "Images", "mainPage.png")
+
         # Normalize the path to remove any '..'
         mainTitleImage = os.path.normpath(mainTitleImagePath)
         background_image = pygame.image.load(mainTitleImage)
@@ -111,7 +114,7 @@ while running:
 
         # projectile input
         if keys[pygame.K_SPACE] or keys[pygame.K_SPACE] or keys[pygame.K_KP_ENTER]:
-            Player.trajectory()
+            Player.shoot()
 
     elif game_state == LEVELSELECT:
         pass
@@ -121,6 +124,18 @@ while running:
 
     # flip() the display to put your work on screen
     pygame.display.flip()
+
+    # handle collisions and update the projectile movement
+        
+    # -----===== LUCA'S SHIT =====----- 
+
+    # for asteroid in asteroids:
+    #     if projectile.collisionDetect(asteroid.xPosition, asteroid.yPosition):
+    #         pass # handle asteroid collisions
+
+    Projectile.updateFire()
+
+    # -----===== END OF LUCA'S SHIT =====----- 
 
 
     # limits FPS to 60

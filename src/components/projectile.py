@@ -16,7 +16,6 @@ class Projectile:
         self.fired = False
 
     def trajectory(self, Player):
-
         # Set the initial position of the projectile to be just above the player
         self.projX = Player.xPos + (Player.width // 2)  # Center the projectile horizontally
         self.projY = Player.yPos
@@ -44,6 +43,54 @@ class Projectile:
             return True
         else:
             return False
+        
+
+# Initialize Pygame
+pygame.init()
+
+# Set up the screen
+screen_width = 800
+screen_height = 600
+screen = pygame.display.set_mode((screen_width, screen_height))
+pygame.display.set_caption("Space Shooter")
+
+# Instantiate Player and Projectile
+player = Player()
+projectile = Projectile()
+
+# Game loop
+running = True
+while running:
+    screen.fill((0, 0, 0))
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE and not projectile.fired:
+                # Fire projectile when spacebar is pressed
+                projectile.fire()
+                projectile.trajectory(player)
+
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_LEFT]:
+        player.move_left()
+    if keys[pygame.K_RIGHT]:
+        player.move_right()
+
+    # Update projectile
+    projectile.updateFire()
+
+    # Draw player
+    player.draw(screen)
+
+    # Draw projectile
+    if projectile.fired:
+        pygame.draw.rect(screen, (255, 255, 255), (projectile.projX, projectile.projY, 5, 10))
+
+    pygame.display.flip()
+
+pygame.quit()
 
 
 

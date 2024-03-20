@@ -12,7 +12,6 @@ class Scoreboard(BaseModel):
 
   #total players
   numberPlayer : Optional[int] = None
-
   userType : Optional[int] = None
 
   #current player

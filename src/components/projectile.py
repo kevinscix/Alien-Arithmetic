@@ -49,12 +49,11 @@ class Projectile:
 pygame.init()
 
 # Set up the screen
-screen_width = 800
-screen_height = 600
+screenWidth = 800 #alter to screen width
+screenHeight = 600 #alter to screen width
 screen = pygame.display.set_mode((screen_width, screen_height))
-pygame.display.set_caption("Space Shooter")
+pygame.display.set_caption("Alien Arthmetic")
 
-# Instantiate Player and Projectile
 player = Player()
 projectile = Projectile()
 

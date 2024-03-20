@@ -114,7 +114,8 @@ while running:
 
         # projectile input
         if keys[pygame.K_SPACE] or keys[pygame.K_SPACE] or keys[pygame.K_KP_ENTER]:
-            Player.shoot()
+            print("pew pew") # debug print
+            Player.shoot() # direct to the shoot method in player
 
     elif game_state == LEVELSELECT:
         pass
@@ -133,7 +134,7 @@ while running:
     #     if projectile.collisionDetect(asteroid.xPosition, asteroid.yPosition):
     #         pass # handle asteroid collisions
 
-    Projectile.updateFire()
+    # Projectile.updateFire()
 
     # -----===== END OF LUCA'S SHIT =====----- 
 

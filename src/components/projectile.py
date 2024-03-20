@@ -12,7 +12,7 @@ class Projectile:
         self.projY = 0 # y-coordinate of the projectile
 
         # the number of pixels the proj moves per frame
-        self.projY_change = 1 # speed of the projectile
+        self.projY_speed = 1 # speed of the projectile
         self.fired = False
 
     def trajectory(self, Player):
@@ -23,7 +23,7 @@ class Projectile:
     def updateFire(self):
         if self.fired:
             # Move the projectile upwards only if it has been fired
-            self.projY -= self.projY_change
+            self.projY -= self.projY_speed
 
             # Check if projectile is off the screen
             if self.projY < 0:
@@ -31,11 +31,6 @@ class Projectile:
                 self.projY = Player.yPos
                 self.fired = False 
 
-    def fire(self):
-        # Set the fired flag to True when the projectile is fired
-        self.fired = True
-
-    #might need
     def collisionDetect(self, asteroidX, asteroidY):
         # Detect collision between the projectile and an asteroid
         distance = math.sqrt((asteroidX - self.projX) ** 2 + (asteroidY - self.projY) ** 2)
@@ -44,6 +39,14 @@ class Projectile:
         else:
             return False
         
+ 
+# make projectile/player stuff compatible with main (its currently crashing)
+        # use debug prints to help if you want
+# make sure the firing/cooldown stuff works (i think its wrong now?)
+# visually display the projectile with a small circle (you can borrow some of the code that they used for the ship)
+# after all that, get in contact with jackson or andy to help you connect collisionDetect with the asteroid logic
+        # i left some scrap code near the bottom of main that can help with this
+
 
 
 

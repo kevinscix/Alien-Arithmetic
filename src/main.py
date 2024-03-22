@@ -6,7 +6,14 @@ import os
 
 MENU = 0
 LOGIN = 1
-GAME = 2
+TEACHER = 2
+TUTORIAL = 3
+LEVELMAIN = 4
+GAME = 5
+SCOREBOARD = 6
+LEVELPLUS = 7
+LEVELMINUS = 8
+LEVELX = 9
 
 # pygame setup ---------------------
 pygame.init()
@@ -20,6 +27,7 @@ game_state = MENU  # Start with the menu
 # Callback functions for GUI ---------------------
 def start_game():
     global game_state
+    # bring to level screen but since we don't have yet we will just bring to game screen
     game_state = GAME  # This changes the game state to the game screen
 
 def quit_game():
@@ -27,25 +35,34 @@ def quit_game():
     print("Quitting the game...")
     running = False
 
-def highscore_game():
-    pass
+def highscores_game():
+    global game_state
+    game_state = SCOREBOARD
+    print("Highscores...")
 
 def tutorial_game():
-    pass
+    global game_state
+    game_state = TUTORIAL
 
 def load_game():
-    pass
+    #call some function to load game then level screen
+    global game_state
+    game_state = LEVELMAIN
+    print("Loading game...")
 
 def studentLogin_game():
     global game_state
+    # ask for username of student before moving to new screen implement later
     game_state = LOGIN  
 
 def teacherLogin_game():
-    pass
+    global game_state
+    game_state = TEACHER
+    
 # ---------------------
 
 # Create the GUI & set player location---------------------
-gui = GameGUI(screen, start_game, quit_game, highscore_game, tutorial_game, load_game, studentLogin_game, teacherLogin_game)
+gui = GameGUI(screen, start_game, quit_game, load_game, tutorial_game, highscores_game, studentLogin_game, teacherLogin_game)
 player_pos = pygame.Vector2(screen.get_width() / 2, (screen.get_height() / 4) * 3 + 20) 
 # ---------------------
 
@@ -66,13 +83,12 @@ while running:
         
 
 
+    currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
 
     if game_state == MENU:
         gui.update_visibility(game_state)
         # Handle GUI events and draw the menu
         gui.handle_events(events)
-        # Get the directory of the script
-        currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
         # Go up one level from 'currentPath' to 'src' and then into the 'Images' directory
         mainTitleImagePath = os.path.join(currentPath, "..", "src", "components", "Images", "titlePage.png")
         # Normalize the path to remove any '..'
@@ -88,16 +104,37 @@ while running:
         gui.handle_events(events)
         gui.draw()
 
+    elif game_state == TEACHER:
+        screen.fill("purple")
+
+    elif game_state == TUTORIAL:
+        tutorialImagePath = os.path.join(currentPath, "..", "src", "components", "Images", "tutorialScreen.png")
+        tutorialImage = pygame.image.load(os.path.normpath(tutorialImagePath))
+        tutorialImage = pygame.transform.scale(tutorialImage, (screen.get_width(), screen.get_height()))
+        screen.blit(tutorialImage, (0, 0))
+
+    elif game_state == LEVELMAIN:
+        levelSelectPath = os.path.join(currentPath, "..", "src", "components", "Images", "mainLevelSelect.png")
+        levelSelectImage = pygame.image.load(os.path.normpath(levelSelectPath))
+        levelSelectImage = pygame.transform.scale(levelSelectImage, (screen.get_width(), screen.get_height()))
+        screen.blit(levelSelectImage, (0, 0))
+
+    elif game_state == LEVELPLUS or game_state == LEVELMINUS or game_state == LEVELX:
+        innerLevelSelectPath = os.path.join(currentPath, "..", "src", "components", "Images", "innerLevelSelect.png")
+        innerLevelSelect = pygame.image.load(os.path.normpath(innerLevelSelectPath))
+        innerLevelSelect = pygame.transform.scale(innerLevelSelect, (screen.get_width(), screen.get_height()))
+        screen.blit(innerLevelSelect, (0, 0))
+
+    
     elif game_state == GAME:
         gui.update_visibility(game_state)
         # Main game logic and rendering
-        currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
-        # Go up one level from 'currentPath' to 'src' and then into the 'Images' directory
-        loginScreenPath = os.path.join(currentPath, "..", "src", "components", "Images", "loginScreen.png")
+        #if level is different we can use gameplay2.png or gameplay3.png image later on using if statement off the game_state variable
+        gamePlay1Path = os.path.join(currentPath, "..", "src", "components", "Images", "gamePlay1.png")
         # Normalize the path to remove any '..'
-        loginScreenImage = pygame.image.load(os.path.normpath(loginScreenPath))
-        loginScreenImage = pygame.transform.scale(loginScreenImage, (screen.get_width(), screen.get_height()))
-        screen.blit(loginScreenImage, (0, 0))
+        gamePlay1Image = pygame.image.load(os.path.normpath(gamePlay1Path))
+        gamePlay1Image = pygame.transform.scale(gamePlay1Image, (screen.get_width(), screen.get_height()))
+        screen.blit(gamePlay1Image, (0, 0))
         """substitute this with the media class later on returning the images"""
         pygame.draw.circle(screen, "red", (int(player_pos.x), int(player_pos.y)), 40)
 
@@ -120,7 +157,9 @@ while running:
             print("pew pew") # debug print
             Player.shoot() # direct to the shoot method in player
 
-    
+    elif game_state == SCOREBOARD:
+        screen.fill("black")
+        
     else:
         print("Error: Invalid game state")
 
@@ -145,17 +184,5 @@ while running:
     # independent physics.
     dt = clock.tick(60) / 1000
 
-
-
-
-
-
-
-
-
-
-
-
-    
 
 pygame.quit()

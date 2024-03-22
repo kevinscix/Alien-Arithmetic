@@ -122,7 +122,20 @@ class GameGUI:
                 "quit": True
             }
         
-        elif game_state == 2:  # GAME state
+        elif game_state == 4:  # LOGIN state
+            self.visibility = {
+                "studentLogin": True,
+                "teacherLogin": True,
+                "start": True,
+                "load": True,
+                "tutorial": True,
+                "highscores": True,
+                "quit": True
+            }
+
+
+
+        elif game_state == 5:  # GAME state
             self.visibility = {
                 "studentLogin": False,
                 "teacherLogin": False,

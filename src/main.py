@@ -90,11 +90,11 @@ while running:
         # Main game logic and rendering
         script_dir = os.path.dirname(__file__)  # __file__ is the path to the current script
         # Go up one level from 'script_dir' to 'src' and then into the 'Images' directory
-        gamplay1path = os.path.join(script_dir, "..", "src", "components", "Images", "mainPage.png")
+        gamplay1path = os.path.join(script_dir, "..", "src", "components", "Images", "gameplay1.png")
         # Normalize the path to remove any '..'
         gameplay1 = os.path.normpath(gamplay1path)
         gameplay1_image = pygame.image.load(gameplay1)
-        gameplay1_image = pygame.transform.scale(background_image, (screen.get_width(), screen.get_height()))
+        gameplay1_image = pygame.transform.scale(gameplay1_image, (screen.get_width(), screen.get_height()))
         screen.blit(gameplay1_image, (0, 0))
         """substitute this with the media class later on returning the images"""
         pygame.draw.circle(screen, "red", (int(player_pos.x), int(player_pos.y)), 40)

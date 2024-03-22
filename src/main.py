@@ -5,21 +5,22 @@ from components.projectile import Projectile
 import os
 
 MENU = 0
-GAME = 1
-LEVELSELECT = 2
+LOGIN = 1
+GAME = 2
 
-# pygame setup
+# pygame setup ---------------------
 pygame.init()
 screen = pygame.display.set_mode((800, 600))
 clock = pygame.time.Clock()
 running = True
 dt = 0
 game_state = MENU  # Start with the menu
+# ---------------------
 
-
-# Callback functions for GUI
+# Callback functions for GUI ---------------------
 def start_game():
-    pass
+    global game_state
+    game_state = GAME  # This changes the game state to the game screen
 
 def quit_game():
     global running
@@ -37,22 +38,20 @@ def load_game():
 
 def studentLogin_game():
     global game_state
-    game_state = GAME  # This changes the game state to the game screen
-    print("Starting the game...")
+    game_state = LOGIN  
 
 def teacherLogin_game():
     pass
+# ---------------------
 
-
-# Create the GUI
+# Create the GUI & set player location---------------------
 gui = GameGUI(screen, start_game, quit_game, highscore_game, tutorial_game, load_game, studentLogin_game, teacherLogin_game)
-
-player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2 + screen.get_height() / 3)
-
+player_pos = pygame.Vector2(screen.get_width() / 2, (screen.get_height() / 4) * 3 + 20) 
+# ---------------------
 
 #border for sprite ie like out of bounds since sprite can go out of screen
 #changes to the movement needs to be made
-#follow the game loop pattern a little bettert
+#follow the game loop pattern a little better
 
 while running:
     # poll for events
@@ -61,7 +60,6 @@ while running:
     for event in events:
         if event.type == pygame.QUIT:
             running = False
-        #temp measure to quit game from fullscreen
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:  # Press Escape to quit
                 running = False
@@ -70,35 +68,40 @@ while running:
 
 
     if game_state == MENU:
+        gui.update_visibility(game_state)
         # Handle GUI events and draw the menu
         gui.handle_events(events)
-        # mainTitleImage = "group55/src/components/Images/mainPage.png"
         # Get the directory of the script
-        script_dir = os.path.dirname(__file__)  # __file__ is the path to the current script
-
-        # Go up one level from 'script_dir' to 'src' and then into the 'Images' directory
-        mainTitleImagePath = os.path.join(script_dir, "..", "src", "components", "Images", "mainPage.png")
-
+        currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
+        # Go up one level from 'currentPath' to 'src' and then into the 'Images' directory
+        mainTitleImagePath = os.path.join(currentPath, "..", "src", "components", "Images", "titlePage.png")
         # Normalize the path to remove any '..'
-        mainTitleImage = os.path.normpath(mainTitleImagePath)
-        background_image = pygame.image.load(mainTitleImage)
-        background_image = pygame.transform.scale(background_image, (screen.get_width(), screen.get_height()))
-        screen.blit(background_image, (0, 0))
+        mainTitleImage = pygame.image.load(os.path.normpath(mainTitleImagePath))
+        mainTitleImage = pygame.transform.scale(mainTitleImage, (screen.get_width(), screen.get_height()))
+        screen.blit(mainTitleImage, (0, 0))
         gui.draw()
-        
+
+    elif game_state == LOGIN:
+        screen.fill("white")
+        gui.update_visibility(game_state)
+        # Handle GUI events and draw the login screen
+        gui.handle_events(events)
+        gui.draw()
+
     elif game_state == GAME:
+        gui.update_visibility(game_state)
         # Main game logic and rendering
-        script_dir = os.path.dirname(__file__)  # __file__ is the path to the current script
-        # Go up one level from 'script_dir' to 'src' and then into the 'Images' directory
-        gamplay1path = os.path.join(script_dir, "..", "src", "components", "Images", "gameplay1.png")
+        currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
+        # Go up one level from 'currentPath' to 'src' and then into the 'Images' directory
+        loginScreenPath = os.path.join(currentPath, "..", "src", "components", "Images", "loginScreen.png")
         # Normalize the path to remove any '..'
-        gameplay1 = os.path.normpath(gamplay1path)
-        gameplay1_image = pygame.image.load(gameplay1)
-        gameplay1_image = pygame.transform.scale(gameplay1_image, (screen.get_width(), screen.get_height()))
-        screen.blit(gameplay1_image, (0, 0))
+        loginScreenImage = pygame.image.load(os.path.normpath(loginScreenPath))
+        loginScreenImage = pygame.transform.scale(loginScreenImage, (screen.get_width(), screen.get_height()))
+        screen.blit(loginScreenImage, (0, 0))
         """substitute this with the media class later on returning the images"""
         pygame.draw.circle(screen, "red", (int(player_pos.x), int(player_pos.y)), 40)
 
+        
         """make sure to implement movement restriction to specific area of the screen later on """
         keys = pygame.key.get_pressed()
         # WASD key movement
@@ -117,8 +120,6 @@ while running:
             print("pew pew") # debug print
             Player.shoot() # direct to the shoot method in player
 
-    elif game_state == LEVELSELECT:
-        pass
     
     else:
         print("Error: Invalid game state")

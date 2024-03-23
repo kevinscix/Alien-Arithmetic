@@ -75,11 +75,18 @@ player_pos = pygame.Vector2(screen.get_width() / 2, (screen.get_height() / 4) * 
 #follow the game loop pattern a little better
 
 #PROJECTILES INFILE METHODS
+# RES_FOLDER = "components/images"
 
-#ideal method
+# def get_rect(obj):
+#     return pygame.Rect(obj['position'][0],
+#                        obj['position'][1],
+#                        obj['surface'].get_width(),
+#                        obj['surface'].get_height())
+
+# #ideal method
 # def create_shot(spaceship):
 #     # load image of bullet
-#     surf = pygame.image.load(os.path.join(RES_FOLDER, 'bullet.png'))
+#     surf = pygame.image.load(os.path.join(RES_FOLDER, 'bullet_blue.png'))
 #     # scale it to smaller size
 #     surf = pygame.transform.scale(surf, (10, 10))
 #     ship_rect = get_rect(spaceship)
@@ -93,20 +100,38 @@ player_pos = pygame.Vector2(screen.get_width() / 2, (screen.get_height() / 4) * 
 #         'player': player,
 #     }
 
-#quick methoid
 
-# def create_shot(pos):
 
+
+#TEMP VARIABLES
 WIDTH, HEIGHT = 800, 600
 player_radius = 25
 player_pos = [WIDTH // 2, ((screen.get_height() / 4) * 3 + 20)]
 player_speed = 5
-
-
 gamePlay1Path = os.path.join(currentPath, "..", "src", "components", "Images", "gamePlay1.png")
 # Normalize the path to remove any '..'
 gamePlay1Image = pygame.image.load(os.path.normpath(gamePlay1Path))
 gamePlay1Image = pygame.transform.scale(gamePlay1Image, (screen.get_width(), screen.get_height()))
+
+bullet_radius = 5
+
+
+#i will add collision when we have asteriods to hit
+
+shots = []
+def create_shot(player_pos):
+    pygame.draw.circle(screen, "red", player_pos, bullet_radius)
+    bullet_pos = [player_pos[0], player_pos[1]]
+    return {
+        'position' : bullet_pos,
+        'speed' : 8,
+        'radius' : bullet_radius,
+    }
+
+def move_shot():
+    for shot in shots:
+        shot['position'][1] -= shot['speed']
+
 
 
 while running:
@@ -122,6 +147,7 @@ while running:
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_SPACE and game_state == GAME:
                 print("pew pew") # debug print
+                shots.append(create_shot(player_pos=player_pos))
 
 
 
@@ -189,7 +215,15 @@ while running:
         # Ensure the player stays within the screen boundaries
         player_pos[0] = max(player_radius, min(player_pos[0], WIDTH - player_radius))
 
+        #draws the player
         pygame.draw.circle(screen, "red", player_pos, player_radius)
+        move_shot()
+        #draws all the bullets
+
+        for shot in shots:
+            pygame.draw.circle(screen, "black", shot['position'], shot['radius'])
+
+
         # projectile input
             #imma get rid of this to see its easier to do it without the projectile class
             # Player.shoot() # direct to the shoot method in player

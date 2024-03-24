@@ -4,19 +4,9 @@ from PygameUIKit import Group, button
 W = 800
 H = 600
 
-#instead of a condition we can pass in a state of the screens
-#you can combine the PygameUIKit with this and I tested it with UISTATEB so you can reference
-
-
-#it's just easier cause you can get rid of the MENU LOGIN states and what not.
-
-
-
 class State():
     def __init__(self, engine):
         self.engine = engine
-
-
     def on_draw(self, surface): pass
     def on_event(self, event): pass
     def on_update(self, delta): pass
@@ -114,9 +104,6 @@ class UISTATEB(State):
 
     def change_state_b(self):
         self.engine.machine.next_state = YourStateB(self.engine)
-
-    def on_test(self):
-        print("Testing....")
 
     def on_draw(self, surface):
         surface.fill(self.background)

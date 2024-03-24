@@ -91,3 +91,7 @@ class GameState(State):
             self.shots.append(self.create_shot(player_pos=self.player_pos))
 
         self.ui.handle_event(event)
+
+
+
+

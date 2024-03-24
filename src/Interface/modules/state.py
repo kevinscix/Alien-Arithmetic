@@ -38,7 +38,7 @@ class State():
 class SaveModel(BaseModel):
     name : str
     score : int
-    level : list[int]
+    level : List[int]
 
     #question
     highScore : int

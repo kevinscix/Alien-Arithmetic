@@ -12,16 +12,14 @@ from modules.state import SaveModel
 class LoginState(State):
     def __init__(self, engine):
         super().__init__(engine)
-        self.background = 'white'
+
         #UI
-        self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter
-        
-        
+        self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter    
         #make this into a utils function?
         currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
-        mainTitleImagePath = os.path.join(currentPath, "..", "src", "components", "Images", "titlePage.png")
+        menuImagePath = os.path.join(currentPath, "..", "src", "components", "Images", "titlePage.png")
         # Normalize the path to remove any '..'
-        self.mainTitleImage = pygame.image.load(os.path.normpath(mainTitleImagePath))
+        self.mainTitleImage = pygame.image.load(os.path.normpath(menuImagePath))
     
         self.instructor : SaveModel = SaveModel(
             name="Instructor",

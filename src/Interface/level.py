@@ -1,4 +1,4 @@
-from state_machine import State, YourStateA, YourStateB, DisplayEngine
+from state_machine import State, YourStateA, DisplayEngine
 from PygameUIKit import Group, button
 import pygame
 import os

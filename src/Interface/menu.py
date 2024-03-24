@@ -1,8 +1,21 @@
-from state_machine import State, YourStateA, YourStateB, DisplayEngine
-from PygameUIKit import Group, button
-from modules.state import SaveModel
-import pygame
 import os
+import sys
+
+#change directory
+current_dir = os.path.dirname(__file__)
+parent_dir = os.path.dirname(current_dir)  # Moves up to 'interface'
+src_dir = os.path.dirname(parent_dir)  # Moves up to 'src'
+sys.path.append(src_dir)
+
+
+#pygame imports
+import pygame
+from PygameUIKit import Group, button
+
+
+#state imports
+from Interface.state_machine import State
+from Interface.modules.state import SaveModel
 
 
 #this file is a quick scehem of how a state would look like for login and sign in state!
@@ -15,13 +28,13 @@ class MenuState(State):
         #UI
         self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter
         
-        
+        self.background = "white"
         #make this into a utils function?
         currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
 
 
         #do we want a title image page for this page?
-        mainTitleImagePath = os.path.join(currentPath, "..", "src", "components", "Images", "titlePage.png")
+        mainTitleImagePath = os.path.join(currentPath, "..", "components", "Images", "titlePage.png")
         # Normalize the path to remove any '..'
         self.mainTitleImage = pygame.image.load(os.path.normpath(mainTitleImagePath))
     
@@ -86,6 +99,7 @@ class MenuState(State):
 
     #implement game state file
     def start_callback(self):
+        print("Start!")
         pass
         
     #call the singin state?
@@ -110,25 +124,28 @@ class MenuState(State):
         #so i think this is fine. I wont delete the gameUI yet cause it might be useful for later
     def on_draw(self, surface):
         #copy and pasted from the gameGUI
+
+        #change to real background?
+        surface.fill(self.background)
         
         button_spacing = 60
 
-        start_y = self.window.get_height() // 2 - (button_spacing * 2)  # Start drawing from this y-coordinate
+        start_y = surface.get_height() // 2 - (button_spacing * 2)  # Start drawing from this y-coordinate
     
             # Start button
-        self.btn_start.draw(self.window, *self.btn_start.surface.get_rect(center=(self.window.get_width() // 2, start_y)).topleft)
+        self.btn_start.draw(surface, *self.btn_start.surface.get_rect(center=(surface.get_width() // 2, start_y)).topleft)
 
             # Load Game button
-        self.btn_load.draw(self.window, *self.btn_load.surface.get_rect(center=(self.window.get_width() // 2, start_y + button_spacing)).topleft)
+        self.btn_load.draw(surface, *self.btn_load.surface.get_rect(center=(surface.get_width() // 2, start_y + button_spacing)).topleft)
 
             # Tutorial button
-        self.btn_tutorial.draw(self.window, *self.btn_tutorial.surface.get_rect(center=(self.window.get_width() // 2, start_y + button_spacing * 2)).topleft)
+        self.btn_tutorial.draw(surface, *self.btn_tutorial.surface.get_rect(center=(surface.get_width() // 2, start_y + button_spacing * 2)).topleft)
        
             # Highscores button
-        self.btn_highscores.draw(self.window, *self.btn_highscores.surface.get_rect(center=(self.window.get_width() // 2, start_y + button_spacing * 3)).topleft)
+        self.btn_highscores.draw(surface, *self.btn_highscores.surface.get_rect(center=(surface.get_width() // 2, start_y + button_spacing * 3)).topleft)
 
             # draw button
-        self.btn_quit.draw(self.window, *self.btn_quit.surface.get_rect(center=(self.window.get_width() // 2, start_y + button_spacing * 4)).topleft)
+        self.btn_quit.draw(surface, *self.btn_quit.surface.get_rect(center=(surface.get_width() // 2, start_y + button_spacing * 4)).topleft)
 
         pygame.display.flip()
 

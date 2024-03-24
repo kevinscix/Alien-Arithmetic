@@ -17,6 +17,8 @@ import pygame
 #this isn't importing properly???? ill figure it out or someone else can i give up
 from Interface.modules.state import SaveModel
 
+#import the states needed so menu... state
+from Interface.menu import MenuState
 
 class LoginState(State):
     def __init__(self, engine):
@@ -68,13 +70,13 @@ class LoginState(State):
     #pulls the player data with the empty player pull function
     def change_state_student(self):
         #should be like  self.engine.machine.next_state = MENUSTATE(self.engine, self.instructor)
-        self.engine.machine.next_state = YourStateA(self.engine)
+        self.engine.machine.next_state = MenuState(self.engine)
 
     #loads a instrctor model
     def change_state_instructor(self):
         #should be like  self.engine.machine.next_state = MENUSTATE(self.engine, self.instructor)
 
-        self.engine.machine.next_state = YourStateB(self.engine)
+        self.engine.machine.next_state = MenuState(self.engine)
 
     def on_draw(self, surface):
         #draws the titleImage on surface

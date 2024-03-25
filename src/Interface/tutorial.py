@@ -1,4 +1,4 @@
-from state_machine import State, YourStateA, DisplayEngine
+from Interface.state_machine import State, DisplayEngine
 from PygameUIKit import Group, button
 import pygame
 import os
@@ -16,8 +16,10 @@ class TutorialState(State):
       
         #make this into a utils function?
         currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
-        tutorialImagePath = os.path.join(currentPath, "..", "src", "components", "Images", "tutorialScreen.png")
-        self.tutorialScreen = pygame.image.load(os.path.normpath(tutorialImagePath))
+        tutorialImagePath = os.path.join(currentPath, "..", "components", "Images", "tutorialScreen.png")
+        # Normalize the path to remove any '..'
+        self.tutorialImage = pygame.image.load(os.path.normpath(tutorialImagePath))
+        self.tutorialImage = pygame.transform.scale(self.tutorialImage, (800, 600))
 
 
        # Back button 
@@ -33,16 +35,17 @@ class TutorialState(State):
     
 
     def go_back_menu(self):
+        from Interface.menu import MenuState
         #should be like i think... we need to talk
-        self.engine.machine.next_state = YourStateA(self.engine)
+        self.engine.machine.next_state = MenuState(self.engine)
 
 
     def on_draw(self, surface):
         #draws the titleImage on surface
-        surface.blit(self.tutorialScreen , (0, 0))
+        surface.blit(self.tutorialImage, (0, 0))
         #add the buttons we need should be 3 for the diff levels
         #change the values to make it better placed
-        self.btn_back.draw(surface, *self.btn_start.surface.get_rect(center=(surface.get_height() // 2, surface.get_height()  // 2 - 50)).topleft)
+        self.btn_back.draw(surface, *self.btn_back.surface.get_rect(center=(surface.get_height() // 2, surface.get_height()  // 2 - 50)).topleft)
         pygame.display.flip()
 
     def on_event(self, event):

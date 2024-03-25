@@ -16,6 +16,7 @@ from PygameUIKit import Group, button
 #state imports
 from Interface.state_machine import State
 from Interface.modules.state import SaveModel
+from Interface.tutorial import TutorialState
 
 
 #this file is a quick scehem of how a state would look like for login and sign in state!
@@ -28,18 +29,17 @@ class MenuState(State):
         #UI
         self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter
         
-        self.background = "white"
         #make this into a utils function?
         currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
 
 
         #do we want a title image page for this page?
-        mainTitleImagePath = os.path.join(currentPath, "..", "components", "Images", "titlePage.png")
+        menuImagePath = os.path.join(currentPath, "..", "components", "Images", "menuPage.png")
         # Normalize the path to remove any '..'
-        self.mainTitleImage = pygame.image.load(os.path.normpath(mainTitleImagePath))
+        self.menuImage = pygame.image.load(os.path.normpath(menuImagePath))
+        self.menuImage= pygame.transform.scale(self.menuImage, (800, 600))
     
         self.user : SaveModel = None
-
        
        # Start button
         self.btn_start = button.ButtonText(
@@ -66,7 +66,7 @@ class MenuState(State):
         # Tutorial button
         self.btn_tutorial = button.ButtonText(
             "Tutorial", 
-            self.tutorial_callback, 
+            self.change_state_tutorial, 
             # rect_color=(145, 92, 85),  # Orange color
             fixed_width=200, 
             border_radius=10, 
@@ -87,8 +87,8 @@ class MenuState(State):
         
         # Quit button
         self.btn_quit = button.ButtonText(
-            "Quit", 
-            self.quit_callback, 
+            "Exit", 
+            self.change_state_exit, 
             rect_color=(181, 71, 71),  # Red color
             fixed_width=180, 
             border_radius=10, 
@@ -107,26 +107,26 @@ class MenuState(State):
         pass
 
     #call the tutorial state which will be just an image for now?
-    def tutorial_callback(self):
-        pass
+    def change_state_tutorial(self):
+        self.engine.machine.next_state = TutorialState(self.engine)
+
 
     #do we jsut want to do a table of the top scores for the first 10?
     def highscores_callback(self):
         pass
 
     #quit functionality you can implement yourself
-    def quit_callback(self):
-        pass 
-
+    def change_state_exit(self):
+        from Interface.login import LoginState
+        self.engine.machine.next_state = LoginState(self.engine)
+ 
 
     #Notes
         #I got rid of the visibility since its redundant if each state just changes the buttons entirely.
         #so i think this is fine. I wont delete the gameUI yet cause it might be useful for later
     def on_draw(self, surface):
-        #copy and pasted from the gameGUI
-
         #change to real background?
-        surface.fill(self.background)
+        surface.blit(self.menuImage, (0, 0))
         
         button_spacing = 60
 

@@ -1,4 +1,4 @@
-from state_machine import State, DisplayEngine
+from Interface.state_machine import State, DisplayEngine
 from PygameUIKit import Group, button
 import pygame
 import os
@@ -10,7 +10,7 @@ from components.asteroid import asteroid
 #this file is a quick scehem of how a state would look like for login and sign in state!
 
 #this isn't importing properly???? ill figure it out or someone else can i give up
-from modules.state import SaveModel
+from Interface.modules.state import SaveModel
 
 
 #need to talk to luca how this works
@@ -66,7 +66,7 @@ class LevelState(State):
 
     def on_event(self, event):
         self.ui.handle_event(event)
-l
+
 
 if __name__ == "__main__":
     def main():

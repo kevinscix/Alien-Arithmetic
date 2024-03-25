@@ -17,7 +17,7 @@ from PygameUIKit import Group, button
 from Interface.state_machine import State
 from Interface.modules.state import SaveModel
 from Interface.tutorial import TutorialState
-from Interface.game import GameState
+from Interface.level import OutterLevelState
 
 #this file is a quick scehem of how a state would look like for login and sign in state!
 
@@ -99,7 +99,7 @@ class MenuState(State):
 
     #implement game state file
     def start_callback(self):
-        self.engine.machine.next_state = GameState(self.engine)
+        self.engine.machine.next_state = OutterLevelState(self.engine)
         pass
         
     #call the singin state?

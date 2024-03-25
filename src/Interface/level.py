@@ -1,4 +1,4 @@
-from state_machine import State, YourStateA, DisplayEngine
+from state_machine import State, DisplayEngine
 from PygameUIKit import Group, button
 import pygame
 import os
@@ -23,9 +23,9 @@ class LevelState(State):
         self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter    
         #make this into a utils function?
         currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
-        menuImagePath = os.path.join(currentPath, "..", "src", "components", "Images", "innerLevelSelect.png")
+        levelSelectPath = os.path.join(currentPath, "..", "components", "Images", "mainLevelSelect.png")
         # Normalize the path to remove any '..'
-        self.levelSelect = pygame.image.load(os.path.normpath(menuImagePath))
+        self.levelSelect = pygame.image.load(os.path.normpath(levelSelectPath))
     
         self.user : SaveModel = None
 

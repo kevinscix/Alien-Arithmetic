@@ -17,9 +17,8 @@ from PygameUIKit import Group, button
 from Interface.state_machine import State
 from Interface.modules.state import SaveModel
 from Interface.tutorial import TutorialState
-from Interface.level import OutterLevelState
 from Interface.leaderboard import LeaderboardState
-
+from Interface.game import GameState
 #this file is a quick scehem of how a state would look like for login and sign in state!
 
 #this isn't importing properly???? ill figure it out or someone else can i give up
@@ -98,9 +97,11 @@ class MenuState(State):
         )
 
 
+
+    #IGNORE OUTLEVEL FOR NOW I WILL USE GAME STATE
     #implement game state file
     def start_callback(self):
-        self.engine.machine.next_state = OutterLevelState(self.engine)
+        self.engine.machine.next_state = GameState(self.engine)
         
     #call the singin state?
     def change_state_load(self):

@@ -1,4 +1,4 @@
-from state_machine import State, YourStateA, DisplayEngine
+from Interface.state_machine import State, DisplayEngine
 from PygameUIKit import Group, button
 import pygame
 import os
@@ -16,8 +16,10 @@ class TutorialState(State):
       
         #make this into a utils function?
         currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
-        tutorialImagePath = os.path.join(currentPath, "..", "src", "components", "Images", "tutorialScreen.png")
-        self.tutorialScreen = pygame.image.load(os.path.normpath(tutorialImagePath))
+        tutorialImagePath = os.path.join(currentPath, "..", "components", "Images", "tutorialScreen.png")
+        # Normalize the path to remove any '..'
+        self.tutorialImage = pygame.image.load(os.path.normpath(tutorialImagePath))
+        self.tutorialImage = pygame.transform.scale(self.tutorialImage, (800, 600))
 
 
        # Back button 

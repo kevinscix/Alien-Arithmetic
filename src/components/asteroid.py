@@ -1,6 +1,9 @@
 #Jackson
-
+import os
+import sys
 import random
+import pygame
+
 
 class asteroid():
     # Class-level attributes
@@ -48,6 +51,28 @@ class asteroid():
             # multiplication
             qAnswer = self.firstOp * self.secondOp
         return qAnswer
+
+
+    def create_asteroids(self, ships):
+        # choose one of the ships as target for fire
+        fire_target = random.choice(ships)
+    
+        # load image of ship
+        surf = pygame.image.load(os.path.join(RES_FOLDER, 'aliens.png'))
+        
+        # scale it to smaller size and make it quadratic
+        surf = pygame.transform.scale(surf, (70, 70))
+        return {
+            'surface': surf.convert_alpha(),
+            'position': [randrange(892), -64],
+            'speed': 4,
+            'fire_target': fire_target,
+            'angle': 0,
+            'ticks_to_laser': 25
+        }
+
+    def move_asteroids(self):
+        pass
 
 
     # Method to generate asteroids with correct and incorrect answers

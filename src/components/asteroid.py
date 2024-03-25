@@ -110,6 +110,11 @@ class Asteroid():
     def showEquation(self) -> str:
         eq = "%d + %d" % (self.firstOp, self.secondOp)
         return eq
+    
+    def collision(self) -> None:
+        
+        pass
+
         
     
 if __name__ == "__main__":

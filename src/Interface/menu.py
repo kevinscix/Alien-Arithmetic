@@ -19,80 +19,63 @@ from Interface.modules.state import SaveModel
 from Interface.tutorial import TutorialState
 from Interface.leaderboard import LeaderboardState
 from Interface.game import GameState
-#this file is a quick scehem of how a state would look like for login and sign in state!
+currentPath = os.path.dirname(__file__)  
 
-#this isn't importing properly???? ill figure it out or someone else can i give up
+menuImagePath = os.path.join(currentPath, "..", "components", "Images", "menuPage.png")
+startImagePath = os.path.join(currentPath, "..", "components", "Images", "startButton.png")
+loadImagePath = os.path.join(currentPath, "..", "components", "Images", "loadButton.png")
+tutorialImagePath = os.path.join(currentPath, "..", "components", "Images", "tutorialButton.png")
+highscoresImagePath = os.path.join(currentPath, "..", "components", "Images", "leaderboardButton.png")
+quitImagePath = os.path.join(currentPath, "..", "components", "Images", "exitButton.png")
 
+menuImage = pygame.image.load(os.path.normpath(menuImagePath))
+menuImage= pygame.transform.scale(menuImage, (800, 600))
+start_image = pygame.image.load(os.path.normpath(startImagePath))
+start_image = pygame.transform.scale(start_image, (200, 75))
+load_image = pygame.image.load(os.path.normpath(loadImagePath))
+load_image = pygame.transform.scale(load_image, (200, 75))
+tutorial_image = pygame.image.load(os.path.normpath(tutorialImagePath))
+tutorial_image = pygame.transform.scale(tutorial_image, (75, 75))
+highscores_image = pygame.image.load(os.path.normpath(highscoresImagePath))
+highscores_image = pygame.transform.scale(highscores_image, (200, 75))
+quit_image = pygame.image.load(os.path.normpath(quitImagePath))
+quit_image = pygame.transform.scale(quit_image, (200, 75))
+
+
+    
 class MenuState(State):
     def __init__(self, engine):
         super().__init__(engine)
         #UI
         self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter
         
-        #make this into a utils function?
-        currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
 
-
-        #do we want a title image page for this page?
-        menuImagePath = os.path.join(currentPath, "..", "components", "Images", "menuPage.png")
-        # Normalize the path to remove any '..'
-        self.menuImage = pygame.image.load(os.path.normpath(menuImagePath))
-        self.menuImage= pygame.transform.scale(self.menuImage, (800, 600))
-    
         self.user : SaveModel = None
-       
-       # Start button
-        self.btn_start = button.ButtonText(
-            "Start", 
-            self.start_callback, 
-            rect_color=(85, 145, 92),  # Green color
-            fixed_width=200, 
-            border_radius=10, 
-            text_align="center", 
+
+        # Start button
+        self.btn_start = button.ButtonPngIcon(
+            start_image, 
+            self.change_state_start, 
             ui_group=self.ui
         )
-        
-        # Load Game button
-        self.btn_load = button.ButtonText(
-            "Load Game", 
+        self.btn_load = button.ButtonPngIcon(
+            load_image, 
             self.change_state_load, 
-            rect_color=(85, 92, 145),  # Blue color
-            fixed_width=220,  # Slightly wider
-            border_radius=10, 
-            text_align="center", 
             ui_group=self.ui
         )
-        
-        # Tutorial button
-        self.btn_tutorial = button.ButtonText(
-            "Tutorial", 
+        self.btn_tutorial = button.ButtonPngIcon(
+            tutorial_image, 
             self.change_state_tutorial, 
-            # rect_color=(145, 92, 85),  # Orange color
-            fixed_width=200, 
-            border_radius=10, 
-            text_align="center", 
             ui_group=self.ui
         )
-        
-        # Highscores button
-        self.btn_highscores = button.ButtonText(
-            "Highscores", 
+        self.btn_highscores = button.ButtonPngIcon(
+            highscores_image, 
             self.change_state_highscore, 
-            rect_color=(92, 145, 85),  # Different shade of green
-            fixed_width=220,  # Slightly wider
-            border_radius=10, 
-            text_align="center", 
             ui_group=self.ui
         )
-        
-        # Quit button
-        self.btn_quit = button.ButtonText(
-            "Exit", 
+        self.btn_quit = button.ButtonPngIcon(
+            quit_image, 
             self.change_state_exit, 
-            rect_color=(181, 71, 71),  # Red color
-            fixed_width=180, 
-            border_radius=10, 
-            text_align="center", 
             ui_group=self.ui
         )
 
@@ -100,7 +83,7 @@ class MenuState(State):
 
     #IGNORE OUTLEVEL FOR NOW I WILL USE GAME STATE
     #implement game state file
-    def start_callback(self):
+    def change_state_start(self):
         self.engine.machine.next_state = GameState(self.engine)
         
     #call the singin state?
@@ -128,27 +111,14 @@ class MenuState(State):
         #so i think this is fine. I wont delete the gameUI yet cause it might be useful for later
     def on_draw(self, surface):
         #change to real background?
-        surface.blit(self.menuImage, (0, 0))
-        
-        button_spacing = 60
+        surface.blit(menuImage, (0, 0))
 
-        start_y = surface.get_height() // 2 - (button_spacing * 2)  # Start drawing from this y-coordinate
-    
-            # Start button
-        self.btn_start.draw(surface, *self.btn_start.surface.get_rect(center=(surface.get_width() // 2, start_y)).topleft)
-
-            # Load Game button
-        self.btn_load.draw(surface, *self.btn_load.surface.get_rect(center=(surface.get_width() // 2, start_y + button_spacing)).topleft)
-
-            # Tutorial button
-        self.btn_tutorial.draw(surface, *self.btn_tutorial.surface.get_rect(center=(surface.get_width() // 2, start_y + button_spacing * 2)).topleft)
+        self.btn_start.draw(surface, 300, 150)
+        self.btn_load.draw(surface, 300, 350)
+        self.btn_tutorial.draw(surface, 700, 400)
+        self.btn_highscores.draw(surface, 550, 550)
+        self.btn_quit.draw(surface, 0, 500) 
        
-            # Highscores button
-        self.btn_highscores.draw(surface, *self.btn_highscores.surface.get_rect(center=(surface.get_width() // 2, start_y + button_spacing * 3)).topleft)
-
-            # draw button
-        self.btn_quit.draw(surface, *self.btn_quit.surface.get_rect(center=(surface.get_width() // 2, start_y + button_spacing * 4)).topleft)
-
         pygame.display.flip()
 
     def on_event(self, event):

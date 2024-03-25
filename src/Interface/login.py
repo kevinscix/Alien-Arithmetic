@@ -20,8 +20,8 @@ from Interface.modules.state import SaveModel
 
 current_path = os.path.dirname(__file__)
 student_login_image_path = os.path.join(current_path, "..", "components", "Images", "student_login.png")
-teacher_login_image_path = os.path.join(current_path, "..", "components", "Images", "student_login.png")
-quit_game_image_path = os.path.join(current_path, "..", "components", "Images", "student_login.png")
+teacher_login_image_path = os.path.join(current_path, "..", "components", "Images", "instructorLogin.png")
+quit_game_image_path = os.path.join(current_path, "..", "components", "Images", "exitButton.png")
 loginImagePath = os.path.join(current_path, "..", "components", "Images", "titlePage.png")
 
 student_login_image = pygame.image.load(os.path.normpath(student_login_image_path))
@@ -58,9 +58,21 @@ class LoginState(State):
     
         self.student : SaveModel = None
 
-        self.btn_student_login = button.ButtonPngIcon(student_login_image, self.change_state_student, ui_group=self.ui)
-        self.btn_teacher_login = button.ButtonPngIcon(teacher_login_image, self.change_state_instructor, ui_group=self.ui)
-        self.btn_quit_game = button.ButtonPngIcon(quit_game_image, self.quit_game, ui_group=self.ui)
+        self.btn_student_login = button.ButtonPngIcon(
+            student_login_image, 
+            self.change_state_student, 
+            ui_group=self.ui
+        )
+        self.btn_teacher_login = button.ButtonPngIcon(
+            teacher_login_image, 
+            self.change_state_instructor, 
+            ui_group=self.ui
+        )
+        self.btn_quit_game = button.ButtonPngIcon(
+            quit_game_image, 
+            self.quit_game, 
+            ui_group=self.ui
+        )
 
     #pulls the player data with the empty player pull function
     def change_state_student(self):

@@ -88,8 +88,8 @@ class MenuState(State):
         
         # Quit button
         self.btn_quit = button.ButtonText(
-            "Quit", 
-            self.quit_callback, 
+            "Exit", 
+            self.change_state_exit, 
             rect_color=(181, 71, 71),  # Red color
             fixed_width=180, 
             border_radius=10, 
@@ -109,8 +109,7 @@ class MenuState(State):
 
     #call the tutorial state which will be just an image for now?
     def change_state_tutorial(self):
-        self.engine.machine.next_state = MenuState(self.engine)
-        print("change")
+        self.engine.machine.next_state = TutorialState(self.engine)
 
 
     #do we jsut want to do a table of the top scores for the first 10?
@@ -118,8 +117,10 @@ class MenuState(State):
         pass
 
     #quit functionality you can implement yourself
-    def quit_callback(self):
-        pass 
+    def change_state_exit(self):
+        from Interface.login import LoginState
+        self.engine.machine.next_state = LoginState(self.engine)
+ 
 
 
     #Notes

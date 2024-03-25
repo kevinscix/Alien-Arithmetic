@@ -67,6 +67,16 @@ class LoginState(State):
             ui_group=self.ui
         )
 
+        # Quit game
+        self.btn_teacherLogin = button.ButtonText(
+            "Quit Game", 
+            self.change_state_instructor, 
+            fixed_width=200,  
+            border_radius=10, 
+            text_align="center", 
+            ui_group=self.ui
+        )
+
     #pulls the player data with the empty player pull function
     def change_state_student(self):
         #should be like  self.engine.machine.next_state = MENUSTATE(self.engine, self.instructor)

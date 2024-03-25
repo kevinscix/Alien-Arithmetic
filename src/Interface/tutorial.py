@@ -35,16 +35,17 @@ class TutorialState(State):
     
 
     def go_back_menu(self):
+        from Interface.menu import MenuState
         #should be like i think... we need to talk
-        self.engine.machine.next_state = YourStateA(self.engine)
+        self.engine.machine.next_state = MenuState(self.engine)
 
 
     def on_draw(self, surface):
         #draws the titleImage on surface
-        surface.blit(self.tutorialScreen , (0, 0))
+        surface.blit(self.tutorialImage, (0, 0))
         #add the buttons we need should be 3 for the diff levels
         #change the values to make it better placed
-        self.btn_back.draw(surface, *self.btn_start.surface.get_rect(center=(surface.get_height() // 2, surface.get_height()  // 2 - 50)).topleft)
+        self.btn_back.draw(surface, *self.btn_back.surface.get_rect(center=(surface.get_height() // 2, surface.get_height()  // 2 - 50)).topleft)
         pygame.display.flip()
 
     def on_event(self, event):

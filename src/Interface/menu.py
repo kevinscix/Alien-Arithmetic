@@ -17,9 +17,8 @@ from PygameUIKit import Group, button
 from Interface.state_machine import State
 from Interface.modules.state import SaveModel
 from Interface.tutorial import TutorialState
-from Interface.level import OutterLevelState
 from Interface.leaderboard import LeaderboardState
-
+from Interface.game import GameState
 currentPath = os.path.dirname(__file__)  
 
 menuImagePath = os.path.join(currentPath, "..", "components", "Images", "menuPage.png")
@@ -81,9 +80,11 @@ class MenuState(State):
         )
 
 
+
+    #IGNORE OUTLEVEL FOR NOW I WILL USE GAME STATE
     #implement game state file
     def change_state_start(self):
-        self.engine.machine.next_state = OutterLevelState(self.engine)
+        self.engine.machine.next_state = GameState(self.engine)
         
     #call the singin state?
     def change_state_load(self):

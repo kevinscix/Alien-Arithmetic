@@ -10,48 +10,51 @@ class asteroid():
     maxAsteroid : int = 50
     minAsteroid : int = 20
     numberOfAsteroids : int = 15
+    speed : int = 10    # how many pixels the asteroid will move by each loop, not final
+    yPos : int = 100      # will not be 100, should be the top of screen
+    firstOp : int
+    secondOp : int
+    correctAnswer : int
 
 
     # Constructor method
-    def __init__(self, firstOp, secondOp, mode) -> None:
+    def __init__(self, mode, xPos) -> None:
 
         # Generate random operands within specified range
         self.firstOp = random.randint(self.minAsteroid, self.maxAsteroid)
         self.secondOp = random.randint(self.minAsteroid, self.maxAsteroid)
 
         # Calculate and set the correct answer to the question
-        self.qAnswer = firstOp + secondOp   # correct answer to question, this needs to change to reflect mode
-
-        # Initialize position
-        self.xPosition = 0
-        self.yPosition = 0
+        self.qAnswer = self.firstOp + self.secondOp   # correct answer to question, this needs to change to reflect mode
+        # set x position from input
+        # input will be an int from 1 to 5, the saved value will be multiplied by a constant to get actual position
+        self.xPos = xPos * 100  # 100 is just a placeholder, will need to confirm
 
         # Initialize array to store asteroid values
-       # self.aAnswer = random.randint(self.minAsteroid, self.maxAsteroid)        # answer that the asteroid will display
         self.asteroidArr = []
 
         # Store the mode of the asteroid (1 for addition, 2 for subtraction, 3 for multiplication)
-        self.mode = mode     
+        self.mode = mode
 
-    # def createOp1() -> None:
-    #     self.firstOp = random.randint(0, 9) # figure out range
-
-    # def createOp2() -> None:
-    #     self.secondOp = random.randint(0, 9)
-
-    # Method to create correct answer based on the mode
-    def createAnswer(self) -> int:
+        # generate answer based on mode
         if self.mode == 1:
             # addition
-            qAnswer = self.firstOp + self.secondOp
+            self.correctAnswer = self.firstOp + self.secondOp
         elif self.mode == 2:
             # subtraction
-            qAnswer = self.firstOp - self.secondOp
+            self.correctAnswer = self.firstOp - self.secondOp
         else:
             # multiplication
-            qAnswer = self.firstOp * self.secondOp
-        return qAnswer
+            self.correctAnswer = self.firstOp * self.secondOp     
 
+    # returns position of asteroid
+    def getPosition(self) -> list:
+        position = [self.xPos, self.yPos]
+        return position
+    
+    def showEquation(self) -> str:
+        eq = "%d + %d" % (self.firstOp, self.secondOp)
+        return eq
 
     def create_asteroids(self, ships):
         # choose one of the ships as target for fire
@@ -71,8 +74,16 @@ class asteroid():
             'ticks_to_laser': 25
         }
 
+    # .generate will create a list of asteriod dictionaries
+    # from create_asteriods
+    # randomize attributes
+    # when asteriods are generated, append to array
+    # 
+
+    # changes Y axis position by speed amount
     def move_asteroids(self):
-        pass
+        self.yPos = self.yPos - self.speed
+        
 
 
     # Method to generate asteroids with correct and incorrect answers
@@ -96,9 +107,6 @@ class asteroid():
             self.asteroidArr.append(x)
 
 
-    # def move() -> None:
-    #     yPosition = yPosition - 5 # figure out how fast to move down
-
    # def destroy() -> None:
         # make asteriod dissapear
 
@@ -111,8 +119,13 @@ class asteroid():
     
 if __name__ == "__main__":
     # Create an instance of the asteroid class
-    ass = asteroid(3, 5, 1)  # Example operands: 3, 5; Mode: Addition (1)
+    ass = asteroid(1, 2)  # mode: 1 (addition) x position: 2
+    print(ass.showEquation())
+    print(ass.getPosition())
+    ass.move_asteroids()
+    ass.move_asteroids()
+    print(ass.getPosition())
     # Generate asteroids with correct and incorrect answers
-    ass.generateAsteroids()
+    # ass.generateAsteroids()
     # Print the array containing asteroid values
     print(ass.asteroidArr)

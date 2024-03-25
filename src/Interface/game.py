@@ -50,6 +50,8 @@ class GameState(State):
         self.player_speed = 5
         self.bullet_radius = 5
 
+
+
         #needs a better way to do the width and height 
             # a big issue is how we pass the surface around this is causing problems 
             # think of a work around
@@ -62,17 +64,25 @@ class GameState(State):
         
     #Game specific functions
     def create_shot(self, player_pos):
-        bullet_pos = [player_pos[0], player_pos[1]]
-        return {
-            'position' : bullet_pos,
-            'speed' : 8,
-            'radius' : self.bullet_radius,
-        }
+        #limits the number of bullets on screen to one
+        if not (len(self.shots) > 0):   
+            bullet_pos = [player_pos[0], player_pos[1]]
+            return {
+                'position' : bullet_pos,
+                'speed' : 8,
+                'radius' : self.bullet_radius,
+            }
 
     def move_shot(self):
-        for shot in self.shots:
+        for shot in self.shots: 
             shot['position'][1] -= shot['speed']
         
+
+    def remove_shot(self):
+        for shot in self.shots:
+            if shot['position'][1] < 0:
+                self.shots.remove(shot)
+
     def on_draw(self, surface):
         #pops the screen up
         #problem is the the surface is only passed on surface we can either hard code the width or heights to reduce calling this function
@@ -81,6 +91,7 @@ class GameState(State):
         
         #moves the bullets down the screen
         self.move_shot()
+        self.remove_shot()
         #draws the circles in the new position
         for shot in self.shots:
             pygame.draw.circle(surface, "black", shot['position'], shot['radius'])
@@ -91,19 +102,20 @@ class GameState(State):
 
     def on_event(self, event):
         #theres no keyboard condition or still need to be determined for menu
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_SPACE:
+                print("pew pew") # debug print
+                shot = self.create_shot(player_pos=self.player_pos)
+                if shot:
+                    self.shots.append(shot)
+
+        self.ui.handle_event(event)
+
+
+    def handle_movement(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
             self.player_pos[0] -= self.player_speed
         if keys[pygame.K_RIGHT]:
             self.player_pos[0] += self.player_speed
-
-
-        if event.type == pygame.KEYUP:
-            if event.key == pygame.K_SPACE:
-                print("pew pew") # debug print
-                self.shots.append(self.create_shot(player_pos=self.player_pos))
-
-        self.ui.handle_event(event)
-
-
 

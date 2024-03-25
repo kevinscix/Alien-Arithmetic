@@ -11,7 +11,7 @@ class Asteroid():
     minAsteroid : int = 1
     maxResultAsteroid : int = 100
     numberOfAsteroids : int = 5
-    speed : int = 10    # how many pixels the asteroid will move by each loop, not final
+    speed : int = 6    # how many pixels the asteroid will move by each loop, not final
     yPos : int = 100      # will not be 100, should be the top of screen
     firstOp : int
     secondOp : int
@@ -77,7 +77,7 @@ class Asteroid():
     # changes Y axis position by speed amount
     def move_asteroids(self):
         for asteroid in self.asteroidArr:
-            asteroid['position'][1] -= self.speed
+            asteroid['position'][1] += self.speed
         
     def collide_barrer(self):
         pass
@@ -98,13 +98,13 @@ class Asteroid():
        picked = random.randint(1, self.numberOfAsteroids) - 1
        for i in range(0, self.numberOfAsteroids - 1):
             if picked == i:
-                self.asteroidArr.append(self.create_asteroids(self.incrementsize * i, 650, self.correctAnswer, True))
+                self.asteroidArr.append(self.create_asteroids(self.incrementsize * i, 0, self.correctAnswer, True))
             else:
                 x = random.randint(self.minAsteroid, self.maxAsteroid)
                 # Ensure the incorrect answer is not a duplicate of the correct answer
                 while x in self.asteroidArr:
                     x = random.randint(self.minAsteroid, self.maxResultAsteroid)
-                self.asteroidArr.append(self.create_asteroids(self.incrementsize * i, 650, x, False))
+                self.asteroidArr.append(self.create_asteroids(self.incrementsize * i, 0, x, False))
 
 
     def showEquation(self) -> str:

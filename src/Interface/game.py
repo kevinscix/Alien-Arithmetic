@@ -9,6 +9,8 @@ sys.path.append(src_dir)
 
 from Interface.state_machine import State
 from Interface.modules.state import SaveModel
+from components.asteroid import Asteroid
+
 from PygameUIKit import Group, button
 import pygame
 
@@ -57,6 +59,8 @@ class GameState(State):
             # think of a work around
         self.player_pos = [WIDTH // 2, ((HEIGHT / 4) * 3 + 20)]
        
+        self.asteroidMaster = Asteroid(1)
+        self.asteroidMaster.generateAsteroids()
 
     #only button that exsit on the screen
     def pause_callback(self):
@@ -92,10 +96,16 @@ class GameState(State):
         #moves the bullets down the screen
         self.move_shot()
         self.remove_shot()
+        self.asteroidMaster.move_asteroids()
+
         #draws the circles in the new position
         for shot in self.shots:
             pygame.draw.circle(surface, "black", shot['position'], shot['radius'])
 
+        for asteroid in self.asteroidMaster.asteroidArr:
+            pygame.draw.circle(surface, "pink", asteroid['position'], 10)
+
+            
         pygame.draw.circle(surface, "red", self.player_pos, self.player_radius)
 
         pygame.display.flip()

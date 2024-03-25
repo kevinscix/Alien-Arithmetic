@@ -10,6 +10,7 @@ class State():
     def on_draw(self, surface): pass
     def on_event(self, event): pass
     def on_update(self, delta): pass
+    def handle_movement(self): pass
 
 class Machine:
     def __init__(self):
@@ -44,7 +45,10 @@ class DisplayEngine:
 
             self.machine.current.on_draw(self.surface)
             self.machine.current.on_update(self.delta)
-
+            try:
+                self.machine.current.handle_movement()
+            except:
+                continue
             pygame.display.flip()
             self.delta = self.clock.tick(self.fps)
 

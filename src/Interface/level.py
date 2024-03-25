@@ -1,4 +1,3 @@
-
 import os
 import sys
 
@@ -22,7 +21,6 @@ import pygame
 
 #this isn't importing properly???? ill figure it out or someone else can i give up
 
-
 #need to talk to luca how this works
 #this is like a bridging state to the game state
 class InnerLevelState(State):
@@ -33,9 +31,10 @@ class InnerLevelState(State):
         self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter    
         #make this into a utils function?
         currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
-        self.levelSelect = os.path.join(currentPath, "..","components", "Images", "innerLevelSelect.png")
+
+        levelSelectPath = os.path.join(currentPath, "..", "components", "Images", "mainLevelSelect.png")
         # Normalize the path to remove any '..'
-        self.levelSelect = pygame.image.load(os.path.normpath(self.levelSelect))
+        self.levelSelect = pygame.image.load(os.path.normpath(levelSelectPath))
         self.levelSelect= pygame.transform.scale(self.levelSelect, (800, 600))
 
         self.user : SaveModel = None
@@ -75,7 +74,6 @@ class InnerLevelState(State):
 
     def on_event(self, event):
         self.ui.handle_event(event)
-
 
 
 class OutterLevelState(State):

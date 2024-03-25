@@ -18,6 +18,7 @@ from Interface.state_machine import State
 from Interface.modules.state import SaveModel
 from Interface.tutorial import TutorialState
 from Interface.level import OutterLevelState
+from Interface.leaderboard import LeaderboardState
 
 #this file is a quick scehem of how a state would look like for login and sign in state!
 
@@ -55,7 +56,7 @@ class MenuState(State):
         # Load Game button
         self.btn_load = button.ButtonText(
             "Load Game", 
-            self.load_callback, 
+            self.change_state_load, 
             rect_color=(85, 92, 145),  # Blue color
             fixed_width=220,  # Slightly wider
             border_radius=10, 
@@ -77,7 +78,7 @@ class MenuState(State):
         # Highscores button
         self.btn_highscores = button.ButtonText(
             "Highscores", 
-            self.highscores_callback, 
+            self.change_state_highscore, 
             rect_color=(92, 145, 85),  # Different shade of green
             fixed_width=220,  # Slightly wider
             border_radius=10, 
@@ -100,10 +101,9 @@ class MenuState(State):
     #implement game state file
     def start_callback(self):
         self.engine.machine.next_state = OutterLevelState(self.engine)
-        pass
         
     #call the singin state?
-    def load_callback(self):
+    def change_state_load(self):
         pass
 
     #call the tutorial state which will be just an image for now?
@@ -112,8 +112,9 @@ class MenuState(State):
 
 
     #do we jsut want to do a table of the top scores for the first 10?
-    def highscores_callback(self):
-        pass
+    def change_state_highscore(self):
+        self.engine.machine.next_state = LeaderboardState(self.engine)
+
 
     #quit functionality you can implement yourself
     def change_state_exit(self):

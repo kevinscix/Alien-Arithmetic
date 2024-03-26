@@ -26,18 +26,18 @@ class LoginState(State):
         super().__init__(engine)
 
         current_path = os.path.dirname(__file__)
-        student_login_image_path = os.path.join(current_path, "..", "components", "Images", "studentLogin.png")
+        student_login_path = os.path.join(current_path, "..", "components", "Images", "studentLogin.png")
         teacher_login_image_path = os.path.join(current_path, "..", "components", "Images", "instructorLogin.png")
         quit_game_image_path = os.path.join(current_path, "..", "components", "Images", "exitButton.png")
-        self.loginImagePath = os.path.join(current_path, "..", "components", "Images", "titlePage.png")
+        loginImagePath = os.path.join(current_path, "..", "components", "Images", "titlePage.png")
 
-        student_login_image = pygame.image.load(os.path.normpath(student_login_image_path))
-        student_login_image = pygame.transform.scale(student_login_image, (290, 90))
-        teacher_login_image = pygame.image.load(os.path.normpath(teacher_login_image_path))
-        teacher_login_image = pygame.transform.scale(teacher_login_image, (290, 90))
-        quit_game_image = pygame.image.load(os.path.normpath(quit_game_image_path))
-        quit_game_image = pygame.transform.scale(quit_game_image, (200, 75))
-        self.loginImage = pygame.image.load(os.path.normpath(self.loginImagePath))
+        self.teacher_login_image = pygame.image.load(os.path.normpath(teacher_login_image_path))
+        self.teacher_login_image = pygame.transform.scale(self.teacher_login_image, (305, 145))
+        self.student_login_image = pygame.image.load(os.path.normpath(student_login_path))
+        self.student_login_image = pygame.transform.scale(self.student_login_image, (260, 151))
+        self.quit_game_image = pygame.image.load(os.path.normpath(quit_game_image_path))
+        self.quit_game_image = pygame.transform.scale(self.quit_game_image, (125, 70))
+        self.loginImage = pygame.image.load(os.path.normpath(loginImagePath))
         self.loginImage = pygame.transform.scale(self.loginImage, (800, 600))
 
 
@@ -62,17 +62,17 @@ class LoginState(State):
         self.student : SaveModel = None
 
         self.btn_student_login = button.ButtonPngIcon(
-            student_login_image, 
+            self.student_login_image, 
             self.change_state_student, 
             ui_group=self.ui
         )
         self.btn_teacher_login = button.ButtonPngIcon(
-            teacher_login_image, 
+            self.teacher_login_image, 
             self.change_state_instructor, 
             ui_group=self.ui
         )
         self.btn_quit_game = button.ButtonPngIcon(
-            quit_game_image, 
+            self.quit_game_image, 
             self.quit_game, 
             ui_group=self.ui
         )
@@ -93,9 +93,9 @@ class LoginState(State):
     def on_draw(self, surface):
         #draws the titleImage on surface
         surface.blit(self.loginImage, (0, 0))
-        self.btn_student_login.draw(surface, 100, 460)
-        self.btn_teacher_login.draw(surface, 425, 460)
-        self.btn_quit_game.draw(surface, 300, 500)
+        self.btn_student_login.draw(surface, 108, 430)
+        self.btn_teacher_login.draw(surface, 410, 424)
+        self.btn_quit_game.draw(surface, 0, 525)
 
 
         pygame.display.flip()

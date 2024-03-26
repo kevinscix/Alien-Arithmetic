@@ -14,7 +14,7 @@ from PygameUIKit import Group, button
 
 
 #state imports
-from Interface.state_machine import State
+from Interface.state_machine import State 
 from Interface.modules.state import SaveModel
 from Interface.tutorial import TutorialState
 from Interface.leaderboard import LeaderboardState
@@ -41,41 +41,41 @@ class MenuState(State):
 
         self.menuImage = pygame.image.load(os.path.normpath(self.menuImagePath))
         self.menuImage= pygame.transform.scale(self.menuImage, (800, 600))
-        start_image = pygame.image.load(os.path.normpath(startImagePath))
-        start_image = pygame.transform.scale(start_image, (200, 75))
-        load_image = pygame.image.load(os.path.normpath(loadImagePath))
-        load_image = pygame.transform.scale(load_image, (200, 75))
-        tutorial_image = pygame.image.load(os.path.normpath(tutorialImagePath))
-        tutorial_image = pygame.transform.scale(tutorial_image, (75, 75))
-        highscores_image = pygame.image.load(os.path.normpath(highscoresImagePath))
-        highscores_image = pygame.transform.scale(highscores_image, (200, 75))
-        quit_image = pygame.image.load(os.path.normpath(quitImagePath))
-        quit_image = pygame.transform.scale(quit_image, (200, 75))
+        self.start_image = pygame.image.load(os.path.normpath(startImagePath))
+        self.start_image = pygame.transform.scale(self.start_image, (265, 150))
+        self.load_image = pygame.image.load(os.path.normpath(loadImagePath))
+        self.load_image = pygame.transform.scale(self.load_image, (265, 155))
+        self.tutorial_image = pygame.image.load(os.path.normpath(tutorialImagePath))
+        self.tutorial_image = pygame.transform.scale(self.tutorial_image, (100, 130))
+        self.highscores_image = pygame.image.load(os.path.normpath(highscoresImagePath))
+        self.highscores_image = pygame.transform.scale(self.highscores_image, (260, 125))
+        self.quit_image = pygame.image.load(os.path.normpath(quitImagePath))
+        self.quit_image = pygame.transform.scale(self.quit_image, (175, 130))
 
 
         # Start button
         self.btn_start = button.ButtonPngIcon(
-            start_image, 
+            self.start_image, 
             self.change_state_start, 
             ui_group=self.ui
         )
         self.btn_load = button.ButtonPngIcon(
-            load_image, 
+            self.load_image, 
             self.change_state_load, 
             ui_group=self.ui
         )
         self.btn_tutorial = button.ButtonPngIcon(
-            tutorial_image, 
+            self.tutorial_image, 
             self.change_state_tutorial, 
             ui_group=self.ui
         )
         self.btn_highscores = button.ButtonPngIcon(
-            highscores_image, 
+            self.highscores_image, 
             self.change_state_highscore, 
             ui_group=self.ui
         )
         self.btn_quit = button.ButtonPngIcon(
-            quit_image, 
+            self.quit_image, 
             self.change_state_exit, 
             ui_group=self.ui
         )
@@ -114,14 +114,15 @@ class MenuState(State):
         #change to real background?
         surface.blit(self.menuImage, (0, 0))
 
-        self.btn_start.draw(surface, 300, 150)
-        self.btn_load.draw(surface, 300, 350)
-        self.btn_tutorial.draw(surface, 700, 400)
-        self.btn_highscores.draw(surface, 550, 550)
-        self.btn_quit.draw(surface, 0, 500) 
+        self.btn_start.draw(surface, 270, 151)
+        self.btn_load.draw(surface, 270, 303)
+        self.btn_tutorial.draw(surface, 695, 355)
+        self.btn_highscores.draw(surface, 540, 470)
+        self.btn_quit.draw(surface, 0, 470) 
        
         pygame.display.flip()
 
     def on_event(self, event):
         #theres no keyboard condition or still need to be determined for menu
         self.ui.handle_event(event)
+

@@ -47,12 +47,9 @@ class GameState(State):
 
         #game constants
         self.shots = []
-  
         self.player_radius = 25
         self.player_speed = 5
         self.bullet_radius = 5
-
-
 
         #needs a better way to do the width and height 
             # a big issue is how we pass the surface around this is causing problems 
@@ -105,7 +102,7 @@ class GameState(State):
         for asteroid in self.asteroidMaster.asteroidArr:
             pygame.draw.circle(surface, "pink", asteroid['position'], 10)
 
-            
+
         pygame.draw.circle(surface, "red", self.player_pos, self.player_radius)
 
         pygame.display.flip()

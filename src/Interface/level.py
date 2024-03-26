@@ -109,8 +109,6 @@ class OutterLevelState(State):
             text_align="center", 
             ui_group=self.ui
         )
-        
-    
         #and so on, must wait to understand how this work before we continue
 
     def start_inner_state(self):

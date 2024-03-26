@@ -1,6 +1,17 @@
+import os
+import sys
+
+import sys
+import os
+
+current_dir = os.path.dirname(__file__)
+parent_dir = os.path.dirname(current_dir)  # Moves up to 'interface'
+src_dir = os.path.dirname(parent_dir)  # Moves up to 'src'
+sys.path.append(src_dir)
+
 from pydantic import BaseModel
 import json
-from src.components.scoreboard import Scoreboard
+from components.scoreboard import Scoreboard
 from typing import List
 
 

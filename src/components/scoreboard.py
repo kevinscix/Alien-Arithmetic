@@ -51,27 +51,3 @@ class Scoreboard(BaseModel):
   #   score = self.board[name]
   #   print(score)
   #   return score
-
-
-# added/what it does - 
-  # load scores from csv
-  #   - load score method reads the data from the file
-  #   - opens file in read mode (iterates over each row in the file)
-  #   - in each row, grabs the data for a players Scoreboard
-  #   - creates a dataScore object
-  #   - adds dataScore to the board dict of Scoreboard (using player as the key)
-  
-  # displayingscores
-  #   - showScores interates over each item in the board dict
-  #   - print each players name and their DataScore
-  
-  # retriving the score
-  #   - get player takes a players name as an input
-  #   - retrieves the datascore object associated with the players name from board dict
-  #   - if found, prints score; if not, says no player found
-   
-  # storing a new score in the csv
-  #   - storeScore takes the Datascore object (player) and a filename (optionally) as inputs
-  #   - opens csv in append mode
-  #   - creates a csv writer object to write data to the file
-  #   - writes a new row to the csv file from datascore (name, score, etc), storing the new score

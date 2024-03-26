@@ -1,3 +1,11 @@
+import os
+import sys
+
+current_dir = os.path.dirname(__file__)
+parent_dir = os.path.dirname(current_dir)  # Moves up to 'interface'
+src_dir = os.path.dirname(parent_dir)  # Moves up to 'src'
+sys.path.append(src_dir)
+
 from pydantic import BaseModel
 import json
 from components.scoreboard import Scoreboard
@@ -17,13 +25,13 @@ class State():
         self.run = 1
 
     #placeholder methods
-    def save_settings(self, settings, filename):
-        with open(filename, 'w') as file:
+    def save_settings(self, settings, filename, file_path=os.path.join(src_dir, 'saves/')):
+        with open(file_path + filename, 'w') as file:
             json.dump(settings, file)
 
-    def load_settings(self, filename):
+    def load_settings(self, filename, file_path=os.path.join(src_dir, 'saves/')):
         try:
-            with open(filename, 'r') as file:
+            with open(file_path + filename, 'r') as file:
                 settings = json.load(file)
                 print(settings)
                 return settings
@@ -38,7 +46,7 @@ class State():
 class SaveModel(BaseModel):
     name : str
     score : int
-    level : list[int]
+    level : List[int]
 
     #question
     highScore : int
@@ -70,19 +78,24 @@ import os
 #scoreboard state -> should have just one txt file
 class ScoreboardState(Scoreboard, State):
   def loadScore(self):
-    txt_files = []
     database : List[SaveState]  = []
-    for root, dirs, files in os.walk("."):
+    for root, dirs, files in os.walk(os.path.join(src_dir, 'saves/')):
         for file in files:
             if file.endswith(".txt"):
-                database.append(SaveState.model_validate_json(self.load_settings(file)))
-                txt_files.append(os.path.join(root, file))
+              try:
+                user = SaveState.model_validate_json(self.load_settings(file))
+                database.append(user)
+              except:
+                print("will catch the error when we return nonetype after iterating over the file")
+                pass
     print(database)
     return database
 
 
 
 if __name__ == "__main__":
+
+
   print("Test cases for DataScore model")
   state = State()
 
@@ -113,11 +126,6 @@ if __name__ == "__main__":
     loggedIn=False
     )
 
-  #how saving workings and loading..
-  EmptyPlayer.save_settings(AndyPlayer.model_dump_json(), "AndyPlayer.txt")
-  EmptyPlayer.save_settings(EmptyPlayer.model_dump_json(), "EmptyPlayer.txt")
-  data = EmptyPlayer.load_settings("EmptyPlayer.txt")
-  andy = EmptyPlayer.load_settings("AndyPlayer.txt")
 
   #example of loading all the save states using the information
   board = ScoreboardState()

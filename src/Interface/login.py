@@ -26,7 +26,7 @@ class LoginState(State):
         super().__init__(engine)
 
         current_path = os.path.dirname(__file__)
-        student_login_image_path = os.path.join(current_path, "..", "components", "Images", "student_login.png")
+        student_login_image_path = os.path.join(current_path, "..", "components", "Images", "studentLogin.png")
         teacher_login_image_path = os.path.join(current_path, "..", "components", "Images", "instructorLogin.png")
         quit_game_image_path = os.path.join(current_path, "..", "components", "Images", "exitButton.png")
         self.loginImagePath = os.path.join(current_path, "..", "components", "Images", "titlePage.png")

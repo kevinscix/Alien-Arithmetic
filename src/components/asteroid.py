@@ -68,7 +68,8 @@ class Asteroid():
             'value' : value,
             'speed': self.speed,
             'angle': 0,
-            'correct' : isCorrect
+            'correct' : isCorrect,
+            'destoryed' : False
         }
 
     # .generate will create a list of asteriod dictionaries

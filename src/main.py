@@ -240,7 +240,7 @@ while running:
     pygame.time.Clock().tick(60)
     # handle collisions and update the projectile movement
 
-    # -----===== LUCA'S SHIT =====-----
+    # -----=====    LUCA'S SHIT    =====-----
 
     # for asteroid in asteroids:
     #     if projectile.collisionDetect(asteroid.xPosition, asteroid.yPosition):

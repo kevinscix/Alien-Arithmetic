@@ -29,13 +29,17 @@ class GameState(State):
         currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
         gameImagePath = os.path.join(currentPath, "..", "components", "Images", "gamePlay1.png")
         shotImagePath = os.path.join(current_dir, "..", "assets", "visuals", "projectiles", "red projectile icon.png")
+        pauseButtonPath = os.path.join(currentPath, "..", "components", "Images", "pauseButton.png")
 
 
         self.gamePlay1Image = pygame.image.load(os.path.normpath(gameImagePath))
+        self.gamePlay1Image = pygame.transform.scale(self.gamePlay1Image, (WIDTH, HEIGHT))
         #we need someone to load in the bullets
         self.shotImage = pygame.image.load(os.path.normpath(shotImagePath))
         self.shotImage = pygame.transform.scale(self.shotImage, (50, 50))
-        self.gamePlay1Image = pygame.transform.scale(self.gamePlay1Image, (WIDTH, HEIGHT))
+        self.pauseButton = pygame.image.load(os.path.normpath(pauseButtonPath))
+        self.pauseButton = pygame.transform.scale(self.pauseButton, (65, 85))
+
         self.user : SaveModel = None
 
         self.border = pygame.rect.Rect(0, 370, 800, 40)
@@ -44,13 +48,9 @@ class GameState(State):
 
 
        # Start button
-        self.btn_puase = button.ButtonText(
-            "PAUSE",
-            self.pause_callback,
-            rect_color=(85, 145, 92),  # Green color
-            fixed_width=200,
-            border_radius=10,
-            text_align="center",
+        self.btn_pause = button.ButtonPngIcon(
+            self.pauseButton, 
+            self.change_state_pause, 
             ui_group=self.ui
         )
 
@@ -76,7 +76,7 @@ class GameState(State):
             self.explosionAnimatation.append(pygame.transform.scale(frame, (60, 60)))
 
     #only button that exsit on the screen
-    def pause_callback(self):
+    def change_state_pause(self):
         pass
 
     #Game specific functions
@@ -155,6 +155,7 @@ class GameState(State):
         #problem is the the surface is only passed on surface we can either hard code the width or heights to reduce calling this function
         #over and over again. for the sake of prototyping ill leave it here cause ill figure it out later
         surface.blit(self.gamePlay1Image, (0, 0))
+        self.btn_pause.draw(surface, 0, 520)
 
         #moves the bullets down the screen
         self.move_shot()

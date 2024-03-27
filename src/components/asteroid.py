@@ -12,10 +12,11 @@ class Asteroid():
         self.minAsteroid : int = 1
         self.maxResultAsteroid : int = 100
         self.numberOfAsteroids : int = 5
-        self.speed : int = 1    # how many pixels the asteroid will move by each loop, not final
+        self.speed : float = 1    # how many pixels the asteroid will move by each loop, not final
         self.firstOp : int
         self.secondOp : int
         self.correctAnswer : int
+        self.size : float = 1     # placeholder value, this will be the default size before scaling
 
 
         # Calculate and set the correct answer to the question
@@ -32,10 +33,10 @@ class Asteroid():
         self.font = pygame.font.Font('freesansbold.ttf', 32)
         self.incrementsize = 800 / self.numberOfAsteroids
 
-
         currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
         asteroidImagePath = os.path.join(currentPath, "..", "components", "Images", "asteroid.png")
         self.asteroidImagePath = pygame.image.load(os.path.normpath(asteroidImagePath))
+
 
     def create_question(self):
          # generate answer based on mode
@@ -68,7 +69,8 @@ class Asteroid():
             'value' : value,
             'speed': self.speed,
             'angle': 0,
-            'correct' : isCorrect
+            'correct' : isCorrect,
+            'destoryed' : False
         }
 
     # .generate will create a list of asteriod dictionaries
@@ -118,14 +120,24 @@ class Asteroid():
     def create_question_surface(self):
         self.question_surface = self.font.render(self.showEquation(), True, (0, 0, 0))
 
+    def size_speed_scale(self, value) -> None:
+        size_scalar = value * 0.02 + 1
+        speed_scalar = 1 - (size_scalar / 10)
+
+        self.size = self.size * size_scalar
+        self.speed = self.speed * speed_scalar
+
 
 
 if __name__ == "__main__":
     # Create an instance of the asteroid class
     ass = Asteroid(1)  # mode: 1 (addition) x position: 2
     ass.create_question()
-    print(ass.showEquation())
-
+    print("size = ", ass.size)
+    print("speed = ", ass.speed)
+    ass.size_speed_scale(30)
+    print("size = ", ass.size)
+    print("speed = ", ass.speed)
 
 
     # Generate asteroids with correct and incorrect answers

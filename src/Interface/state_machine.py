@@ -10,6 +10,7 @@ class State():
     def on_draw(self, surface): pass
     def on_event(self, event): pass
     def on_update(self, delta): pass
+
     def handle_movement(self): pass
 
 class Machine:

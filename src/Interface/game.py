@@ -10,10 +10,9 @@ sys.path.append(src_dir)
 from Interface.state_machine import State
 from Interface.modules.state import SaveModel
 from components.asteroid import Asteroid
-
+from components.player import Player
 from PygameUIKit import Group, button
 import pygame
-
 
 #this file is a quick scehem of how a state would look like for login and sign in state!
 
@@ -31,13 +30,18 @@ class GameState(State):
         gameImagePath = os.path.join(currentPath, "..", "components", "Images", "gamePlay1.png")
         shotImagePath = os.path.join(current_dir, "..", "assets", "visuals", "projectiles", "red projectile icon.png")
 
+
         self.gamePlay1Image = pygame.image.load(os.path.normpath(gameImagePath))
         #we need someone to load in the bullets
         self.shotImage = pygame.image.load(os.path.normpath(shotImagePath))
         self.shotImage = pygame.transform.scale(self.shotImage, (50, 50))
         self.gamePlay1Image = pygame.transform.scale(self.gamePlay1Image, (WIDTH, HEIGHT))
         self.user : SaveModel = None
-        self.border = pygame.rect.Rect(10, 10, 600, 20)
+
+        self.border = pygame.rect.Rect(0, 370, 800, 40)
+        self.healthbar = pygame.rect.Rect(0, 0, 800, 40)
+        self.player = Player()
+
 
        # Start button
         self.btn_puase = button.ButtonText(
@@ -55,6 +59,7 @@ class GameState(State):
         self.player_radius = 25
         self.player_speed = 5
         self.bullet_radius = 5
+        self.exAsteroids = []
 
         #needs a better way to do the width and height
             # a big issue is how we pass the surface around this is causing problems
@@ -63,6 +68,12 @@ class GameState(State):
 
         self.asteroidMaster = Asteroid(1)
         self.asteroidMaster.generateAsteroids()
+
+        self.explosionAnimatation = []
+        for i in range(7):
+            explosionFramePath = os.path.join(parent_dir, "assets", "visuals", "explosion!!!!!", "explosion frames", "explosion{}.png".format(str(i + 1)))
+            frame = pygame.image.load(explosionFramePath).convert_alpha()
+            self.explosionAnimatation.append(pygame.transform.scale(frame, (60, 60)))
 
     #only button that exsit on the screen
     def pause_callback(self):
@@ -106,20 +117,37 @@ class GameState(State):
                         #gain health gain store
                         #how should we draw the health bar onto the screen
                         #remove asteroids and start new level
+                        self.player.addPoints(1)
                         self.newRound()
-                        pass
                     else:
-                        #loss health
-                        pass
+                        if not asteroid['destoryed']:
+                            self.player.damage()
+                            #call destory func here...
+                            asteroid['destoryed'] = True
+
                     return True
             return False
         except:
             pass
 
+    def border_collided(self):
+        for asteroid in self.asteroidMaster.asteroidArr:
+            if self.border.colliderect(self.get_rect(asteroid)):
+                self.exAsteroids.append(asteroid)
+                self.asteroidMaster.asteroidArr.remove(asteroid)
+                return True
+        return False
+
+    def updateHealthBar(self):
+        self.healthbar.width = 800 * self.player.healthScale()
+
 
 
     def newRound(self):
+        #remove current asteroid and shots
+        print(self.player.points)
         self.asteroidMaster.asteroidArr = []
+        self.shots = []
         self.asteroidMaster.generateAsteroids()
 
     def on_draw(self, surface):
@@ -141,21 +169,27 @@ class GameState(State):
             surface.blit(asteroid['surface'], asteroid['position'])
             surface.blit(asteroid['number_surface'], asteroid['position'])
 
+
             # pygame.draw.circle(surface, "pink", asteroid['position'], 50)
 
         self.shot_collided()
+        if self.border_collided():
+            self.player.addPoints(-1)
+            self.player.damage()
+            self.newRound()
 
+        self.updateHealthBar()
         surface.blit(self.asteroidMaster.question_surface, [500, 300])
-
         pygame.draw.circle(surface, "red", self.player_pos, self.player_radius)
         pygame.draw.rect(surface, "red", self.border)
+        pygame.draw.rect(surface, "green", self.healthbar)
+
         pygame.display.flip()
 
     def on_event(self, event):
         #theres no keyboard condition or still need to be determined for menu
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_SPACE:
-                print("pew pew") # debug print
                 shot = self.create_shot(player_pos=self.player_pos)
                 if shot:
                     self.shots.append(shot)

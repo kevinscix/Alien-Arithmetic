@@ -18,9 +18,6 @@ import pygame
 from Interface.modules.state import SaveModel
 
 
-
-
-
 class LoginState(State):
     def __init__(self, engine):
         super().__init__(engine)
@@ -42,7 +39,7 @@ class LoginState(State):
 
 
         #UI
-        self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter    
+        self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter
         #make this into a utils function?
         currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
 
@@ -58,22 +55,22 @@ class LoginState(State):
             overallGrade=0000,
             loggedIn=True
         )
-    
+
         self.student : SaveModel = None
 
         self.btn_student_login = button.ButtonPngIcon(
-            self.student_login_image, 
-            self.change_state_student, 
+            self.student_login_image,
+            self.change_state_student,
             ui_group=self.ui
         )
         self.btn_teacher_login = button.ButtonPngIcon(
-            self.teacher_login_image, 
-            self.change_state_instructor, 
+            self.teacher_login_image,
+            self.change_state_instructor,
             ui_group=self.ui
         )
         self.btn_quit_game = button.ButtonPngIcon(
-            self.quit_game_image, 
-            self.quit_game, 
+            self.quit_game_image,
+            self.quit_game,
             ui_group=self.ui
         )
 

@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-#Kevin
-from pydantic import BaseModel
-=======
->>>>>>> 3a29dd7ff5a429fa97e894aa27aae548b2b4c7db
 from typing import Optional
 
 class Player():

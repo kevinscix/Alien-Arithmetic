@@ -12,10 +12,11 @@ class Asteroid():
         self.minAsteroid : int = 1
         self.maxResultAsteroid : int = 100
         self.numberOfAsteroids : int = 5
-        self.speed : int = 1    # how many pixels the asteroid will move by each loop, not final
+        self.speed : float = 1    # how many pixels the asteroid will move by each loop, not final
         self.firstOp : int
         self.secondOp : int
         self.correctAnswer : int
+        self.size : float = 1     # placeholder value, this will be the default size before scaling
 
 
         # Calculate and set the correct answer to the question
@@ -29,7 +30,7 @@ class Asteroid():
 
         # Store the mode of the asteroid (1 for addition, 2 for subtraction, 3 for multiplication)
         self.mode = mode
-        self.font = pygame.font.Font('freesansbold.ttf', 32)
+        # self.font = pygame.font.Font('freesansbold.ttf', 32)
         self.incrementsize = 800 / self.numberOfAsteroids
 
 
@@ -119,14 +120,24 @@ class Asteroid():
     def create_question_surface(self):
         self.question_surface = self.font.render(self.showEquation(), True, (0, 0, 0))
 
+    def size_speed_scale(self, value) -> None:
+        size_scalar = value * 0.02 + 1
+        speed_scalar = 1 - (size_scalar / 10)
+
+        self.size = self.size * size_scalar 
+        self.speed = self.speed * speed_scalar
+
 
 
 if __name__ == "__main__":
     # Create an instance of the asteroid class
     ass = Asteroid(1)  # mode: 1 (addition) x position: 2
     ass.create_question()
-    print(ass.showEquation())
-
+    print("size = ", ass.size)
+    print("speed = ", ass.speed)
+    ass.size_speed_scale(30)
+    print("size = ", ass.size)
+    print("speed = ", ass.speed)
 
 
     # Generate asteroids with correct and incorrect answers

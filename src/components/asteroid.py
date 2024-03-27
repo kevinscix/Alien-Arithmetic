@@ -30,13 +30,13 @@ class Asteroid():
 
         # Store the mode of the asteroid (1 for addition, 2 for subtraction, 3 for multiplication)
         self.mode = mode
-        # self.font = pygame.font.Font('freesansbold.ttf', 32)
+        self.font = pygame.font.Font('freesansbold.ttf', 32)
         self.incrementsize = 800 / self.numberOfAsteroids
-
 
         currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
         asteroidImagePath = os.path.join(currentPath, "..", "components", "Images", "asteroid.png")
         self.asteroidImagePath = pygame.image.load(os.path.normpath(asteroidImagePath))
+
 
     def create_question(self):
          # generate answer based on mode
@@ -124,7 +124,7 @@ class Asteroid():
         size_scalar = value * 0.02 + 1
         speed_scalar = 1 - (size_scalar / 10)
 
-        self.size = self.size * size_scalar 
+        self.size = self.size * size_scalar
         self.speed = self.speed * speed_scalar
 
 

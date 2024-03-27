@@ -30,6 +30,7 @@ class GameState(State):
         gameImagePath = os.path.join(currentPath, "..", "components", "Images", "gamePlay1.png")
         shotImagePath = os.path.join(current_dir, "..", "assets", "visuals", "projectiles", "red projectile icon.png")
 
+
         self.gamePlay1Image = pygame.image.load(os.path.normpath(gameImagePath))
         #we need someone to load in the bullets
         self.shotImage = pygame.image.load(os.path.normpath(shotImagePath))
@@ -39,8 +40,6 @@ class GameState(State):
 
         self.border = pygame.rect.Rect(0, 370, 800, 40)
         self.healthbar = pygame.rect.Rect(0, 0, 800, 40)
-
-
         self.player = Player()
 
 
@@ -60,6 +59,7 @@ class GameState(State):
         self.player_radius = 25
         self.player_speed = 5
         self.bullet_radius = 5
+        self.exAsteroids = []
 
         #needs a better way to do the width and height
             # a big issue is how we pass the surface around this is causing problems
@@ -68,6 +68,12 @@ class GameState(State):
 
         self.asteroidMaster = Asteroid(1)
         self.asteroidMaster.generateAsteroids()
+
+        self.explosionAnimatation = []
+        for i in range(7):
+            explosionFramePath = os.path.join(parent_dir, "assets", "visuals", "explosion!!!!!", "explosion frames", "explosion{}.png".format(str(i + 1)))
+            frame = pygame.image.load(explosionFramePath).convert_alpha()
+            self.explosionAnimatation.append(pygame.transform.scale(frame, (60, 60)))
 
     #only button that exsit on the screen
     def pause_callback(self):
@@ -124,15 +130,18 @@ class GameState(State):
         except:
             pass
 
-
     def border_collided(self):
         for asteroid in self.asteroidMaster.asteroidArr:
             if self.border.colliderect(self.get_rect(asteroid)):
+                self.exAsteroids.append(asteroid)
+                self.asteroidMaster.asteroidArr.remove(asteroid)
                 return True
         return False
 
     def updateHealthBar(self):
         self.healthbar.width = 800 * self.player.healthScale()
+
+
 
     def newRound(self):
         #remove current asteroid and shots
@@ -159,6 +168,7 @@ class GameState(State):
         for asteroid in self.asteroidMaster.asteroidArr:
             surface.blit(asteroid['surface'], asteroid['position'])
             surface.blit(asteroid['number_surface'], asteroid['position'])
+
 
             # pygame.draw.circle(surface, "pink", asteroid['position'], 50)
 

@@ -19,7 +19,7 @@ class TutorialState(State):
         tutorialImagePath = os.path.join(currentPath, "..", "components", "Images", "tutorialScreen.png")
         # Normalize the path to remove any '..'
         self.tutorialImage = pygame.image.load(os.path.normpath(tutorialImagePath))
-        self.tutorialImage = pygame.transform.scale(self.tutorialImage, (800, 600))
+        self.tutorialImage = pygame.transform.scale(self.tutorialImage, (860, 600))
 
 
        # Back button 
@@ -42,7 +42,7 @@ class TutorialState(State):
 
     def on_draw(self, surface):
         #draws the titleImage on surface
-        surface.blit(self.tutorialImage, (0, 0))
+        surface.blit(self.tutorialImage, (-30, 0))
         #add the buttons we need should be 3 for the diff levels
         #change the values to make it better placed
         self.btn_back.draw(surface, *self.btn_back.surface.get_rect(center=(surface.get_height() // 2, surface.get_height()  // 2 - 50)).topleft)

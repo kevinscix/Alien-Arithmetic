@@ -1,8 +1,11 @@
+<<<<<<< HEAD
 #Kevin
 from pydantic import BaseModel
+=======
+>>>>>>> 3a29dd7ff5a429fa97e894aa27aae548b2b4c7db
 from typing import Optional
 
-class Player(BaseModel):
+class Player():
     # health and points of the player
     health : Optional[int] = None
     points : Optional[int] = None
@@ -10,18 +13,20 @@ class Player(BaseModel):
 
     # initialize the player attributes with 100 health and 0 points
     def __init__(self):
+        self.totalHealth = 3
         self.health = 3
         self.points = 0
         self.speed = 300
         self.ready = True
 
-    # decreases the health of the player
-    def damage(self) -> None:
-        self.health -= 0 #placeholder for damage amount
-
+    def healthScale(self) -> int:
+        return self.health / self.totalHealth
+    #decrease by onne, player should have a set
     def damage(self):
         self.health -= 1
 
+    def resetHealth(self):
+        self.health = 3
     # returns the health of the player
     def getHealth(self) -> int:
         return self.health
@@ -39,12 +44,3 @@ class Player(BaseModel):
     #for later implementation to save player specific information
     def save(self) -> None:
         pass
-
-    def shoot(self):
-        # can a projectile be fired?
-        if self.ready == True: # yes!
-            self.ready = False # projectile cant be fired anymore
-            Projectile.trajectory(self) # redirect user to trajectory with player information
-        else: # no!!
-            # if missile isn't ready, nothing happens :)
-            pass

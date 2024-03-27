@@ -10,10 +10,9 @@ sys.path.append(src_dir)
 from Interface.state_machine import State
 from Interface.modules.state import SaveModel
 from components.asteroid import Asteroid
-
+from components.player import Player
 from PygameUIKit import Group, button
 import pygame
-
 
 #this file is a quick scehem of how a state would look like for login and sign in state!
 
@@ -37,7 +36,13 @@ class GameState(State):
         self.shotImage = pygame.transform.scale(self.shotImage, (50, 50))
         self.gamePlay1Image = pygame.transform.scale(self.gamePlay1Image, (WIDTH, HEIGHT))
         self.user : SaveModel = None
-        self.border = pygame.rect.Rect(10, 10, 600, 20)
+
+        self.border = pygame.rect.Rect(0, 370, 800, 40)
+        self.healthbar = pygame.rect.Rect(0, 0, 800, 40)
+
+
+        self.player = Player()
+
 
        # Start button
         self.btn_puase = button.ButtonText(
@@ -106,20 +111,34 @@ class GameState(State):
                         #gain health gain store
                         #how should we draw the health bar onto the screen
                         #remove asteroids and start new level
+                        self.player.addPoints(1)
                         self.newRound()
-                        pass
                     else:
-                        #loss health
-                        pass
+                        if not asteroid['destoryed']:
+                            self.player.damage()
+                            #call destory func here...
+                            asteroid['destoryed'] = True
+
                     return True
             return False
         except:
             pass
 
 
+    def border_collided(self):
+        for asteroid in self.asteroidMaster.asteroidArr:
+            if self.border.colliderect(self.get_rect(asteroid)):
+                return True
+        return False
+
+    def updateHealthBar(self):
+        self.healthbar.width = 800 * self.player.healthScale()
 
     def newRound(self):
+        #remove current asteroid and shots
+        print(self.player.points)
         self.asteroidMaster.asteroidArr = []
+        self.shots = []
         self.asteroidMaster.generateAsteroids()
 
     def on_draw(self, surface):
@@ -144,18 +163,23 @@ class GameState(State):
             # pygame.draw.circle(surface, "pink", asteroid['position'], 50)
 
         self.shot_collided()
+        if self.border_collided():
+            self.player.addPoints(-1)
+            self.player.damage()
+            self.newRound()
 
+        self.updateHealthBar()
         surface.blit(self.asteroidMaster.question_surface, [500, 300])
-
         pygame.draw.circle(surface, "red", self.player_pos, self.player_radius)
         pygame.draw.rect(surface, "red", self.border)
+        pygame.draw.rect(surface, "green", self.healthbar)
+
         pygame.display.flip()
 
     def on_event(self, event):
         #theres no keyboard condition or still need to be determined for menu
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_SPACE:
-                print("pew pew") # debug print
                 shot = self.create_shot(player_pos=self.player_pos)
                 if shot:
                     self.shots.append(shot)

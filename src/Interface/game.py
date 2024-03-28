@@ -19,11 +19,13 @@ import pygame
 #this isn't importing properly???? ill figure it out or someone else can i give up
 
 class GameState(State):
-    def __init__(self, engine):
+    def __init__(self, engine, user):
         super().__init__(engine)
         #UI
         self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter
         WIDTH, HEIGHT = 800, 600
+
+        self.user = user
 
         #make this into a utils function?
         currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
@@ -156,7 +158,7 @@ class GameState(State):
 
     def onGameEnd(self):
         from Interface.level import OuterLevelState
-        self.engine.machine.next_state = OuterLevelState(self.engine)
+        self.engine.machine.next_state = OuterLevelState(self.engine, self.user)
         #return user to level
 
     def on_draw(self, surface):

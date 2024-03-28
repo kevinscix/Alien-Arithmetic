@@ -56,8 +56,8 @@ class LoginState(State):
         )
 
         self.student : SaveModel = None
-        self.text_input = text_input.TextInput(placeholder="This is a placeholder text", 
-                                               fixed_width=200, 
+        self.text_input = text_input.TextInput(placeholder="Username/Password", 
+                                               fixed_width=400, 
                                                border_radius=2, 
                                                ui_group=self.ui,
                                                font=pygame.font.Font('freesansbold.ttf', 32))
@@ -109,7 +109,10 @@ class LoginState(State):
         # self.text_input.draw(surface, 200, 200)
 
         # Demo(surface).run()
-        self.text_input.draw(surface, 400, 200)
+        pygame.draw.rect(surface, "gray31", pygame.Rect(200, 350, 400, 40))
+
+        self.text_input.draw(surface, 200, 350)
+
 
         pygame.display.flip()
 

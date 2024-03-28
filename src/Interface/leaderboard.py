@@ -59,8 +59,8 @@ class LeaderboardState(State):
         self.engine.machine.next_state = MenuState(self.engine, self.user)
     
     def change_state_select(self):
-        from Interface.level import OutterLevelState
-        self.engine.machine.next_state = OutterLevelState(self.engine)
+        from Interface.level import OuterLevelState
+        self.engine.machine.next_state = OuterLevelState(self.engine, self.user)
 
 
     def on_draw(self, surface):
@@ -81,6 +81,9 @@ class LeaderboardState(State):
             surface.blit(score_surface, (320, y))
             surface.blit(logged_in_surface, (550, y))
             y += self.font.get_height() + 25
+
+        mainScore_surface = self.font.render(str(self.user.name) + ' score: ' + str(self.user.score), True, "red")
+        surface.blit(mainScore_surface, (250, 75))
 
     
 

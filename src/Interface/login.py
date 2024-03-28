@@ -80,13 +80,22 @@ class LoginState(State):
 
     #pulls the player data with the empty player pull function
     def change_state_student(self):
+        from Interface.modules.state import ScoreboardState
+        bo = ScoreboardState()
+        Player = bo.getPlayer(playerName=self.text_input.get_text())
+        print(Player)
         #should be like  self.engine.machine.next_state = MENUSTATE(self.engine, self.instructor)
-        self.engine.machine.next_state = MenuState(self.engine)
+        self.engine.machine.next_state = MenuState(self.engine, Player)
 
     #loads a instrctor model
     def change_state_instructor(self):
         #should be like  self.engine.machine.next_state = MENUSTATE(self.engine, self.instructor)
-        self.engine.machine.next_state = MenuState(self.engine)
+        from Interface.modules.state import ScoreboardState
+        bo = ScoreboardState()
+        Player = bo.getPlayer(playerName=self.text_input.get_text())
+        print(Player)
+        #should be like  self.engine
+        self.engine.machine.next_state = MenuState(self.engine, Player)
 
     def quit_game(self):
        pygame.quit()
@@ -106,7 +115,9 @@ class LoginState(State):
 
 
     def on_event(self, event):
-        print(self.text_input.get_text())
+        pass
+        self.ui.handle_event(event)
+
         self.text_input._handle_event(event)
         if not self.text_input.active:
             return

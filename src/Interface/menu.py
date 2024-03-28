@@ -15,7 +15,7 @@ from PygameUIKit import Group, button
 
 #state imports
 from Interface.state_machine import State 
-from Interface.modules.state import SaveModel
+from Interface.modules.state import SaveState
 from Interface.tutorial import TutorialState
 from Interface.leaderboard import LeaderboardState
 from Interface.game import GameState
@@ -27,11 +27,11 @@ currentPath = os.path.dirname(__file__)
 
     
 class MenuState(State):
-    def __init__(self, engine):
+    def __init__(self, engine, user):
         super().__init__(engine)
         #UI
         self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter
-        self.user : SaveModel = None
+        self.user : SaveState = user
 
         self.menuImagePath = os.path.join(currentPath, "..", "components", "Images", "menuPage.png")
         startImagePath = os.path.join(currentPath, "..", "components", "Images", "startButton.png")
@@ -82,7 +82,6 @@ class MenuState(State):
         )
 
 
-
     #IGNORE OUTLEVEL FOR NOW I WILL USE GAME STATE
     #implement game state file
     def change_state_start(self):
@@ -95,12 +94,12 @@ class MenuState(State):
 
     #call the tutorial state which will be just an image for now?
     def change_state_tutorial(self):
-        self.engine.machine.next_state = TutorialState(self.engine)
+        self.engine.machine.next_state = TutorialState(self.engine, self.user)
 
 
     #do we jsut want to do a table of the top scores for the first 10?
     def change_state_highscore(self):
-        self.engine.machine.next_state = LeaderboardState(self.engine)
+        self.engine.machine.next_state = LeaderboardState(self.engine, self.user)
 
 
     #quit functionality you can implement yourself

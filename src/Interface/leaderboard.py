@@ -9,12 +9,12 @@ import os
 
 
 class LeaderboardState(State):
-    def __init__(self, engine):
+    def __init__(self, engine, user):
         super().__init__(engine)
 
         #UI
         self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter    
-      
+        self.user = user
         currentPath = os.path.dirname(__file__)  
         scoreboardImagePath = os.path.join(currentPath, "..", "components", "Images", "scoreboardScreen.png")
         backButtonPath = os.path.join(currentPath, "..", "components", "Images", "logOutButton.png")
@@ -56,7 +56,7 @@ class LeaderboardState(State):
 
     def change_state_menu(self):
         from Interface.menu import MenuState
-        self.engine.machine.next_state = MenuState(self.engine)
+        self.engine.machine.next_state = MenuState(self.engine, self.user)
     
     def change_state_select(self):
         from Interface.level import OutterLevelState

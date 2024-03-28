@@ -33,7 +33,6 @@ class State():
         try:
             with open(file_path + filename, 'r') as file:
                 settings = json.load(file)
-                print(settings)
                 return settings
         except FileNotFoundError:
             print("Settings file not found.")
@@ -77,6 +76,7 @@ import os
 #all this stuff works just needs to make a saves folder cause its hitting requirements.txt, im going to ignore and foucs on other aspects
 #scoreboard state -> should have just one txt file
 class ScoreboardState(Scoreboard, State):
+
   def loadScore(self):
     database : List[SaveState]  = []
     for root, dirs, files in os.walk(os.path.join(src_dir, 'saves/')):
@@ -88,9 +88,13 @@ class ScoreboardState(Scoreboard, State):
               except:
                 print("will catch the error when we return nonetype after iterating over the file")
                 pass
-    print(database)
     return database
 
+  def getPlayer(self, playerName):
+    saves = self.loadScore()
+    for playerSave in saves:
+      if playerSave.name == playerName:
+        return playerSave
 
 
 if __name__ == "__main__":
@@ -130,9 +134,7 @@ if __name__ == "__main__":
   #example of loading all the save states using the information
   board = ScoreboardState()
   scoreboard : List[SaveState] = board.loadScore()
-  for score in scoreboard:
-    print(score)
-
-
+  print(board.getPlayer("Andy"))
+ 
 
 

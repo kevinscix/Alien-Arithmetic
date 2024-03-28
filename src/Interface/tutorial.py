@@ -8,12 +8,13 @@ import os
 
 
 class TutorialState(State):
-    def __init__(self, engine):
+    def __init__(self, engine, user):
         super().__init__(engine)
 
         #UI
         self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter    
-      
+        self.user = user
+
         #make this into a utils function?
         currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
         tutorialImagePath = os.path.join(currentPath, "..", "components", "Images", "tutorialScreen.png")
@@ -37,7 +38,7 @@ class TutorialState(State):
     def go_back_menu(self):
         from Interface.menu import MenuState
         #should be like i think... we need to talk
-        self.engine.machine.next_state = MenuState(self.engine)
+        self.engine.machine.next_state = MenuState(self.engine, self.user)
 
 
     def on_draw(self, surface):

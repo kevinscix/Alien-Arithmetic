@@ -155,8 +155,8 @@ class GameState(State):
         self.asteroidMaster.generateAsteroids()
 
     def onGameEnd(self):
-        from Interface.level import OutterLevelState
-        self.engine.machine.next_state = OutterLevelState(self.engine)
+        from Interface.level import OuterLevelState
+        self.engine.machine.next_state = OuterLevelState(self.engine)
         #return user to level
 
     def on_draw(self, surface):

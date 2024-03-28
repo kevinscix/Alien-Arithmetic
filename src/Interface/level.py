@@ -157,7 +157,7 @@ class InnerLevelState(State):
         #and so on, must wait to understand how this work before we continue
 
     def start_game_state(self):
-        self.engine.machine.next_state = GameState(self.engine, self.user)
+        self.engine.machine.next_state = GameState(self.engine, self.user, self.mode)
 
     def change_state_exit(self):
         self.engine.machine.next_state = OuterLevelState(self.engine, self.user)

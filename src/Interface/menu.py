@@ -85,10 +85,12 @@ class MenuState(State):
     #IGNORE OUTLEVEL FOR NOW I WILL USE GAME STATE
     #implement game state file
     def change_state_start(self):
-        self.engine.machine.next_state = GameState(self.engine, self.user)
+        #give a clear file
+        self.engine.machine.next_state = OuterLevelState(self.engine, self.user)
         
     #call the singin state?
     def change_state_load(self):
+        #contiue with current user
         self.engine.machine.next_state = OuterLevelState(self.engine, self.user)
 
 

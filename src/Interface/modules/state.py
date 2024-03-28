@@ -108,7 +108,7 @@ if __name__ == "__main__":
   AndyPlayer = SaveState(
     name="Andy",
     score=40,
-    level=[2,1,3],
+    level=[2,1],
     highScore=50,
     questionsCompleted=3,
     incorrectAmt=1,

@@ -46,14 +46,14 @@ class Asteroid():
 
         # Calculate and set the correct answer to the question
         self.qAnswer = self.firstOp + self.secondOp
-
-        if self.mode == 1:
+        print("creating question for", self.mode)
+        if self.mode == "plus":
             # addition
             self.correctAnswer = self.firstOp + self.secondOp
-        elif self.mode == 2:
+        elif self.mode == "minus":
             # subtraction
             self.correctAnswer = self.firstOp - self.secondOp
-        else:
+        elif self.mode == "multiply":
             # multiplication
             self.correctAnswer = self.firstOp * self.secondOp
 
@@ -111,10 +111,16 @@ class Asteroid():
                 # Ensure the incorrect answer is not a duplicate of the correct answer
                 while x in self.asteroidArr:
                     x = random.randint(self.minAsteroid, self.maxResultAsteroid)
-                self.asteroidArr.append(self.create_asteroids(self.incrementsize * i, 0, x, False))
+                self.asteroidArr.appelnd(self.create_asteroids(self.incrementsize * i, 0, x, False))
 
     def showEquation(self) -> str:
-        eq = "%d + %d" % (self.firstOp, self.secondOp)
+        if self.mode == "plus":
+            eq = "%d + %d" % (self.firstOp, self.secondOp)
+        elif self.mode == "minus":
+            eq = "%d - %d" % (self.firstOp, self.secondOp)
+        elif self.mode == "multiply":
+            eq = "%d x %d" % (self.firstOp, self.secondOp)
+
         return eq
 
     def create_question_surface(self):

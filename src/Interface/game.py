@@ -19,11 +19,13 @@ import pygame
 #this isn't importing properly???? ill figure it out or someone else can i give up
 
 class GameState(State):
-    def __init__(self, engine):
+    def __init__(self, engine, user, mode):
         super().__init__(engine)
         #UI
         self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter
         WIDTH, HEIGHT = 800, 600
+
+        self.user = user
 
         #make this into a utils function?
         currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
@@ -64,12 +66,14 @@ class GameState(State):
         self.bullet_radius = 5
         self.exAsteroids = []
 
+        self.rounds = 10
+
         #needs a better way to do the width and height
             # a big issue is how we pass the surface around this is causing problems
             # think of a work around
         self.player_pos = [WIDTH // 2, ((HEIGHT / 4) * 3 + 20)]
 
-        self.asteroidMaster = Asteroid(1)
+        self.asteroidMaster = Asteroid(mode)
         self.asteroidMaster.generateAsteroids()
 
         self.explosionAnimatation = []
@@ -150,14 +154,28 @@ class GameState(State):
 
     def newRound(self):
         #remove current asteroid and shots
-        print(self.player.points)
-        self.asteroidMaster.asteroidArr = []
-        self.asteroidMaster.generateAsteroids()
+
+
+        if round > 0:
+            print(self.player.points)
+            self.asteroidMaster.asteroidArr = []
+            self.asteroidMaster.generateAsteroids()
+            self.round -= 1
+        else:
+            self.onGameWin()
 
     def onGameEnd(self):
         from Interface.level import OuterLevelState
-        self.engine.machine.next_state = OuterLevelState(self.engine)
+        self.user.level = [0, 0, 0] #increment by 1
+        self.engine.machine.next_state = OuterLevelState(self.engine, self.user)
         #return user to level
+
+
+    def onGameWin(self):
+        #increment the level by up
+        from Interface.level import OuterLevelState
+        self.engine.machine.next_state = OuterLevelState(self.engine, self.user)
+        
 
     def on_draw(self, surface):
         #pops the screen up

@@ -85,11 +85,13 @@ class MenuState(State):
     #IGNORE OUTLEVEL FOR NOW I WILL USE GAME STATE
     #implement game state file
     def change_state_start(self):
-        self.engine.machine.next_state = GameState(self.engine)
+        #give a clear file
+        self.engine.machine.next_state = OuterLevelState(self.engine, self.user)
         
     #call the singin state?
     def change_state_load(self):
-        self.engine.machine.next_state = OuterLevelState(self.engine)
+        #contiue with current user
+        self.engine.machine.next_state = OuterLevelState(self.engine, self.user)
 
 
     #call the tutorial state which will be just an image for now?

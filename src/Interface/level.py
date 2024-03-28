@@ -28,11 +28,12 @@ quit_image = pygame.image.load(os.path.normpath(quitImagePath))
 quit_image = pygame.transform.scale(quit_image, (175, 130))
 
 class OuterLevelState(State):
-    def __init__(self, engine):
+    def __init__(self, engine, user):
         super().__init__(engine)
 
         #UI
         self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter    
+        self.user = user
         #make this into a utils function?
         levelImagePath = os.path.join(currentPath, "..","components", "Images", "outerLevelSelect.png")
         self.levelSelect = pygame.image.load(os.path.normpath(levelImagePath))
@@ -46,7 +47,6 @@ class OuterLevelState(State):
         minusAsteroidPath = os.path.join(currentPath, "..","components", "Images", "minusAsteroid.png")
         self.minusAsteroid = pygame.image.load(os.path.normpath(minusAsteroidPath))
         self.minusAsteroid= pygame.transform.scale(self.minusAsteroid, (175, 180))
-
 
 
         self.user : SaveModel = None
@@ -77,12 +77,12 @@ class OuterLevelState(State):
         )
 
     def start_inner_state(self, mode):
-        self.engine.machine.next_state = InnerLevelState(self.engine, mode)
+        self.engine.machine.next_state = InnerLevelState(self.engine, mode, self.user)
         print(mode)
 
     def change_state_exit(self):
         from Interface.menu import MenuState
-        self.engine.machine.next_state = MenuState(self.engine)
+        self.engine.machine.next_state = MenuState(self.engine, self.user)
 
 
     def on_draw(self, surface):
@@ -103,11 +103,11 @@ class OuterLevelState(State):
         self.ui.handle_event(event)
 
 class InnerLevelState(State):
-    def __init__(self, engine, mode):
+    def __init__(self, engine, mode, user):
         super().__init__(engine)
 
         self.mode = mode        
-
+        self.user = user
         #UI
         self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter    
         #make this into a utils function?
@@ -157,10 +157,10 @@ class InnerLevelState(State):
         #and so on, must wait to understand how this work before we continue
 
     def start_game_state(self):
-        self.engine.machine.next_state = GameState(self.engine)
+        self.engine.machine.next_state = GameState(self.engine, self.user, self.mode)
 
     def change_state_exit(self):
-        self.engine.machine.next_state = OuterLevelState(self.engine)
+        self.engine.machine.next_state = OuterLevelState(self.engine, self.user)
 
     def on_draw(self, surface):
         #draws the titleImage on surface

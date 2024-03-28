@@ -37,7 +37,7 @@ class LoginState(State):
         self.loginImage = pygame.image.load(os.path.normpath(loginImagePath))
         self.loginImage = pygame.transform.scale(self.loginImage, (800, 600))
 
-
+        
         #UI
         self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter
         #make this into a utils function?
@@ -57,6 +57,11 @@ class LoginState(State):
         )
 
         self.student : SaveModel = None
+        self.text_input = text_input.TextInput(placeholder="This is a placeholder text", 
+                                               fixed_width=200, 
+                                               border_radius=2, 
+                                               ui_group=self.ui,
+                                               font=pygame.font.Font('freesansbold.ttf', 32))
 
         self.btn_student_login = button.ButtonPngIcon(
             self.student_login_image,
@@ -93,9 +98,13 @@ class LoginState(State):
         self.btn_student_login.draw(surface, 108, 430)
         self.btn_teacher_login.draw(surface, 410, 424)
         self.btn_quit_game.draw(surface, 0, 525)
+        # self.text_input.draw(surface, 200, 200)
+
+        # Demo(surface).run()
 
 
         pygame.display.flip()
+
 
     def on_event(self, event):
         #theres no keyboard condition or still need to be determined
@@ -104,3 +113,52 @@ class LoginState(State):
         #         self.engine.machine.next_state = YourStateB(self.engine)
         self.ui.handle_event(event)
 
+
+
+
+class Demo:
+    def __init__(self, surface):
+        self.done = False
+        self.clock = pygame.time.Clock()
+        self.surface = surface
+        self.easy_objects = Group()
+        self.text_input = text_input.TextInput(placeholder="This is a placeholder text", fixed_width=200, border_radius=2, ui_group=self.easy_objects,
+                                               font=pygame.font.Font('freesansbold.ttf', 32))
+
+
+    def run(self):
+        while not self.done:
+            dt = self.clock.tick(60) / 1000
+            self.events()
+            self.update(dt)
+            self.draw(self.surface)
+
+    def events(self):
+        events = pygame.event.get()
+        for event in events:
+            self.easy_objects.handle_event(event)
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                print(f"position: {event.pos}")
+
+        self.text_input.handle_events(events)
+
+    def update(self, dt):
+        self.easy_objects.update(dt)
+       
+    def draw(self, surface):
+        self.text_input.draw(surface, 200, 200)
+
+        pygame.display.flip()
+
+   
+   
+
+
+
+
+# if __name__ == '__main__':
+#     pygame.init()
+#     def_font = pygame.font.SysFont("Arial", 20)
+
+#     Demo().run()
+#     pygame.quit()

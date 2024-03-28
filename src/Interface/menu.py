@@ -19,6 +19,7 @@ from Interface.modules.state import SaveModel
 from Interface.tutorial import TutorialState
 from Interface.leaderboard import LeaderboardState
 from Interface.game import GameState
+from Interface.level import OutterLevelState
 currentPath = os.path.dirname(__file__)  
 
 
@@ -89,7 +90,8 @@ class MenuState(State):
         
     #call the singin state?
     def change_state_load(self):
-        pass
+        self.engine.machine.next_state = OutterLevelState(self.engine)
+
 
     #call the tutorial state which will be just an image for now?
     def change_state_tutorial(self):

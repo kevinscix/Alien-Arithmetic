@@ -30,10 +30,13 @@ class GameState(State):
         gameImagePath = os.path.join(currentPath, "..", "components", "Images", "gamePlay1.png")
         shotImagePath = os.path.join(current_dir, "..", "assets", "visuals", "projectiles", "red projectile icon.png")
         pauseButtonPath = os.path.join(currentPath, "..", "components", "Images", "pauseButton.png")
-
+        playerPath = os.path.join(current_dir, "..", "assets", "visuals", "player ship", "ship red.png")
 
         self.gamePlay1Image = pygame.image.load(os.path.normpath(gameImagePath))
         self.gamePlay1Image = pygame.transform.scale(self.gamePlay1Image, (WIDTH, HEIGHT))
+        self.playerImage = pygame.image.load(os.path.normpath(playerPath))
+        self.playerImage = pygame.transform.scale(self.playerImage, (200, 200))
+
         #we need someone to load in the bullets
         self.shotImage = pygame.image.load(os.path.normpath(shotImagePath))
         self.shotImage = pygame.transform.scale(self.shotImage, (50, 50))
@@ -112,6 +115,7 @@ class GameState(State):
             shot_rect = self.get_rect(self.shots[0])
             for asteroid in self.asteroidMaster.asteroidArr:
                 if shot_rect.colliderect(self.get_rect(asteroid)):
+                    self.shots = []
                     #write logic about point gain and lost for health if correct or not
                     if asteroid['correct']:
                         #gain health gain store
@@ -123,8 +127,10 @@ class GameState(State):
                         if not asteroid['destoryed']:
                             self.player.damage()
                             #call destory func here...
+                            self.exAsteroids.append([asteroid, 0])
+                            self.asteroidMaster.asteroidArr.remove(asteroid)
                             asteroid['destoryed'] = True
-
+                            
                     return True
             return False
         except:
@@ -133,22 +139,25 @@ class GameState(State):
     def border_collided(self):
         for asteroid in self.asteroidMaster.asteroidArr:
             if self.border.colliderect(self.get_rect(asteroid)):
-                self.exAsteroids.append(asteroid)
-                self.asteroidMaster.asteroidArr.remove(asteroid)
                 return True
         return False
 
     def updateHealthBar(self):
         self.healthbar.width = 800 * self.player.healthScale()
-
+        if self.healthbar.width == 0:
+            self.onGameEnd()
 
 
     def newRound(self):
         #remove current asteroid and shots
         print(self.player.points)
         self.asteroidMaster.asteroidArr = []
-        self.shots = []
         self.asteroidMaster.generateAsteroids()
+
+    def onGameEnd(self):
+        from Interface.level import OutterLevelState
+        self.engine.machine.next_state = OutterLevelState(self.engine)
+        #return user to level
 
     def on_draw(self, surface):
         #pops the screen up
@@ -173,6 +182,16 @@ class GameState(State):
 
             # pygame.draw.circle(surface, "pink", asteroid['position'], 50)
 
+        #draws the dead asteroids animation
+        for asteroid in self.exAsteroids:
+            surface.blit(self.explosionAnimatation[int(asteroid[1])], asteroid[0]['position'])
+            asteroid[1] += 0.2
+
+            if asteroid[1] >= len(self.explosionAnimatation):
+               # "animation cycle is finished remove from list should despawn here..."
+                self.exAsteroids.remove(asteroid)
+
+
         self.shot_collided()
         if self.border_collided():
             self.player.addPoints(-1)
@@ -181,11 +200,15 @@ class GameState(State):
 
         self.updateHealthBar()
         surface.blit(self.asteroidMaster.question_surface, [500, 300])
-        pygame.draw.circle(surface, "red", self.player_pos, self.player_radius)
+        # pygame.draw.circle(surface, "red", self.player_pos, self.player_radius)
+        surface.blit(self.playerImage, self.player_pos)
+
+
         pygame.draw.rect(surface, "red", self.border)
         pygame.draw.rect(surface, "green", self.healthbar)
 
         pygame.display.flip()
+
 
     def on_event(self, event):
         #theres no keyboard condition or still need to be determined for menu

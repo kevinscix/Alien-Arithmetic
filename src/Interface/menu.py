@@ -19,7 +19,7 @@ from Interface.modules.state import SaveModel
 from Interface.tutorial import TutorialState
 from Interface.leaderboard import LeaderboardState
 from Interface.game import GameState
-from Interface.level import OutterLevelState
+from Interface.level import OuterLevelState
 currentPath = os.path.dirname(__file__)  
 
 
@@ -90,7 +90,7 @@ class MenuState(State):
         
     #call the singin state?
     def change_state_load(self):
-        self.engine.machine.next_state = OutterLevelState(self.engine)
+        self.engine.machine.next_state = OuterLevelState(self.engine)
 
 
     #call the tutorial state which will be just an image for now?
@@ -127,4 +127,8 @@ class MenuState(State):
     def on_event(self, event):
         #theres no keyboard condition or still need to be determined for menu
         self.ui.handle_event(event)
+
+
+
+
 

@@ -36,7 +36,7 @@ class Asteroid():
         self.incrementsize = 800 / self.numberOfAsteroids
 
         currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
-        asteroidImagePath = os.path.join(currentPath, "..", "components", "Images", "asteroid.png")
+        asteroidImagePath = os.path.join(currentPath, "..", "assets", "visuals", "level builder", "asteroid.png")
         self.asteroidImagePath = pygame.image.load(os.path.normpath(asteroidImagePath))
 
 

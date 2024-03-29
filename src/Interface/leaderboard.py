@@ -17,8 +17,8 @@ class LeaderboardState(State):
         self.user = user
         currentPath = os.path.dirname(__file__)  
         scoreboardImagePath = os.path.join(currentPath, "..", "components", "Images", "scoreboardScreen.png")
-        backButtonPath = os.path.join(currentPath, "..", "components", "Images", "logOutButton.png")
-        levelSelectButtonPath = os.path.join(currentPath, "..", "components", "Images", "levelSelectButton.png")
+        backButtonPath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "logOutButton.png")
+        levelSelectButtonPath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "levelSelectButton.png")
         self.scoreboardImage = pygame.image.load(os.path.normpath(scoreboardImagePath))
         self.scoreboardImage = pygame.transform.scale(self.scoreboardImage, (800, 600))
         self.backButtonImage = pygame.image.load(os.path.normpath(backButtonPath))

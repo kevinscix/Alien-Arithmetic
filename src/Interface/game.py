@@ -31,7 +31,7 @@ class GameState(State):
         currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
         gameImagePath = os.path.join(currentPath, "..", "components", "Images", "gamePlay1.png")
         shotImagePath = os.path.join(current_dir, "..", "assets", "visuals", "projectiles", "red projectile icon.png")
-        pauseButtonPath = os.path.join(currentPath, "..", "components", "Images", "pauseButton.png")
+        pauseButtonPath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "pauseButton.png")
         playerPath = os.path.join(current_dir, "..", "assets", "visuals", "player ship", "ship red.png")
 
         self.gamePlay1Image = pygame.image.load(os.path.normpath(gameImagePath))

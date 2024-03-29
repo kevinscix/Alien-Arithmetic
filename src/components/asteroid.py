@@ -82,7 +82,7 @@ class Asteroid():
             'speed': self.speed,
             'angle': 0,
             'correct' : isCorrect,
-            'destoryed' : False
+            'destroyed' : False
         }
 
     # .generate will create a list of asteriod dictionaries
@@ -181,17 +181,24 @@ if __name__ == "__main__":
     for i in range(5):
          print(ass.asteroidArr[i]["position"])
 
+    # print("should be false", ass.asteroidArr[0]["destroyed"])
+
 
     class test_asteroid(unittest.TestCase):
 
-         def setUp(self):
+        def setUp(self):
             self.asteroid = Asteroid(1)
             self.asteroid.create_question()
             self.asteroid.generateAsteroids()
         
-         def test_move(self):
+        def test_move(self):
             for i in range(5):
                 self.asteroid.move_asteroids()
             self.assertEqual(self.asteroid.asteroidArr[0]["position"][1], 5, "position is wrong")
+
+        def test_collide(self):
+            for i in range (5):
+                self.assertEqual(self.asteroid.asteroidArr[i]["destroyed"], True, "not destroyed")
+            
 
     unittest.main()

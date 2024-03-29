@@ -133,7 +133,7 @@ class GameState(State):
                             self.exAsteroids.append([asteroid, 0])
                             self.asteroidMaster.asteroidArr.remove(asteroid)
                             asteroid['destroyed'] = True
-                            
+                    
                     return True
             return False
         except:
@@ -163,13 +163,14 @@ class GameState(State):
 
     def onGameEnd(self):
         from Interface.level import OuterLevelState
-        print(self.user)
         self.engine.machine.next_state = OuterLevelState(self.engine, self.user)
         #return user to level
 
 
     def onGameWin(self):
         #increment the level by up
+
+
         from Interface.level import OuterLevelState
         self.engine.machine.next_state = OuterLevelState(self.engine, self.user)
         

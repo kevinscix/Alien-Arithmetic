@@ -34,11 +34,11 @@ class MenuState(State):
         self.user : SaveState = user
 
         self.menuImagePath = os.path.join(currentPath, "..", "components", "Images", "menuPage.png")
-        startImagePath = os.path.join(currentPath, "..", "components", "Images", "startButton.png")
-        loadImagePath = os.path.join(currentPath, "..", "components", "Images", "loadButton.png")
-        tutorialImagePath = os.path.join(currentPath, "..", "components", "Images", "tutorialButton.png")
-        highscoresImagePath = os.path.join(currentPath, "..", "components", "Images", "leaderboardButton.png")
-        quitImagePath = os.path.join(currentPath, "..", "components", "Images", "exitButton.png")
+        startImagePath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "startButton.png")
+        loadImagePath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "loadButton.png")
+        tutorialImagePath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "tutorialButton.png")
+        highscoresImagePath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "leaderboardButton.png")
+        quitImagePath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "exitButton.png")
 
         self.menuImage = pygame.image.load(os.path.normpath(self.menuImagePath))
         self.menuImage= pygame.transform.scale(self.menuImage, (800, 600))

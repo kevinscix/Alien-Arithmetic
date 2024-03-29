@@ -20,7 +20,7 @@ class Asteroid():
         self.secondOp : int
         self.correctAnswer : int
         self.size : float = 1     # placeholder value, this will be the default size before scaling
-
+        self.mode = mode
 
         # Calculate and set the correct answer to the question
         self.qAnswer = 0
@@ -31,13 +31,6 @@ class Asteroid():
         self.asteroidArr = []
         self.question_surface = ''
 
-        # Store the mode of the asteroid (1 for addition, 2 for subtraction, 3 for multiplication)
-        if mode == 1:
-            self.mode = "plus"
-        elif mode == 2:
-            self.mode = "minus"
-        else:
-            self.mode = "multiply"
 
         self.font = pygame.font.Font('freesansbold.ttf', 32)
         self.incrementsize = 800 / self.numberOfAsteroids

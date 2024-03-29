@@ -182,7 +182,7 @@ class GameState(State):
         #problem is the the surface is only passed on surface we can either hard code the width or heights to reduce calling this function
         #over and over again. for the sake of prototyping ill leave it here cause ill figure it out later
         surface.blit(self.gamePlay1Image, (0, 0))
-        self.btn_pause.draw(surface, 0, 520)
+        self.btn_pause.draw(surface, 0, 515)
 
         #moves the bullets down the screen
         self.move_shot()

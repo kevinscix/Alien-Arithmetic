@@ -45,7 +45,6 @@ class GameState(State):
         self.pauseButton = pygame.image.load(os.path.normpath(pauseButtonPath))
         self.pauseButton = pygame.transform.scale(self.pauseButton, (65, 85))
 
-        self.user : SaveModel = None
 
         self.border = pygame.rect.Rect(0, 370, 800, 40)
         self.healthbar = pygame.rect.Rect(0, 0, 800, 40)
@@ -128,12 +127,12 @@ class GameState(State):
                         self.player.addPoints(1)
                         self.newRound()
                     else:
-                        if not asteroid['destoryed']:
+                        if not asteroid['destroyed']:
                             self.player.damage()
                             #call destory func here...
                             self.exAsteroids.append([asteroid, 0])
                             self.asteroidMaster.asteroidArr.remove(asteroid)
-                            asteroid['destoryed'] = True
+                            asteroid['destroyed'] = True
                             
                     return True
             return False
@@ -154,19 +153,17 @@ class GameState(State):
 
     def newRound(self):
         #remove current asteroid and shots
-
-
-        if round > 0:
+        if self.rounds > 0:
             print(self.player.points)
             self.asteroidMaster.asteroidArr = []
             self.asteroidMaster.generateAsteroids()
-            self.round -= 1
+            self.rounds -= 1
         else:
             self.onGameWin()
 
     def onGameEnd(self):
         from Interface.level import OuterLevelState
-        self.user.level = [0, 0, 0] #increment by 1
+        print(self.user)
         self.engine.machine.next_state = OuterLevelState(self.engine, self.user)
         #return user to level
 

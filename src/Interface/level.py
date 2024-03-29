@@ -48,9 +48,6 @@ class OuterLevelState(State):
         self.minusAsteroid = pygame.image.load(os.path.normpath(minusAsteroidPath))
         self.minusAsteroid= pygame.transform.scale(self.minusAsteroid, (125, 125))
 
-
-        self.user : SaveModel = None
-
        # Student Login button
         self.btn_level_x = button.ButtonPngIcon(
             self.xAsteroid, 
@@ -125,8 +122,6 @@ class InnerLevelState(State):
         self.levelThree = pygame.image.load(os.path.normpath(levelThreePath))
         self.levelThree = pygame.transform.scale(self.levelThree, (150, 125))
 
-
-        self.user : SaveModel = None
 
        # Student Login button
         self.btn_level_one = button.ButtonPngIcon(

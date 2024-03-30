@@ -1,10 +1,6 @@
 import sys
 import os
 
-current_dir = os.path.dirname(__file__)
-parent_dir = os.path.dirname(current_dir)  # Moves up to 'interface'
-src_dir = os.path.dirname(parent_dir)  # Moves up to 'src'
-sys.path.append(src_dir)
 
 from Interface.state_machine import State
 from Interface.menu import MenuState
@@ -27,6 +23,7 @@ class LoginState(State):
         teacher_login_image_path = os.path.join(current_path, "..", "assets", "visuals", "buttons", "text buttons", "instructorLogin.png")
         quit_game_image_path = os.path.join(current_path, "..", "assets", "visuals", "buttons", "text buttons", "exitButton.png")
         loginImagePath = os.path.join(current_path, "..", "assets", "visuals", "pages - backgrounds", "log in page.png")
+        self.font_path = os.path.join(current_path, "..","assets", "visuals", "fonts", "PressStart2P-Regular.ttf")
 
         self.teacher_login_image = pygame.image.load(os.path.normpath(teacher_login_image_path))
         self.teacher_login_image = pygame.transform.scale(self.teacher_login_image, (250, 100))
@@ -60,7 +57,7 @@ class LoginState(State):
                                                fixed_width=400,
                                                border_radius=2,
                                                ui_group=self.ui,
-                                               font=pygame.font.Font('freesansbold.ttf', 32))
+                                               font=pygame.font.Font(self.font_path, 23))
 
         self.btn_student_login = button.ButtonPngIcon(
             self.student_login_image,
@@ -122,7 +119,7 @@ class LoginState(State):
         self.btn_student_login.draw(surface, 125, 450)
         self.btn_teacher_login.draw(surface, 427, 450)
         self.btn_quit_game.draw(surface, 0, 525)
-        pygame.draw.rect(surface, "gray31", pygame.Rect(200, 350, 400, 40))
+        pygame.draw.rect(surface, "gray31", pygame.Rect(200, 350, 400, 34))
         self.text_input.draw(surface, 200, 350)
 
         pygame.display.flip()

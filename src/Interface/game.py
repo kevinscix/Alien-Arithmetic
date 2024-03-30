@@ -132,7 +132,7 @@ class GameState(State):
                         #gain health gain store
                         #how should we draw the health bar onto the screen
                         #remove asteroids and start new level
-                        self.player.addPoints(1)
+                        self.player.addPoints(10)
                         self.newRound()
                     else:
                         if not asteroid['destroyed']:
@@ -159,7 +159,6 @@ class GameState(State):
         if self.healthbar.width == 0:
             self.onGameEnd()
 
-
     def newRound(self):
         #remove current asteroid and shots
         if self.rounds > 0:
@@ -175,9 +174,10 @@ class GameState(State):
         self.engine.machine.next_state = OuterLevelState(self.engine, self.user)
         #return user to level
 
-
     def onGameWin(self):
         #increment the level by up
+        self.user.score += self.player.points
+
         if self.level == 3:
             if self.user.level[0] == 3:
                 print("FINISHED LAST LEVEL")
@@ -187,10 +187,10 @@ class GameState(State):
             self.user.level[1] += 1
 
         self.user.save_settings(self.user.model_dump_json(), self.user.name)
+        print(self.user)
 
         from Interface.level import OuterLevelState
         self.engine.machine.next_state = OuterLevelState(self.engine, self.user)
-
 
     def on_draw(self, surface):
         #pops the screen up
@@ -227,7 +227,7 @@ class GameState(State):
 
         self.shot_collided()
         if self.border_collided():
-            self.player.addPoints(-1)
+            self.player.addPoints(-10)
             self.player.damage()
             self.newRound()
 

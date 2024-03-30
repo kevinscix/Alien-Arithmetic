@@ -38,6 +38,7 @@ class OuterLevelState(State):
         #UI
         self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter
         self.user : SaveState = user
+
         #make this into a utils function?
         levelImagePath = os.path.join(currentPath, "..", "assets", "visuals", "pages - backgrounds", "asteroid page.png")
         self.levelSelect = pygame.image.load(os.path.normpath(levelImagePath))
@@ -54,6 +55,12 @@ class OuterLevelState(State):
 
         #determine max level
         self.maxLevel = self.user.level[0]
+        if self.maxLevel == 1:
+            self.btn_level_minus.hover_color = "red"
+            self.btn_level_x.hover_color = "red"
+        elif self.maxLevel == 2:
+            self.btn_level_x.hover_color = "red"
+
 
         self.modes = {
             "plus" : 1,
@@ -85,14 +92,6 @@ class OuterLevelState(State):
             self.change_state_exit,
             ui_group=self.ui
         )
-
-        if self.maxLevel == 1:
-            self.btn_level_minus.hover_color = "red"
-            self.btn_level_x.hover_color = "red"
-        elif self.maxLevel == 2:
-            self.btn_level_x.hover_color = "red"
-
-
     def start_inner_state(self, mode):
         if  self.modes[mode] <= self.maxLevel:
             self.engine.machine.next_state = InnerLevelState(self.engine, mode, self.user)
@@ -141,6 +140,7 @@ class OuterLevelState(State):
                     self.user = self.originalUser
                     self.originalUser = None
                     self.developerMode = False
+                self.updateMaxLevel()
 
 class InnerLevelState(State):
     def __init__(self, engine, mode, user):

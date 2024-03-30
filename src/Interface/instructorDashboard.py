@@ -11,6 +11,7 @@ import os
 class instructorState(State):
     def __init__(self, engine):
         super().__init__(engine)
+        self.currentPage = 0  
 
         #UI
         self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter    
@@ -20,13 +21,13 @@ class instructorState(State):
         leftButtonPath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "left button.png")
         rightButtonPath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "right button.png")
         self.instructorImage = pygame.image.load(os.path.normpath(instructorImagePath))
-        self.instructorImage = pygame.transform.scale(self.instructorImage, (830, 600))
+        self.instructorImage = pygame.transform.scale(self.instructorImage, (840, 600))
         self.backButtonImage = pygame.image.load(os.path.normpath(backButtonPath))
         self.backButtonImage = pygame.transform.scale(self.backButtonImage, (150, 100))
         self.leftButtonImage = pygame.image.load(os.path.normpath(leftButtonPath))
-        self.leftButtonImage = pygame.transform.scale(self.leftButtonImage, (50, 50))
+        self.leftButtonImage = pygame.transform.scale(self.leftButtonImage, (75, 100))
         self.rightButtonImage = pygame.image.load(os.path.normpath(rightButtonPath))
-        self.rightButtonImage = pygame.transform.scale(self.rightButtonImage, (50, 50))
+        self.rightButtonImage = pygame.transform.scale(self.rightButtonImage, (75, 100))
 
 
 
@@ -54,7 +55,6 @@ class instructorState(State):
         self.scoreboard = ScoreboardState()
         scores : List[SaveState] = self.scoreboard.loadScore()
         sorted_scores = sorted(scores, key=lambda s: s.score, reverse=True)
-
         return sorted_scores
 
     def change_state_menu(self):
@@ -64,11 +64,14 @@ class instructorState(State):
     def change_state_left(self):
         pass
     def change_state_right(self):
-        pass
+        leaderboard_data = self.createBoard()
+        total_pages = (len(leaderboard_data) + 4) // 5  # Calculate the total number of pages
+        if self.currentPage + 1 < total_pages:  # Check if there's a next page
+            self.currentPage += 1
 
     def on_draw(self, surface):
         #draws the titleImage on surface
-        surface.blit(self.instructorImage, (-15, 0))
+        surface.blit(self.instructorImage, (-25, 0))
 
         leaderboard_data = self.createBoard()
         y = 228
@@ -77,19 +80,24 @@ class instructorState(State):
         #change for loop to have the number 5 and its start be variables passed 
         #to a function that will change its numbers either 
         #+5 or -5 based on left or right button
-        for i, player in enumerate(leaderboard_data[:5], start=1):
-            # Create text surfaces for the player's name, score, and logged-in status
-            name_surface = self.font.render(f"{i}.{player.name}", True, (255, 255, 255))
-            score_surface = self.font.render(str(player.score), True, (255, 255, 255))
+        try:
+            start_index = self.currentPage * 5
+            end_index = start_index + 5
+            displayed_scores = leaderboard_data[start_index:end_index]
             
-            surface.blit(name_surface, (175, y))
-            surface.blit(score_surface, (490, y))
-            y += self.font.get_height() + 20
+            for i, player in enumerate(displayed_scores, start=start_index + 1):
+                name_surface = self.font.render(f"{i}.{player.name}", True, (255, 255, 255))
+                score_surface = self.font.render(str(player.score), True, (255, 255, 255))
+                surface.blit(name_surface, (175, y))
+                surface.blit(score_surface, (490, y))
+                y += self.font.get_height() + 20
+        except:
+            pass
 
 
     
-        self.btn_left.draw,(surface, 0, 350)
-        self.btn_right.draw,(surface, 40, 350)
+        self.btn_left.draw(surface, -3, 250)
+        self.btn_right.draw(surface, 728, 250)
 
         self.btn_back.draw(surface, 0, 500)
 

@@ -52,7 +52,7 @@ class LoginState(State):
             loggedIn=True
         )
 
-        self.font = pygame.font.Font('freesansbold.ttf', 32)
+        self.font = pygame.font.Font(self.font_path, 25)
 
         self.student : SaveState = None
         self.text_input = text_input.TextInput(placeholder="Username/Password",
@@ -100,7 +100,7 @@ class LoginState(State):
                 self.engine.machine.next_state = MenuState(self.engine, self.instructor)
             elif len(self.text_input.get_text()) > 7:
                 msg = {
-                    'message' : self.font.render("Exceeds maxium text input", True, (0, 0, 0)),
+                    'message' : self.font.render("Exceeds maxium text input", True, (255, 0, 0)),
                 }
                 self.error_messages = msg
                 print("too big")
@@ -112,7 +112,7 @@ class LoginState(State):
                 self.engine.machine.next_state = MenuState(self.engine, Player)
         else:
             msg = {
-                    'message' : self.font.render("Empty text box", True, (0, 0, 0)),
+                    'message' : self.font.render("Empty Username", True, (255, 0, 0)),
                 }
             self.error_messages = msg
 
@@ -123,7 +123,7 @@ class LoginState(State):
             self.engine.machine.next_state = instructorState(self.engine)
         else:
             msg = {
-                    'message' :  self.font.render("Wrong password for Instructor", True, (0, 0, 0)),
+                    'message' :  self.font.render("Wrong password", True, (255, 0, 0)),
                 }
             self.error_messages = msg
 
@@ -139,11 +139,11 @@ class LoginState(State):
         self.btn_student_login.draw(surface, 125, 450)
         self.btn_teacher_login.draw(surface, 427, 450)
         self.btn_quit_game.draw(surface, 0, 525)
-        pygame.draw.rect(surface, "gray31", pygame.Rect(200, 350, 400, 34))
-        self.text_input.draw(surface, 200, 350)
+        pygame.draw.rect(surface, "gray31", pygame.Rect(180, 350, 400, 34))
+        self.text_input.draw(surface, 180, 350)
 
         try:
-            surface.blit(self.error_messages['message'], [0,0])
+            surface.blit(self.error_messages['message'], [190,400])
         except:
             #no errors happens
             pass

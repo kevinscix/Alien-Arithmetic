@@ -33,7 +33,9 @@ class GameState(State):
         gameImagePath = os.path.join(currentPath, "..", "assets", "visuals", "pages - backgrounds", "blue level page.png")
         shotImagePath = os.path.join(current_dir, "..", "assets", "visuals", "projectiles", "red projectile icon.png")
         pauseButtonPath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "pauseButton.png")
+        playButtonPath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "resume button pix.png")
         playerPath = os.path.join(current_dir, "..", "assets", "visuals", "player ship", "ship red.png")
+        self.font_path = os.path.join(currentPath, "..","assets", "visuals", "fonts", "PressStart2P-Regular.ttf")
 
         self.gamePlay1Image = pygame.image.load(os.path.normpath(gameImagePath))
         self.gamePlay1Image = pygame.transform.scale(self.gamePlay1Image, (WIDTH, HEIGHT))
@@ -45,6 +47,9 @@ class GameState(State):
         self.shotImage = pygame.transform.scale(self.shotImage, (50, 50))
         self.pauseButton = pygame.image.load(os.path.normpath(pauseButtonPath))
         self.pauseButton = pygame.transform.scale(self.pauseButton, (65, 85))
+        self.playButton = pygame.image.load(os.path.normpath(playButtonPath))
+        self.playButton = pygame.transform.scale(self.playButton, (65, 85))
+
 
 
         self.border = pygame.rect.Rect(0, 370, 800, 40)
@@ -53,7 +58,8 @@ class GameState(State):
 
         self.pause : bool = False
        # Start button
-        self.btn_pause = button.ButtonPngIcon(
+        self.btn_pause = button.ButtonTwoStates(
+            self.playButton,
             self.pauseButton,
             self.change_state_pause,
             ui_group=self.ui
@@ -88,7 +94,8 @@ class GameState(State):
         self.music.game_music()
         self.sfx = sfx()
 
-        self.pause_surface = pygame.font.Font('freesansbold.ttf', 32).render("PAUSED", True, (0,0,0))
+        self.pause_surface = pygame.font.Font(self.font_path, 50
+                                              ).render("PAUSED", True, (255,0,0))
 
     #only button that exsit on the screen
     def change_state_pause(self):
@@ -208,7 +215,7 @@ class GameState(State):
             self.remove_shot()
             self.asteroidMaster.move_asteroids()
         else:
-            surface.blit(self.pause_surface, [0,0])
+            surface.blit(self.pause_surface, [230,300])
 
 
         for shot in self.shots:

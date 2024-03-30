@@ -16,13 +16,13 @@ class TutorialState(State):
         currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
         tutorialImagePath1 = os.path.join(currentPath, "..", "assets", "visuals", "pages - backgrounds", "tutorial page 1.png")
         self.tutorialImage1 = pygame.image.load(os.path.normpath(tutorialImagePath1))
-        self.tutorialImage1 = pygame.transform.scale(self.tutorialImage1, (860, 600))
-        tutorialImagePath2 = os.path.join(currentPath, "..", "assets", "visuals", "pages - backgrounds", "tutorial page 1.png")
+        self.tutorialImage1 = pygame.transform.scale(self.tutorialImage1, (800, 600))
+        tutorialImagePath2 = os.path.join(currentPath, "..", "assets", "visuals", "pages - backgrounds", "tutorial page 2.png")
         self.tutorialImage2 = pygame.image.load(os.path.normpath(tutorialImagePath2))
-        self.tutorialImage2 = pygame.transform.scale(self.tutorialImage1, (860, 600))
+        self.tutorialImage2 = pygame.transform.scale(self.tutorialImage2, (800, 600))
 
 
-        backButtonPath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "logOutButton.png")
+        backButtonPath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "exitButton.png")
         self.backButtonImage = pygame.image.load(os.path.normpath(backButtonPath))
         self.backButtonImage = pygame.transform.scale(self.backButtonImage, (150, 100))
         leftButtonPath = os.path.join(currentPath, "..","assets", "visuals", "buttons", "text buttons", "left button.png")
@@ -67,11 +67,11 @@ class TutorialState(State):
 
     def on_draw(self, surface):
         if self.currentPage == 0:
-            surface.blit(self.tutorialImage, (-30, 0))
-            self.btn_right.draw(surface, 750, 500)
+            surface.blit(self.tutorialImage1, (0, 0))
+            self.btn_right.draw(surface, 725, 275)
         else:
-            surface.blit(self.tutorialImage, (-30, 0))
-            self.btn_left.draw(surface, 0, 500)
+            surface.blit(self.tutorialImage2, (0, 0))
+            self.btn_left.draw(surface, 4, 260)
         self.btn_back.draw(surface, 0, 500)
         pygame.display.flip()
 

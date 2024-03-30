@@ -87,23 +87,25 @@ class MenuState(State):
     #IGNORE OUTLEVEL FOR NOW I WILL USE GAME STATE
     #implement game state file
     def change_state_start(self):
-        self.sfx.button_sound()
-        #give a clear savestate for user to start new
-        #just keep the users name
-        newSave = SaveState(
-            name=self.user.name,
-            score=000,
-            level=[1,1], #max level so they have access to all
-            highScore=0000,
-            questionsCompleted=000,
-            incorrectAmt=0000,
-            correctAmt=000,
-            overallGrade=0000,
-            loggedIn=True
-        )
-        newSave.save_settings(newSave.model_dump_json(), "{}.txt".format(self.user.name))
-
-        self.engine.machine.next_state = OuterLevelState(self.engine, newSave)
+        if not self.user.name == "Instructor":
+            self.sfx.button_sound()
+            #give a clear savestate for user to start new
+            #just keep the users name
+            newSave = SaveState(
+                name=self.user.name,
+                score=000,
+                level=[1,1], #max level so they have access to all
+                highScore=0000,
+                questionsCompleted=000,
+                incorrectAmt=0000,
+                correctAmt=000,
+                overallGrade=0000,
+                loggedIn=True
+            )
+            newSave.save_settings(newSave.model_dump_json(), "{}.txt".format(self.user.name))
+            self.engine.machine.next_state = OuterLevelState(self.engine, newSave)
+        else:
+            self.engine.machine.next_state = OuterLevelState(self.engine, self.user)
 
     #call the singin state?
     def change_state_load(self):

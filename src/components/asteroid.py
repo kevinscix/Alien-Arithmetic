@@ -15,14 +15,20 @@ class Asteroid():
         self.minAsteroid : int = 1
         self.maxResultAsteroid : int = self.maxAsteroid * self.maxAsteroid
 
+        #offset is used to center the asteroid to center
         if level == 1:
             self.numberOfAsteroids = 3
+            self.offset = 70
         elif level == 2:
             self.numberOfAsteroids = 4
+            self.offset = 55
         elif level == 3:
             self.numberOfAsteroids = 5
+            self.offset = 35
         else:
             self.numberOfAsteroids = 5
+
+
         self.speed : float = 1    # how many pixels the asteroid will move by each loop, not final
         self.firstOp : int
         self.secondOp : int
@@ -78,7 +84,7 @@ class Asteroid():
         return {
             'surface': surf,
             'number_surface': number_surface,
-            'position': [x, y],
+            'position': [x + self.offset, y],
             'value' : value,
             'speed': self.speed,
             'angle': 0,
@@ -116,9 +122,11 @@ class Asteroid():
         picked = random.randint(0 , self.numberOfAsteroids - 1)
         print(picked)
         print(self.correctAnswer)
+        values = []
         for i in range(0, self.numberOfAsteroids):
             if picked == i:
                 self.asteroidArr.append(self.create_asteroids(self.incrementsize * i, 0, self.correctAnswer, True))
+                values.append(self.correctAnswer)
             else:
                 if self.mode == "plus":
                     # 1 - max + max is the upper limit
@@ -133,7 +141,7 @@ class Asteroid():
                     x = random.randint(self.minAsteroid, self.maxResultAsteroid)
 
                 # Ensure the incorrect answer is not a duplicate of the correct answer
-                while x in self.asteroidArr:
+                while x in values:
                     x = random.randint(self.minAsteroid, self.maxResultAsteroid)
                 self.asteroidArr.append(self.create_asteroids(self.incrementsize * i, 0, x, False))
 

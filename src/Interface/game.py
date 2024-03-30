@@ -48,7 +48,7 @@ class GameState(State):
 
 
         self.border = pygame.rect.Rect(0, 370, 800, 40)
-        self.healthbar = pygame.rect.Rect(0, 0, 800, 40)
+        self.healthbar = pygame.rect.Rect(0, 0, 800, 10)
         self.player = Player()
 
 
@@ -71,7 +71,7 @@ class GameState(State):
         #needs a better way to do the width and height
             # a big issue is how we pass the surface around this is causing problems
             # think of a work around
-        self.player_pos = [WIDTH // 2, ((HEIGHT / 4) * 3 + 20)]
+        self.player_pos = [WIDTH // 2, ((HEIGHT / 4) * 3 - 60)]
 
         self.asteroidMaster = Asteroid(mode, level)
         self.asteroidMaster.generateAsteroids()
@@ -97,7 +97,7 @@ class GameState(State):
     def create_shot(self, player_pos):
         #limits the number of bullets on screen to one
         if not (len(self.shots) > 0):
-            bullet_pos = [player_pos[0], player_pos[1]]
+            bullet_pos = [player_pos[0] + 75, player_pos[1]]
             return {
                 'surface' :  self.shotImage,
                 'position' : bullet_pos,
@@ -210,7 +210,7 @@ class GameState(State):
             # pygame.draw.circle(surface, "black", shot['position'], shot['radius'])
         for asteroid in self.asteroidMaster.asteroidArr:
             surface.blit(asteroid['surface'], asteroid['position'])
-            surface.blit(asteroid['number_surface'], asteroid['position'])
+            surface.blit(asteroid['number_surface'], [asteroid['position'][0] + 15, asteroid['position'][1] + 15])
 
 
             # pygame.draw.circle(surface, "pink", asteroid['position'], 50)
@@ -232,7 +232,8 @@ class GameState(State):
             self.newRound()
 
         self.updateHealthBar()
-        surface.blit(self.asteroidMaster.question_surface, [500, 300])
+        pygame.draw.rect(surface, "gray",  pygame.rect.Rect(335, 535, 135, 50))
+        surface.blit(self.asteroidMaster.question_surface, [365, 545])
         # pygame.draw.circle(surface, "red", self.player_pos, self.player_radius)
         surface.blit(self.playerImage, self.player_pos)
 
@@ -257,8 +258,8 @@ class GameState(State):
 
     def handle_movement(self):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_LEFT]:
+        if keys[pygame.K_LEFT] and self.player_pos[0] > -40:
             self.player_pos[0] -= self.player_speed
-        if keys[pygame.K_RIGHT]:
+        if keys[pygame.K_RIGHT] and self.player_pos[0] < 800 - 150:
             self.player_pos[0] += self.player_speed
 

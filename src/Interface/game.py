@@ -30,7 +30,7 @@ class GameState(State):
 
         #make this into a utils function?
         currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
-        gameImagePath = os.path.join(currentPath, "..", "components", "Images", "gamePlay1.png")
+        gameImagePath = os.path.join(currentPath, "..", "assets", "visuals", "pages - backgrounds", "blue level page.png")
         shotImagePath = os.path.join(current_dir, "..", "assets", "visuals", "projectiles", "red projectile icon.png")
         pauseButtonPath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "pauseButton.png")
         playerPath = os.path.join(current_dir, "..", "assets", "visuals", "player ship", "ship red.png")

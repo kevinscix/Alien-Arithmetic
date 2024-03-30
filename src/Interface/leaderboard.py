@@ -17,7 +17,7 @@ class LeaderboardState(State):
         self.user = user
         currentPath = os.path.dirname(__file__)  
         scoreboardImagePath = os.path.join(currentPath, "..", "assets", "visuals", "pages - backgrounds", "student leaderboard page.png")
-        backButtonPath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "logOutButton.png")
+        backButtonPath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "exitButton.png")
         levelSelectButtonPath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "levelSelectButton.png")
         self.font_path = os.path.join(currentPath, "..","assets", "visuals", "fonts", "PressStart2P-Regular.ttf")
         self.scoreboardImage = pygame.image.load(os.path.normpath(scoreboardImagePath))
@@ -69,7 +69,7 @@ class LeaderboardState(State):
             y += self.font.get_height() + 30
 
         mainScore_surface = self.font.render(str(self.user.name) + ' score: ' + str(self.user.score), True, "red")
-        surface.blit(mainScore_surface, (250, 85))
+        surface.blit(mainScore_surface, (160, 100))
 
     
 

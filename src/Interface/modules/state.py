@@ -71,8 +71,7 @@ class SaveState(SaveModel, State):
 
 import os
 
-#all this stuff works just needs to make a saves folder cause its hitting requirements.txt, im going to ignore and foucs on other aspects
-#scoreboard state -> should have just one txt file
+
 class ScoreboardState(Scoreboard, State):
 
   def loadScore(self):

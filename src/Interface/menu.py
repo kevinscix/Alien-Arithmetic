@@ -102,7 +102,7 @@ class MenuState(State):
                 overallGrade=0000,
                 loggedIn=True
             )
-            newSave.save_settings(newSave.model_dump_json(), "{}.txt".format(self.user.name))
+            newSave.save_settings(newSave.model_dump_json(), "{}".format(self.user.name))
             self.engine.machine.next_state = OuterLevelState(self.engine, newSave)
         else:
             self.engine.machine.next_state = OuterLevelState(self.engine, self.user)

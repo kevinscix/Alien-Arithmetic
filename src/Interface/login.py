@@ -78,6 +78,9 @@ class LoginState(State):
             ui_group=self.ui
         )
 
+        self.error_messages = []
+
+
         #music
         from components.media import music, sfx
 

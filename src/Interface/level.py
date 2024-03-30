@@ -53,15 +53,6 @@ class OuterLevelState(State):
         self.minusAsteroid = pygame.image.load(os.path.normpath(minusAsteroidPath))
         self.minusAsteroid= pygame.transform.scale(self.minusAsteroid, (125, 125))
 
-        #determine max level
-        self.maxLevel = self.user.level[0]
-        if self.maxLevel == 1:
-            self.btn_level_minus.hover_color = "red"
-            self.btn_level_x.hover_color = "red"
-        elif self.maxLevel == 2:
-            self.btn_level_x.hover_color = "red"
-
-
         self.modes = {
             "plus" : 1,
             "minus" : 2,
@@ -92,6 +83,20 @@ class OuterLevelState(State):
             self.change_state_exit,
             ui_group=self.ui
         )
+
+
+
+        #determine max level
+        self.maxLevel = self.user.level[0]
+        if self.maxLevel == 1:
+            self.btn_level_minus.hover_color = "red"
+            self.btn_level_x.hover_color = "red"
+        elif self.maxLevel == 2:
+            self.btn_level_x.hover_color = "red"
+
+
+
+
     def start_inner_state(self, mode):
         if  self.modes[mode] <= self.maxLevel:
             self.engine.machine.next_state = InnerLevelState(self.engine, mode, self.user)

@@ -30,11 +30,6 @@ quit_image = pygame.transform.scale(quit_image, (150, 105))
 class OuterLevelState(State):
     def __init__(self, engine, user):
         super().__init__(engine)
-        if user == "Instructor":
-            self.developerMode = True
-        else:
-            self.developerMode = False
-        self.originalUser = None  # To store the original user state
         #UI
         self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter
         self.user : SaveState = user
@@ -145,7 +140,6 @@ class OuterLevelState(State):
                     self.user = self.originalUser
                     self.originalUser = None
                     self.developerMode = False
-                self.updateMaxLevel()
 
 class InnerLevelState(State):
     def __init__(self, engine, mode, user):

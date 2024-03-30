@@ -51,7 +51,7 @@ class GameState(State):
         self.healthbar = pygame.rect.Rect(0, 0, 800, 10)
         self.player = Player()
 
-
+        self.pause : bool = False
        # Start button
         self.btn_pause = button.ButtonPngIcon(
             self.pauseButton,
@@ -88,9 +88,11 @@ class GameState(State):
         self.music.game_music()
         self.sfx = sfx()
 
+        self.pause_surface = pygame.font.Font('freesansbold.ttf', 32).render("PAUSED", True, (0,0,0))
 
     #only button that exsit on the screen
     def change_state_pause(self):
+        self.pause = not self.pause
         pass
 
     #Game specific functions
@@ -199,10 +201,15 @@ class GameState(State):
         surface.blit(self.gamePlay1Image, (0, 0))
         self.btn_pause.draw(surface, 0, 515)
 
-        #moves the bullets down the screen
-        self.move_shot()
-        self.remove_shot()
-        self.asteroidMaster.move_asteroids()
+        #stops incrementing the moving shots
+        if not self.pause:
+            #moves the bullets down the screen
+            self.move_shot()
+            self.remove_shot()
+            self.asteroidMaster.move_asteroids()
+        else:
+            surface.blit(self.pause_surface, [0,0])
+
 
         for shot in self.shots:
             surface.blit(shot['surface'], shot['position'])
@@ -211,7 +218,6 @@ class GameState(State):
         for asteroid in self.asteroidMaster.asteroidArr:
             surface.blit(asteroid['surface'], asteroid['position'])
             surface.blit(asteroid['number_surface'], [asteroid['position'][0] + 15, asteroid['position'][1] + 15])
-
 
             # pygame.draw.circle(surface, "pink", asteroid['position'], 50)
 

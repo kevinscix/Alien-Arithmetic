@@ -14,6 +14,7 @@ from components.player import Player
 from PygameUIKit import Group, button
 import pygame
 
+from settings import Settings
 #this file is a quick scehem of how a state would look like for login and sign in state!
 
 #this isn't importing properly???? ill figure it out or someone else can i give up
@@ -25,6 +26,7 @@ class GameState(State):
         self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter
         WIDTH, HEIGHT = 800, 600
 
+        self.settings = Settings()
         self.user : SaveState = user
         self.level = level
 
@@ -35,12 +37,12 @@ class GameState(State):
         pauseButtonPath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "pauseButton.png")
         playButtonPath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "resume button pix.png")
         playerPath = os.path.join(current_dir, "..", "assets", "visuals", "player ship", "ship red.png")
+
         self.font_path = os.path.join(currentPath, "..","assets", "visuals", "fonts", "PressStart2P-Regular.ttf")
 
-        self.gamePlay1Image = pygame.image.load(os.path.normpath(gameImagePath))
-        self.gamePlay1Image = pygame.transform.scale(self.gamePlay1Image, (WIDTH, HEIGHT))
-        self.playerImage = pygame.image.load(os.path.normpath(playerPath))
-        self.playerImage = pygame.transform.scale(self.playerImage, (200, 200))
+        settings = self.settings.getbackground()
+        self.gamePlay1Image = pygame.transform.scale(settings['background'], (WIDTH, HEIGHT))
+        self.playerImage = pygame.transform.scale(settings['ship'], (200, 200))
 
         #we need someone to load in the bullets
         self.shotImage = pygame.image.load(os.path.normpath(shotImagePath))

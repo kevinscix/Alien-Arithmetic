@@ -237,8 +237,6 @@ class GameState(State):
         # pygame.draw.circle(surface, "red", self.player_pos, self.player_radius)
         surface.blit(self.playerImage, self.player_pos)
 
-
-        pygame.draw.rect(surface, "red", self.border)
         pygame.draw.rect(surface, "green", self.healthbar)
 
         pygame.display.flip()

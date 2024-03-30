@@ -3,28 +3,34 @@ from PygameUIKit import Group, button
 import pygame
 import os
 
-#comments
-# do we need any interactions from this state
-
 
 class TutorialState(State):
     def __init__(self, engine, user):
         super().__init__(engine)
-
+        self.currentPage = 0
         #UI
         self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter    
         self.user = user
 
         #make this into a utils function?
         currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
-        tutorialImagePath = os.path.join(currentPath, "..", "assets", "visuals", "pages - backgrounds", "tutorial page.png")
-        # Normalize the path to remove any '..'
-        self.tutorialImage = pygame.image.load(os.path.normpath(tutorialImagePath))
-        self.tutorialImage = pygame.transform.scale(self.tutorialImage, (860, 600))
+        tutorialImagePath1 = os.path.join(currentPath, "..", "assets", "visuals", "pages - backgrounds", "tutorial page 1.png")
+        self.tutorialImage1 = pygame.image.load(os.path.normpath(tutorialImagePath1))
+        self.tutorialImage1 = pygame.transform.scale(self.tutorialImage1, (860, 600))
+        tutorialImagePath2 = os.path.join(currentPath, "..", "assets", "visuals", "pages - backgrounds", "tutorial page 1.png")
+        self.tutorialImage2 = pygame.image.load(os.path.normpath(tutorialImagePath2))
+        self.tutorialImage2 = pygame.transform.scale(self.tutorialImage1, (860, 600))
+
 
         backButtonPath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "logOutButton.png")
         self.backButtonImage = pygame.image.load(os.path.normpath(backButtonPath))
         self.backButtonImage = pygame.transform.scale(self.backButtonImage, (150, 100))
+        leftButtonPath = os.path.join(currentPath, "..","assets", "visuals", "buttons", "text buttons", "left button.png")
+        rightButtonPath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "right button.png")
+        self.leftButtonImage = pygame.image.load(os.path.normpath(leftButtonPath))
+        self.leftButtonImage = pygame.transform.scale(self.leftButtonImage, (75, 100))
+        self.rightButtonImage = pygame.image.load(os.path.normpath(rightButtonPath))
+        self.rightButtonImage = pygame.transform.scale(self.rightButtonImage, (75, 100))
 
        # Back button 
         #needs to set up the correct location for and settings 
@@ -33,18 +39,39 @@ class TutorialState(State):
             self.change_state_menu, 
             ui_group=self.ui
         )
+
+        self.btn_left = button.ButtonPngIcon(
+            self.leftButtonImage, 
+            self.change_state_left, 
+            ui_group=self.ui
+        )
+        self.btn_right = button.ButtonPngIcon(
+            self.rightButtonImage, 
+            self.change_state_right, 
+            ui_group=self.ui
+        )
     
 
     def change_state_menu(self):
         from Interface.menu import MenuState
         self.engine.machine.next_state = MenuState(self.engine, self.user)
+    
 
+    def change_state_left(self):
+        if self.currentPage == 1: 
+            self.currentPage -= 1
+
+    def change_state_right(self):
+        if self.currentPage == 0:  
+            self.currentPage += 1
 
     def on_draw(self, surface):
-        #draws the titleImage on surface
-        surface.blit(self.tutorialImage, (-30, 0))
-        #add the buttons we need should be 3 for the diff levels
-        #change the values to make it better placed
+        if self.currentPage == 0:
+            surface.blit(self.tutorialImage, (-30, 0))
+            self.btn_right.draw(surface, 750, 500)
+        else:
+            surface.blit(self.tutorialImage, (-30, 0))
+            self.btn_left.draw(surface, 0, 500)
         self.btn_back.draw(surface, 0, 500)
         pygame.display.flip()
 

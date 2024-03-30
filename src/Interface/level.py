@@ -35,7 +35,7 @@ class OuterLevelState(State):
         self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter    
         self.user = user
         #make this into a utils function?
-        levelImagePath = os.path.join(currentPath, "..","components", "Images", "outerLevelSelect.png")
+        levelImagePath = os.path.join(currentPath, "..", "assets", "visuals", "pages - backgrounds", "asteroid page.png")
         self.levelSelect = pygame.image.load(os.path.normpath(levelImagePath))
         self.levelSelect= pygame.transform.scale(self.levelSelect, (800, 600))
         xAsteroidPath = os.path.join(currentPath, "..", "assets", "visuals", "stage-level select", "xAsteroid.png")
@@ -109,7 +109,7 @@ class InnerLevelState(State):
         self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter    
         #make this into a utils function?
 
-        levelSelectPath = os.path.join(currentPath, "..", "components", "Images", "innerLevelSelect.png")
+        levelSelectPath = os.path.join(currentPath, "..", "assets", "visuals", "pages - backgrounds", "planet page.png")
         self.levelSelect = pygame.image.load(os.path.normpath(levelSelectPath))
         self.levelSelect= pygame.transform.scale(self.levelSelect, (800, 600))
         levelOnePath = os.path.join(currentPath, "..", "assets", "visuals", "stage-level select", "levelOne.png")

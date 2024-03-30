@@ -8,6 +8,7 @@ sys.path.append(src_dir)
 
 from Interface.state_machine import State
 from Interface.menu import MenuState
+from Interface.instructorDashboard import instructorState
 
 from PygameUIKit import Group, button, text_input
 import pygame
@@ -26,7 +27,7 @@ class LoginState(State):
         student_login_path = os.path.join(current_path, "..", "assets", "visuals", "buttons", "text buttons", "studentLogin.png")
         teacher_login_image_path = os.path.join(current_path, "..", "assets", "visuals", "buttons", "text buttons", "instructorLogin.png")
         quit_game_image_path = os.path.join(current_path, "..", "assets", "visuals", "buttons", "text buttons", "exitButton.png")
-        loginImagePath = os.path.join(current_path, "..", "components", "Images", "titlePage.png")
+        loginImagePath = os.path.join(current_path, "..", "assets", "visuals", "pages - backgrounds", "log in page.png")
 
         self.teacher_login_image = pygame.image.load(os.path.normpath(teacher_login_image_path))
         self.teacher_login_image = pygame.transform.scale(self.teacher_login_image, (250, 100))
@@ -89,13 +90,7 @@ class LoginState(State):
 
     #loads a instrctor model
     def change_state_instructor(self):
-        #should be like  self.engine.machine.next_state = MENUSTATE(self.engine, self.instructor)
-        from Interface.modules.state import ScoreboardState
-        bo = ScoreboardState()
-        Player = bo.getPlayer(playerName=self.text_input.get_text())
-        print(Player)
-        #should be like  self.engine
-        self.engine.machine.next_state = MenuState(self.engine, Player)
+        self.engine.machine.next_state = instructorState(self.engine)
 
     def quit_game(self):
        pygame.quit()

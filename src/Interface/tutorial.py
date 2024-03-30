@@ -17,7 +17,7 @@ class TutorialState(State):
 
         #make this into a utils function?
         currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
-        tutorialImagePath = os.path.join(currentPath, "..", "components", "Images", "tutorialScreen.png")
+        tutorialImagePath = os.path.join(currentPath, "..", "assets", "visuals", "pages - backgrounds", "tutorial page.png")
         # Normalize the path to remove any '..'
         self.tutorialImage = pygame.image.load(os.path.normpath(tutorialImagePath))
         self.tutorialImage = pygame.transform.scale(self.tutorialImage, (860, 600))

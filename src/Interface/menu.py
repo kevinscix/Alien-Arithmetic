@@ -33,7 +33,7 @@ class MenuState(State):
         self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter
         self.user : SaveState = user
 
-        self.menuImagePath = os.path.join(currentPath, "..", "components", "Images", "menuPage.png")
+        self.menuImagePath = os.path.join(currentPath, "..", "assets", "visuals", "pages - backgrounds", "main page.png")
         startImagePath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "startButton.png")
         loadImagePath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "loadButton.png")
         tutorialImagePath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "tutorialButton.png")

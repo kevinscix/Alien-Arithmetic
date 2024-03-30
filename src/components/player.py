@@ -1,4 +1,4 @@
-
+import unittest
 from typing import Optional
 
 class Player():
@@ -40,3 +40,34 @@ class Player():
     #for later implementation to save player specific information
     def save(self) -> None:
         pass
+
+
+class TestPlayer(unittest.TestCase):
+
+    def setUp(self):
+        self.player = Player()
+
+    def test_initial_attributes(self):
+        # Test that a new player has the correct initial attributes
+        self.assertEqual(self.player.totalHealth, 3, "Initial total health should be 3")
+        self.assertEqual(self.player.health, 3, "Initial health should be 3")
+        self.assertEqual(self.player.points, 0, "Initial points should be 0")
+        self.assertEqual(self.player.speed, 300, "Initial speed should be 300")
+        self.assertTrue(self.player.ready, "Player should be initially ready")
+
+    def test_health_scale(self):
+        # Test the health scale method
+        self.player.health = 1
+        self.assertEqual(self.player.healthScale(), 1 / 3, "Health scale calculation is incorrect")
+
+    def test_modify_attributes(self):
+        # Test modifying player's health, points, and speed
+        self.player.health = 2
+        self.player.points = 100
+        self.player.speed = 200
+        self.assertEqual(self.player.health, 2, "Health should be updated to 2")
+        self.assertEqual(self.player.points, 100, "Points should be updated to 100")
+        self.assertEqual(self.player.speed, 200, "Speed should be updated to 200")
+
+if __name__ == "__main__":
+    unittest.main()

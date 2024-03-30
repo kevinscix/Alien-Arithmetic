@@ -30,7 +30,11 @@ quit_image = pygame.transform.scale(quit_image, (150, 105))
 class OuterLevelState(State):
     def __init__(self, engine, user):
         super().__init__(engine)
-
+        if user == "Instructor":
+            self.developerMode = True
+        else:
+            self.developerMode = False
+        self.originalUser = None  # To store the original user state
         #UI
         self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter
         self.user : SaveState = user
@@ -115,6 +119,29 @@ class OuterLevelState(State):
     def on_event(self, event):
         self.ui.handle_event(event)
 
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_BACKSLASH:  # Check if the '\' key is pressed
+                if not self.developerMode:
+                    # Save the original user state and switch to Instructor mode
+                    self.originalUser = self.user
+                    self.user = SaveState(
+                        name="Instructor",
+                        score=0,
+                        level=[3,3],  # Max level for Instructor
+                        highScore=0,
+                        questionsCompleted=0,
+                        incorrectAmt=0,
+                        correctAmt=0,
+                        overallGrade=0,
+                        loggedIn=True
+                    )
+                    self.developerMode = True
+                else:
+                    # Revert to the original user state
+                    self.user = self.originalUser
+                    self.originalUser = None
+                    self.developerMode = False
+
 class InnerLevelState(State):
     def __init__(self, engine, mode, user):
         super().__init__(engine)
@@ -198,3 +225,5 @@ class InnerLevelState(State):
 
     def on_event(self, event):
         self.ui.handle_event(event)
+
+

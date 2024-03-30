@@ -266,7 +266,7 @@ class GameState(State):
                 print("Returning to menu screen")
                 self.change_state_menu()
             if event.key == pygame.K_p:
-                self.change_state_pause()
+                self.btn_pause._on_click()
 
         self.ui.handle_event(event)
 

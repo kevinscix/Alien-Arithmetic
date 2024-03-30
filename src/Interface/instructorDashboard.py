@@ -17,10 +17,17 @@ class instructorState(State):
         currentPath = os.path.dirname(__file__)  
         instructorImagePath = os.path.join(currentPath, "..", "assets", "visuals", "pages - backgrounds", "instructor leaderboard page.png")
         backButtonPath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "logOutButton.png")
+        leftButtonPath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "left button.png")
+        rightButtonPath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "right button.png")
         self.instructorImage = pygame.image.load(os.path.normpath(instructorImagePath))
         self.instructorImage = pygame.transform.scale(self.instructorImage, (830, 600))
         self.backButtonImage = pygame.image.load(os.path.normpath(backButtonPath))
         self.backButtonImage = pygame.transform.scale(self.backButtonImage, (150, 100))
+        self.leftButtonImage = pygame.image.load(os.path.normpath(leftButtonPath))
+        self.leftButtonImage = pygame.transform.scale(self.leftButtonImage, (50, 50))
+        self.rightButtonImage = pygame.image.load(os.path.normpath(rightButtonPath))
+        self.rightButtonImage = pygame.transform.scale(self.rightButtonImage, (50, 50))
+
 
 
 
@@ -31,16 +38,16 @@ class instructorState(State):
             self.change_state_menu, 
             ui_group=self.ui
         )
-        # self.btn_left = button.ButtonPngIcon(
-        #     self.leftButtonImage, 
-        #     self.change_state_right, 
-        #     ui_group=self.ui
-        # )
-        # self.btn_right = button.ButtonPngIcon(
-        #     self.rightButtonImage, 
-        #     self.change_state_right, 
-        #     ui_group=self.ui
-        # )
+        self.btn_left = button.ButtonPngIcon(
+            self.leftButtonImage, 
+            self.change_state_right, 
+            ui_group=self.ui
+        )
+        self.btn_right = button.ButtonPngIcon(
+            self.rightButtonImage, 
+            self.change_state_right, 
+            ui_group=self.ui
+        )
     
     def createBoard(self):
         from Interface.modules.state import ScoreboardState, SaveState
@@ -81,6 +88,8 @@ class instructorState(State):
 
 
     
+        self.btn_left.draw,(surface, 0, 350)
+        self.btn_right.draw,(surface, 40, 350)
 
         self.btn_back.draw(surface, 0, 500)
 

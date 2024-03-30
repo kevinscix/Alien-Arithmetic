@@ -143,6 +143,7 @@ class Asteroid():
                 # Ensure the incorrect answer is not a duplicate of the correct answer
                 while x in values:
                     x = random.randint(self.minAsteroid, self.maxResultAsteroid)
+                values.append(x)
                 self.asteroidArr.append(self.create_asteroids(self.incrementsize * i, 0, x, False))
 
     def showEquation(self) -> str:

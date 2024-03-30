@@ -52,6 +52,8 @@ class LoginState(State):
             loggedIn=True
         )
 
+        self.font = pygame.font.Font('freesansbold.ttf', 32)
+
         self.student : SaveState = None
         self.text_input = text_input.TextInput(placeholder="Username/Password",
                                                fixed_width=400,
@@ -96,22 +98,40 @@ class LoginState(State):
         if self.text_input.get_text():
             if self.text_input.get_text() == "dev123":
                 self.engine.machine.next_state = MenuState(self.engine, self.instructor)
+            elif len(self.text_input.get_text()) > 7:
+                msg = {
+                    'message' : self.font.render("Exceeds maxium text input", True, (0, 0, 0)),
+                }
+                self.error_messages = msg
+                print("too big")
             else:
                 Player = bo.getPlayer(playerName=self.text_input.get_text())
                 #should be like  self.engine.machine.next_state = MENUSTATE(self.engine, self.instructor)
                 #need to add an error message popup
+
                 self.engine.machine.next_state = MenuState(self.engine, Player)
+        else:
+            msg = {
+                    'message' : self.font.render("Empty text box", True, (0, 0, 0)),
+                }
+            self.error_messages = msg
 
     #loads a instrctor model
     def change_state_instructor(self):
         self.sfx.button_sound()
         if self.text_input.get_text() == "yourMom": #temp password
             self.engine.machine.next_state = instructorState(self.engine)
+        else:
+            msg = {
+                    'message' :  self.font.render("Wrong password for Instructor", True, (0, 0, 0)),
+                }
+            self.error_messages = msg
 
     def quit_game(self):
        self.sfx.button_sound()
 
        pygame.quit()
+
 
     def on_draw(self, surface):
         #draws the titleImage on surface
@@ -122,6 +142,11 @@ class LoginState(State):
         pygame.draw.rect(surface, "gray31", pygame.Rect(200, 350, 400, 34))
         self.text_input.draw(surface, 200, 350)
 
+        try:
+            surface.blit(self.error_messages['message'], [0,0])
+        except:
+            #no errors happens
+            pass
         pygame.display.flip()
 
 

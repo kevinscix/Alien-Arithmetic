@@ -5,6 +5,7 @@ from typing import Dict, Optional, List
 from Interface.state_machine import State, DisplayEngine
 import json
 import os
+import unittest
 
 
 #we should clarify the logic for this file, it doesnt really make senses now
@@ -127,4 +128,73 @@ class ScoreboardState(State):
 
         pygame.display.flip()
 
+
+#unit testing
+
+# class TestScoreboard(unittest.TestCase):
+
+#     def setUp(self):
+#         # Initialize the Scoreboard object
+#         self.scoreboard = Scoreboard()
+
+#     def test_initialization(self):
+#         # Test that the Scoreboard is initialized with default values
+#         self.assertIsNone(self.scoreboard.numberPlayer, "numberPlayer should initially be None")
+#         self.assertIsNone(self.scoreboard.userType, "userType should initially be None")
+
+#     def test_add_score(self):
+#         # Assuming there's a method to add a score which we'll need to define based on actual implementation
+#         pass
+
+#     def test_get_player_info(self):
+#         # Assuming there's a method to get player information which we'll need to define based on actual implementation
+#         pass
+
+# if __name__ == "__main__":
+#     unittest.main()
     
+class TestScoreboard(unittest.TestCase):
+
+    def setUp(self):
+        # Initialize the Scoreboard object
+        self.scoreboard = Scoreboard()
+        # Assuming the Scoreboard class can handle multiple players, represented in some form of collection
+
+    def test_initialization(self):
+        # Test that the Scoreboard is initialized properly
+        self.assertIsInstance(self.scoreboard, Scoreboard, "Scoreboard instance is not created correctly")
+
+    def test_add_score(self):
+        # Test adding a score for a new player
+        self.scoreboard.add_score("Emily", 100)
+        player_info = self.scoreboard.get_player_info("Emily")
+        self.assertEqual(player_info['score'], 100, "Score for Emily was not added correctly")
+
+        # Test updating the score for an existing player
+        self.scoreboard.add_score("Emily", 150)
+        updated_info = self.scoreboard.get_player_info("Emily")
+        self.assertEqual(updated_info['score'], 150, "Score for Emily was not updated correctly")
+
+    def test_get_player_info(self):
+        # Test retrieving player information
+        self.scoreboard.add_score("Bob", 200)
+        bob_info = self.scoreboard.get_player_info("Bob")
+        self.assertEqual(bob_info['score'], 200, "Failed to retrieve correct score for Bob")
+
+    def test_remove_player(self):
+        # Testing the method to remove a player
+        self.scoreboard.add_score("Emily", 50)
+        self.scoreboard.remove_player("Emily")
+        with self.assertRaises(KeyError):
+            self.scoreboard.get_player_info("Emily")
+
+    def test_list_scores(self):
+        # Testing the method to list all scores
+        self.scoreboard.add_score("Emily", 100)
+        self.scoreboard.add_score("Bob", 200)
+        scores = self.scoreboard.list_scores()
+        self.assertIn(("Emily", 100), scores, "Alice's score is not listed correctly")
+        self.assertIn(("Bob", 200), scores, "Bob's score is not listed correctly")
+
+if __name__ == "__main__":
+    unittest.main()

@@ -88,13 +88,27 @@ class MenuState(State):
     #implement game state file
     def change_state_start(self):
         self.sfx.button_sound()
-        #give a clear file
-        self.engine.machine.next_state = OuterLevelState(self.engine, self.user)
+        #give a clear savestate for user to start new
+        #just keep the users name
+        newSave = SaveState(
+            name=self.user.name,
+            score=000,
+            level=[1,1], #max level so they have access to all
+            highScore=0000,
+            questionsCompleted=000,
+            incorrectAmt=0000,
+            correctAmt=000,
+            overallGrade=0000,
+            loggedIn=True
+        )
+        newSave.save_settings(newSave.model_dump_json(), "{}.txt".format(self.user.name))
+
+        self.engine.machine.next_state = OuterLevelState(self.engine, newSave)
 
     #call the singin state?
     def change_state_load(self):
         self.sfx.button_sound()
-        #contiue with current user
+        #contiue with current users
         self.engine.machine.next_state = OuterLevelState(self.engine, self.user)
 
 

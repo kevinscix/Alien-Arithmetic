@@ -8,7 +8,7 @@ src_dir = os.path.dirname(parent_dir)  # Moves up to 'src'
 sys.path.append(src_dir)
 
 from Interface.state_machine import State
-from Interface.modules.state import SaveModel
+from Interface.modules.state import SaveState
 from components.asteroid import Asteroid
 from components.player import Player
 from PygameUIKit import Group, button
@@ -25,7 +25,7 @@ class GameState(State):
         self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter
         WIDTH, HEIGHT = 800, 600
 
-        self.user = user
+        self.user : SaveState = user
         self.level = level
 
         #make this into a utils function?
@@ -178,7 +178,15 @@ class GameState(State):
 
     def onGameWin(self):
         #increment the level by up
+        if self.level == 3:
+            if self.user.level[0] == 3:
+                print("FINISHED LAST LEVEL")
+            else:
+                self.user.level[0] += 1
+        elif self.level < 3:
+            self.user.level[1] += 1
 
+        self.user.save_settings(self.user.model_dump_json(), self.user.name)
 
         from Interface.level import OuterLevelState
         self.engine.machine.next_state = OuterLevelState(self.engine, self.user)

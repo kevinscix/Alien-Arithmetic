@@ -45,7 +45,7 @@ class LoginState(State):
         self.instructor : SaveState = SaveState(
             name="Instructor",
             score=000,
-            level=[3,3,3], #max level so they have access to all
+            level=[3,3], #max level so they have access to all
             highScore=0000,
             questionsCompleted=000,
             incorrectAmt=0000,

@@ -102,8 +102,8 @@ class LoginState(State):
     #loads a instrctor model
     def change_state_instructor(self):
         self.sfx.button_sound()
-
-        self.engine.machine.next_state = MenuState(self.engine, self.instructor)
+        if self.text_input.get_text() == "yourMom": #temp password
+            self.engine.machine.next_state = instructorState(self.engine)
 
     def quit_game(self):
        self.sfx.button_sound()

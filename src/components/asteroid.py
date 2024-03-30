@@ -45,8 +45,9 @@ class Asteroid():
         self.asteroidArr = []
         self.question_surface = ''
 
+        self.font_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "assets", "visuals", "fonts", "PressStart2P-Regular.ttf")
 
-        self.font = pygame.font.Font('freesansbold.ttf', 32)
+        self.font = pygame.font.Font(self.font_path, 24)
         self.incrementsize = 800 / self.numberOfAsteroids
 
         currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
@@ -158,11 +159,11 @@ class Asteroid():
     def showEquation(self) -> str:
         eq = ""
         if self.mode == "plus":
-            eq = "%d + %d" % (self.firstOp, self.secondOp)
+            eq = "%d+%d" % (self.firstOp, self.secondOp)
         elif self.mode == "minus":
-            eq = "%d - %d" % (self.firstOp, self.secondOp)
+            eq = "%d-%d" % (self.firstOp, self.secondOp)
         elif self.mode == "multiply":
-            eq = "%d x %d" % (self.firstOp, self.secondOp)
+            eq = "%dx%d" % (self.firstOp, self.secondOp)
 
         return eq
 

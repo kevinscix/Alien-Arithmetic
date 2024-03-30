@@ -222,12 +222,11 @@ class GameState(State):
         for shot in self.shots:
             surface.blit(shot['surface'], shot['position'])
 
-            # pygame.draw.circle(surface, "black", shot['position'], shot['radius'])
         for asteroid in self.asteroidMaster.asteroidArr:
             surface.blit(asteroid['surface'], asteroid['position'])
             surface.blit(asteroid['number_surface'], [asteroid['position'][0] + 15, asteroid['position'][1] + 15])
 
-            # pygame.draw.circle(surface, "pink", asteroid['position'], 50)
+
 
         #draws the dead asteroids animation
         for asteroid in self.exAsteroids:
@@ -247,8 +246,7 @@ class GameState(State):
 
         self.updateHealthBar()
         pygame.draw.rect(surface, "gray",  pygame.rect.Rect(335, 535, 135, 50))
-        surface.blit(self.asteroidMaster.question_surface, [365, 545])
-        # pygame.draw.circle(surface, "red", self.player_pos, self.player_radius)
+        surface.blit(self.asteroidMaster.question_surface, [350, 545])
         surface.blit(self.playerImage, self.player_pos)
 
         pygame.draw.rect(surface, "green", self.healthbar)

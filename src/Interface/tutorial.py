@@ -22,22 +22,21 @@ class TutorialState(State):
         self.tutorialImage = pygame.image.load(os.path.normpath(tutorialImagePath))
         self.tutorialImage = pygame.transform.scale(self.tutorialImage, (860, 600))
 
+        backButtonPath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "logOutButton.png")
+        self.backButtonImage = pygame.image.load(os.path.normpath(backButtonPath))
+        self.backButtonImage = pygame.transform.scale(self.backButtonImage, (150, 100))
 
        # Back button 
         #needs to set up the correct location for and settings 
-        self.btn_back = button.ButtonText(
-            "Go Back to Menu", 
-            self.go_back_menu, 
-            fixed_width=200, 
-            border_radius=10, 
-            text_align="center", 
+        self.btn_back = button.ButtonPngIcon(
+            self.backButtonImage, 
+            self.change_state_menu, 
             ui_group=self.ui
         )
     
 
-    def go_back_menu(self):
+    def change_state_menu(self):
         from Interface.menu import MenuState
-        #should be like i think... we need to talk
         self.engine.machine.next_state = MenuState(self.engine, self.user)
 
 
@@ -46,7 +45,7 @@ class TutorialState(State):
         surface.blit(self.tutorialImage, (-30, 0))
         #add the buttons we need should be 3 for the diff levels
         #change the values to make it better placed
-        self.btn_back.draw(surface, *self.btn_back.surface.get_rect(center=(surface.get_height() // 2, surface.get_height()  // 2 - 50)).topleft)
+        self.btn_back.draw(surface, 0, 500)
         pygame.display.flip()
 
     def on_event(self, event):

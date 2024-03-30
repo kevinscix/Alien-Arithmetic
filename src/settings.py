@@ -17,19 +17,34 @@ class Settings():
     redBackground = os.path.join(current_dir,"assets", "visuals", "pages - backgrounds", "red level page.png")
     yellowBackground = os.path.join(current_dir,"assets", "visuals", "pages - backgrounds", "yellow level page.png")
 
+    blueLevelUp = os.path.join(current_dir,"assets", "visuals", "pages - backgrounds", "level up blue.png")
+    redLevelUp = os.path.join(current_dir,"assets", "visuals", "pages - backgrounds", "level up red.png")
+    yellowLevelUp = os.path.join(current_dir,"assets", "visuals", "pages - backgrounds", "level up yellow.png")
+
+    redShot = os.path.join(current_dir, "assets", "visuals", "projectiles", "red projectile icon.png")
+    blueShot = os.path.join(current_dir, "assets", "visuals", "projectiles", "blue projectile icon.png")
+    yellowShot = os.path.join(current_dir, "assets", "visuals", "projectiles", "yellow projectile icon.png")
+
+
     self.pairs = [
       {
         'ship' :  pygame.image.load(os.path.normpath(redship)),
-        'background' : pygame.image.load(os.path.normpath(redBackground))
+        'background' : pygame.image.load(os.path.normpath(redBackground)),
+        'level' : pygame.image.load(os.path.normpath(redLevelUp)),
+        'shot' : pygame.image.load(os.path.normpath(redShot))
       },
       {
         'ship' : pygame.image.load(os.path.normpath(blueship)),
-        'background' : pygame.image.load(os.path.normpath(blueBackground))
+        'background' : pygame.image.load(os.path.normpath(blueBackground)),
+        'level' : pygame.image.load(os.path.normpath(blueLevelUp)),
+        'shot' : pygame.image.load(os.path.normpath(blueShot))
       },
       {
         'ship' : pygame.image.load(os.path.normpath(yellowship)),
-        'background' : pygame.image.load(os.path.normpath(yellowBackground))
-      },
+        'background' : pygame.image.load(os.path.normpath(yellowBackground)),
+        'level' : pygame.image.load(os.path.normpath(yellowLevelUp)),
+        'shot' : pygame.image.load(os.path.normpath(yellowShot))
+      }
     ]
 
   def getbackground(self):

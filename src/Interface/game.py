@@ -26,33 +26,31 @@ class GameState(State):
         self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter
         WIDTH, HEIGHT = 800, 600
 
-        self.settings = Settings()
+        self.settings = Settings().getbackground()
+
         self.user : SaveState = user
         self.level = level
 
         #make this into a utils function?
         currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
-        gameImagePath = os.path.join(currentPath, "..", "assets", "visuals", "pages - backgrounds", "blue level page.png")
         shotImagePath = os.path.join(current_dir, "..", "assets", "visuals", "projectiles", "red projectile icon.png")
         pauseButtonPath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "pauseButton.png")
         playButtonPath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "resume button pix.png")
-        playerPath = os.path.join(current_dir, "..", "assets", "visuals", "player ship", "ship red.png")
 
         self.font_path = os.path.join(currentPath, "..","assets", "visuals", "fonts", "PressStart2P-Regular.ttf")
 
-        settings = self.settings.getbackground()
-        self.gamePlay1Image = pygame.transform.scale(settings['background'], (WIDTH, HEIGHT))
-        self.playerImage = pygame.transform.scale(settings['ship'], (200, 200))
+        self.gamePlay1Image = pygame.transform.scale(self.settings['background'], (WIDTH, HEIGHT))
+        self.playerImage = pygame.transform.scale(self.settings['ship'], (200, 200))
 
         #we need someone to load in the bullets
-        self.shotImage = pygame.image.load(os.path.normpath(shotImagePath))
+        self.shotImage = self.settings['shot']
         self.shotImage = pygame.transform.scale(self.shotImage, (50, 50))
+
+
         self.pauseButton = pygame.image.load(os.path.normpath(pauseButtonPath))
         self.pauseButton = pygame.transform.scale(self.pauseButton, (65, 85))
         self.playButton = pygame.image.load(os.path.normpath(playButtonPath))
         self.playButton = pygame.transform.scale(self.playButton, (65, 85))
-
-
 
         self.border = pygame.rect.Rect(0, 370, 800, 40)
         self.healthbar = pygame.rect.Rect(0, 0, 800, 10)
@@ -66,6 +64,17 @@ class GameState(State):
             self.change_state_pause,
             ui_group=self.ui
         )
+
+        levelButtonPath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "levelSelectButton.png")
+        self.levelButton = pygame.image.load(os.path.normpath(levelButtonPath))
+        self.levelButton = pygame.transform.scale(self.levelButton, (200, 80))
+        self.btn_level = button.ButtonPngIcon(
+            self.levelButton,
+            self.change_state_level,
+            ui_group=self.ui
+        )
+
+
         from components.media import sfx
         self.sfx = sfx()
 
@@ -100,6 +109,15 @@ class GameState(State):
 
         self.pause_surface = pygame.font.Font(self.font_path, 50
                                               ).render("PAUSED", True, (255,0,0))
+
+
+
+        self.ended : bool = False
+
+
+    def change_state_level(self):
+        from Interface.level import OuterLevelState
+        self.engine.machine.next_state = OuterLevelState(self.engine, self.user)
 
     #only button that exsit on the screen
     def change_state_pause(self):
@@ -184,12 +202,20 @@ class GameState(State):
             self.onGameWin()
 
     def onGameEnd(self):
-        from Interface.level import OuterLevelState
-        self.engine.machine.next_state = OuterLevelState(self.engine, self.user)
+        pass
         #return user to level
 
     def onGameWin(self):
+        self.ended = True
+        #empty all variables
+        self.shots = []
+        self.exAsteroids = []
+        self.asteroidMaster.asteroidArr = []
+
         #increment the level by up
+        self.gamePlay1Image = pygame.transform.scale(self.settings['level'], (800, 600))
+
+
         self.user.score += self.player.points
 
         if self.level == 3:
@@ -203,9 +229,6 @@ class GameState(State):
 
         self.user.save_settings(self.user.model_dump_json(), self.user.name)
         print(self.user)
-
-        from Interface.level import OuterLevelState
-        self.engine.machine.next_state = OuterLevelState(self.engine, self.user)
 
     def on_draw(self, surface):
         #pops the screen up
@@ -249,12 +272,15 @@ class GameState(State):
             self.player.damage()
             self.newRound()
 
-        self.updateHealthBar()
-        pygame.draw.rect(surface, "gray",  pygame.rect.Rect(335, 535, 135, 50))
-        surface.blit(self.asteroidMaster.question_surface, [350, 545])
-        surface.blit(self.playerImage, self.player_pos)
-
-        pygame.draw.rect(surface, "green", self.healthbar)
+        #when still not ended
+        if not self.ended:
+            self.updateHealthBar()
+            pygame.draw.rect(surface, "gray",  pygame.rect.Rect(335, 535, 135, 50))
+            surface.blit(self.asteroidMaster.question_surface, [350, 545])
+            surface.blit(self.playerImage, self.player_pos)
+            pygame.draw.rect(surface, "green", self.healthbar)
+        else:
+            self.btn_level.draw(surface, 300, 250)
 
         pygame.display.flip()
 

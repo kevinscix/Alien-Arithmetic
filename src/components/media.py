@@ -42,9 +42,9 @@ class sfx():
             'explosion' : pygame.mixer.SoundType(self.explosion_sounds),
             'button' : pygame.mixer.SoundType(self.button_sounds)
         }
+        self.sounds['button'].set_volume(0.2)
 
     def button_sound(self):
-        self.sounds['button'].set_volume(0.2)
         self.sounds['button'].play()
 
 

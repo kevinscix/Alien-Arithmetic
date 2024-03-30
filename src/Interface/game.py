@@ -185,6 +185,7 @@ class GameState(State):
                 print("FINISHED LAST LEVEL")
             else:
                 self.user.level[0] += 1
+                self.user.level[1] = 1
         elif self.level < 3:
             self.user.level[1] += 1
 

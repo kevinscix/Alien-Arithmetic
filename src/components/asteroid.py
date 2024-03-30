@@ -123,27 +123,36 @@ class Asteroid():
         print(picked)
         print(self.correctAnswer)
         values = []
+
+        #must append here else it will allow the generated value before be the correct answers
+        values.append(self.correctAnswer)
         for i in range(0, self.numberOfAsteroids):
             if picked == i:
                 self.asteroidArr.append(self.create_asteroids(self.incrementsize * i, 0, self.correctAnswer, True))
-                values.append(self.correctAnswer)
             else:
                 if self.mode == "plus":
                     # 1 - max + max is the upper limit
                     x = random.randint(self.minAsteroid, self.maxAsteroid + self.maxAsteroid)
+                    while x in values:
+                        print(x, " |+| ", values)
+                        x = random.randint(self.minAsteroid, self.maxAsteroid + self.maxAsteroid)
                     # addition
                 elif self.mode == "minus":
                     # 1 - max and max - 1, range for minus
                     x = random.randint(-self.maxAsteroid, self.maxAsteroid)
+                    while x in values:
+                        x = random.randint(-self.maxAsteroid, self.maxAsteroid)
 
                 elif self.mode == "multiply":
                     # 1 - max * max.
                     x = random.randint(self.minAsteroid, self.maxResultAsteroid)
+                    while x in values:
+                        x = random.randint(self.minAsteroid, self.maxResultAsteroid)
 
                 # Ensure the incorrect answer is not a duplicate of the correct answer
-                while x in values:
-                    x = random.randint(self.minAsteroid, self.maxResultAsteroid)
+                
                 values.append(x)
+                print(x, " -> " ,values)
                 self.asteroidArr.append(self.create_asteroids(self.incrementsize * i, 0, x, False))
 
     def showEquation(self) -> str:

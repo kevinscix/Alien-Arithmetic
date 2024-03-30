@@ -132,8 +132,6 @@ class GameState(State):
                             #call destory func here...
                             self.exAsteroids.append([asteroid, 0])
                             self.asteroidMaster.asteroidArr.remove(asteroid)
-                            asteroid['destoryed'] = True
-
                             asteroid['destroyed'] = True
                             
                     return True

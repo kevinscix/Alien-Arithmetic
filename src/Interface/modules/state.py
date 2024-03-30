@@ -64,14 +64,12 @@ class SaveModel(BaseModel):
     def setQuestionsCompleted(self, questions) -> None:
       self.questionsCompleted = questions
 
-
 class SaveState(SaveModel, State):
   def __str__(self) -> str:
      return "{} with a score of {}.".format(self.name, self.score)
   pass
 
 import os
-
 
 #all this stuff works just needs to make a saves folder cause its hitting requirements.txt, im going to ignore and foucs on other aspects
 #scoreboard state -> should have just one txt file
@@ -96,6 +94,21 @@ class ScoreboardState(Scoreboard, State):
       if playerSave.name == playerName:
         return playerSave
 
+    #if player is not in the data base we should save them a new file for their save
+    newPlayerSave = SaveState(
+      name=playerName,
+      score=000,
+      level=[1,1], #max level so they have access to all
+      highScore=0000,
+      questionsCompleted=000,
+      incorrectAmt=0000,
+      correctAmt=000,
+      overallGrade=0000,
+      loggedIn=True
+    )
+
+    newPlayerSave.save_settings(newPlayerSave.model_dump_json(), playerName)
+    return newPlayerSave
 
 if __name__ == "__main__":
 
@@ -135,6 +148,6 @@ if __name__ == "__main__":
   board = ScoreboardState()
   scoreboard : List[SaveState] = board.loadScore()
   print(board.getPlayer("Andy"))
- 
+
 
 

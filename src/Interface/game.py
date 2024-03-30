@@ -8,7 +8,7 @@ src_dir = os.path.dirname(parent_dir)  # Moves up to 'src'
 sys.path.append(src_dir)
 
 from Interface.state_machine import State
-from Interface.modules.state import SaveModel
+from Interface.modules.state import SaveState
 from components.asteroid import Asteroid
 from components.player import Player
 from PygameUIKit import Group, button
@@ -19,13 +19,14 @@ import pygame
 #this isn't importing properly???? ill figure it out or someone else can i give up
 
 class GameState(State):
-    def __init__(self, engine, user, mode):
+    def __init__(self, engine, user, mode, level):
         super().__init__(engine)
         #UI
         self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter
         WIDTH, HEIGHT = 800, 600
 
-        self.user = user
+        self.user : SaveState = user
+        self.level = level
 
         #make this into a utils function?
         currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
@@ -47,7 +48,7 @@ class GameState(State):
 
 
         self.border = pygame.rect.Rect(0, 370, 800, 40)
-        self.healthbar = pygame.rect.Rect(0, 0, 800, 40)
+        self.healthbar = pygame.rect.Rect(0, 0, 800, 10)
         self.player = Player()
 
 
@@ -70,9 +71,9 @@ class GameState(State):
         #needs a better way to do the width and height
             # a big issue is how we pass the surface around this is causing problems
             # think of a work around
-        self.player_pos = [WIDTH // 2, ((HEIGHT / 4) * 3 + 20)]
+        self.player_pos = [WIDTH // 2, ((HEIGHT / 4) * 3 - 60)]
 
-        self.asteroidMaster = Asteroid(mode)
+        self.asteroidMaster = Asteroid(mode, level)
         self.asteroidMaster.generateAsteroids()
 
         self.explosionAnimatation = []
@@ -80,6 +81,13 @@ class GameState(State):
             explosionFramePath = os.path.join(parent_dir, "assets", "visuals", "explosion!!!!!", "explosion frames", "explosion{}.png".format(str(i + 1)))
             frame = pygame.image.load(explosionFramePath).convert_alpha()
             self.explosionAnimatation.append(pygame.transform.scale(frame, (60, 60)))
+
+         #music
+        from components.media import music, sfx
+        self.music = music()
+        self.music.game_music()
+        self.sfx = sfx()
+
 
     #only button that exsit on the screen
     def change_state_pause(self):
@@ -89,7 +97,7 @@ class GameState(State):
     def create_shot(self, player_pos):
         #limits the number of bullets on screen to one
         if not (len(self.shots) > 0):
-            bullet_pos = [player_pos[0], player_pos[1]]
+            bullet_pos = [player_pos[0] + 75, player_pos[1]]
             return {
                 'surface' :  self.shotImage,
                 'position' : bullet_pos,
@@ -132,8 +140,9 @@ class GameState(State):
                             #call destory func here...
                             self.exAsteroids.append([asteroid, 0])
                             self.asteroidMaster.asteroidArr.remove(asteroid)
+                            self.sfx.explosion_sound()
                             asteroid['destroyed'] = True
-                            
+
                     return True
             return False
         except:
@@ -169,7 +178,15 @@ class GameState(State):
 
     def onGameWin(self):
         #increment the level by up
+        if self.level == 3:
+            if self.user.level[0] == 3:
+                print("FINISHED LAST LEVEL")
+            else:
+                self.user.level[0] += 1
+        elif self.level < 3:
+            self.user.level[1] += 1
 
+        self.user.save_settings(self.user.model_dump_json(), self.user.name)
 
         from Interface.level import OuterLevelState
         self.engine.machine.next_state = OuterLevelState(self.engine, self.user)
@@ -193,7 +210,7 @@ class GameState(State):
             # pygame.draw.circle(surface, "black", shot['position'], shot['radius'])
         for asteroid in self.asteroidMaster.asteroidArr:
             surface.blit(asteroid['surface'], asteroid['position'])
-            surface.blit(asteroid['number_surface'], asteroid['position'])
+            surface.blit(asteroid['number_surface'], [asteroid['position'][0] + 15, asteroid['position'][1] + 15])
 
 
             # pygame.draw.circle(surface, "pink", asteroid['position'], 50)
@@ -215,12 +232,11 @@ class GameState(State):
             self.newRound()
 
         self.updateHealthBar()
-        surface.blit(self.asteroidMaster.question_surface, [500, 300])
+        pygame.draw.rect(surface, "gray",  pygame.rect.Rect(335, 535, 135, 50))
+        surface.blit(self.asteroidMaster.question_surface, [365, 545])
         # pygame.draw.circle(surface, "red", self.player_pos, self.player_radius)
         surface.blit(self.playerImage, self.player_pos)
 
-
-        pygame.draw.rect(surface, "red", self.border)
         pygame.draw.rect(surface, "green", self.healthbar)
 
         pygame.display.flip()
@@ -233,14 +249,15 @@ class GameState(State):
                 shot = self.create_shot(player_pos=self.player_pos)
                 if shot:
                     self.shots.append(shot)
+                    self.sfx.shoot_sound()
 
         self.ui.handle_event(event)
 
 
     def handle_movement(self):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_LEFT]:
+        if keys[pygame.K_LEFT] and self.player_pos[0] > -40:
             self.player_pos[0] -= self.player_speed
-        if keys[pygame.K_RIGHT]:
+        if keys[pygame.K_RIGHT] and self.player_pos[0] < 800 - 150:
             self.player_pos[0] += self.player_speed
 

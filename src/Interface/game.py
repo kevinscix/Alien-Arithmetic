@@ -53,8 +53,8 @@ class GameState(State):
 
        # Start button
         self.btn_pause = button.ButtonPngIcon(
-            self.pauseButton, 
-            self.change_state_pause, 
+            self.pauseButton,
+            self.change_state_pause,
             ui_group=self.ui
         )
 
@@ -132,8 +132,10 @@ class GameState(State):
                             #call destory func here...
                             self.exAsteroids.append([asteroid, 0])
                             self.asteroidMaster.asteroidArr.remove(asteroid)
+                            asteroid['destoryed'] = True
+
                             asteroid['destroyed'] = True
-                    
+                            
                     return True
             return False
         except:
@@ -173,7 +175,7 @@ class GameState(State):
 
         from Interface.level import OuterLevelState
         self.engine.machine.next_state = OuterLevelState(self.engine, self.user)
-        
+
 
     def on_draw(self, surface):
         #pops the screen up

@@ -15,8 +15,7 @@ import pygame
 #this file is a quick scehem of how a state would look like for login and sign in state!
 
 #this isn't importing properly???? ill figure it out or someone else can i give up
-from Interface.modules.state import SaveModel
-
+from Interface.modules.state import SaveState
 
 class LoginState(State):
     def __init__(self, engine):
@@ -43,7 +42,7 @@ class LoginState(State):
         currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
 
 
-        self.instructor : SaveModel = SaveModel(
+        self.instructor : SaveState = SaveState(
             name="Instructor",
             score=000,
             level=[3,3,3], #max level so they have access to all
@@ -55,10 +54,10 @@ class LoginState(State):
             loggedIn=True
         )
 
-        self.student : SaveModel = None
-        self.text_input = text_input.TextInput(placeholder="Username/Password", 
-                                               fixed_width=400, 
-                                               border_radius=2, 
+        self.student : SaveState = None
+        self.text_input = text_input.TextInput(placeholder="Username/Password",
+                                               fixed_width=400,
+                                               border_radius=2,
                                                ui_group=self.ui,
                                                font=pygame.font.Font('freesansbold.ttf', 32))
 
@@ -78,26 +77,33 @@ class LoginState(State):
             ui_group=self.ui
         )
 
+        #music
+        from components.media import music, sfx
+
+        self.music = music()
+        self.music.menu_music()
+        self.sfx = sfx()
+
     #pulls the player data with the empty player pull function
     def change_state_student(self):
+        self.sfx.button_sound()
+
         from Interface.modules.state import ScoreboardState
         bo = ScoreboardState()
         Player = bo.getPlayer(playerName=self.text_input.get_text())
-        print(Player)
         #should be like  self.engine.machine.next_state = MENUSTATE(self.engine, self.instructor)
+        #need to add an error message popup
         self.engine.machine.next_state = MenuState(self.engine, Player)
 
     #loads a instrctor model
     def change_state_instructor(self):
-        #should be like  self.engine.machine.next_state = MENUSTATE(self.engine, self.instructor)
-        from Interface.modules.state import ScoreboardState
-        bo = ScoreboardState()
-        Player = bo.getPlayer(playerName=self.text_input.get_text())
-        print(Player)
-        #should be like  self.engine
-        self.engine.machine.next_state = MenuState(self.engine, Player)
+        self.sfx.button_sound()
+
+        self.engine.machine.next_state = MenuState(self.engine, self.instructor)
 
     def quit_game(self):
+       self.sfx.button_sound()
+
        pygame.quit()
 
     def on_draw(self, surface):
@@ -109,12 +115,10 @@ class LoginState(State):
         pygame.draw.rect(surface, "gray31", pygame.Rect(200, 350, 400, 40))
         self.text_input.draw(surface, 200, 350)
 
-
         pygame.display.flip()
 
 
     def on_event(self, event):
-        pass
         self.ui.handle_event(event)
 
         self.text_input._handle_event(event)
@@ -123,6 +127,6 @@ class LoginState(State):
         pressed = pygame.key.get_pressed()
 
         for key in [pygame.K_BACKSPACE, pygame.K_LEFT, pygame.K_RIGHT] + [i for i in range(32, 127)]:
-            if not pressed[key] or not self.text_input.should_handle_key(key): 
+            if not pressed[key] or not self.text_input.should_handle_key(key):
                 continue
             self.text_input.handle_key(key)

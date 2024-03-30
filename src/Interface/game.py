@@ -19,13 +19,14 @@ import pygame
 #this isn't importing properly???? ill figure it out or someone else can i give up
 
 class GameState(State):
-    def __init__(self, engine, user, mode):
+    def __init__(self, engine, user, mode, level):
         super().__init__(engine)
         #UI
         self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter
         WIDTH, HEIGHT = 800, 600
 
         self.user = user
+        self.level = level
 
         #make this into a utils function?
         currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
@@ -72,7 +73,7 @@ class GameState(State):
             # think of a work around
         self.player_pos = [WIDTH // 2, ((HEIGHT / 4) * 3 + 20)]
 
-        self.asteroidMaster = Asteroid(mode)
+        self.asteroidMaster = Asteroid(mode, level)
         self.asteroidMaster.generateAsteroids()
 
         self.explosionAnimatation = []
@@ -80,6 +81,13 @@ class GameState(State):
             explosionFramePath = os.path.join(parent_dir, "assets", "visuals", "explosion!!!!!", "explosion frames", "explosion{}.png".format(str(i + 1)))
             frame = pygame.image.load(explosionFramePath).convert_alpha()
             self.explosionAnimatation.append(pygame.transform.scale(frame, (60, 60)))
+
+         #music
+        from components.media import music, sfx
+        self.music = music()
+        self.music.game_music()
+        self.sfx = sfx()
+
 
     #only button that exsit on the screen
     def change_state_pause(self):
@@ -132,10 +140,9 @@ class GameState(State):
                             #call destory func here...
                             self.exAsteroids.append([asteroid, 0])
                             self.asteroidMaster.asteroidArr.remove(asteroid)
-                            asteroid['destoryed'] = True
-
+                            self.sfx.explosion_sound()
                             asteroid['destroyed'] = True
-                            
+
                     return True
             return False
         except:
@@ -235,6 +242,7 @@ class GameState(State):
                 shot = self.create_shot(player_pos=self.player_pos)
                 if shot:
                     self.shots.append(shot)
+                    self.sfx.shoot_sound()
 
         self.ui.handle_event(event)
 

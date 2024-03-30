@@ -90,10 +90,13 @@ class LoginState(State):
 
         from Interface.modules.state import ScoreboardState
         bo = ScoreboardState()
-        Player = bo.getPlayer(playerName=self.text_input.get_text())
-        #should be like  self.engine.machine.next_state = MENUSTATE(self.engine, self.instructor)
-        #need to add an error message popup
-        self.engine.machine.next_state = MenuState(self.engine, Player)
+        #if no text then don't let the users enter...
+        #do we want an error system here
+        if self.text_input.get_text():
+            Player = bo.getPlayer(playerName=self.text_input.get_text())
+            #should be like  self.engine.machine.next_state = MENUSTATE(self.engine, self.instructor)
+            #need to add an error message popup
+            self.engine.machine.next_state = MenuState(self.engine, Player)
 
     #loads a instrctor model
     def change_state_instructor(self):

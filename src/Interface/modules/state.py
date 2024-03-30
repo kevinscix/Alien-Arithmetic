@@ -79,13 +79,13 @@ class ScoreboardState(Scoreboard, State):
     database : List[SaveState]  = []
     for root, dirs, files in os.walk(os.path.join(src_dir, 'saves/')):
         for file in files:
-            if file.endswith(".txt"):
-              try:
-                user = SaveState.model_validate_json(self.load_settings(file))
-                database.append(user)
-              except:
-                print("will catch the error when we return nonetype after iterating over the file")
-                pass
+            try:
+              user = SaveState.model_validate_json(self.load_settings(file))
+              database.append(user)
+            except:
+                
+              print("will catch the error when we return nonetype after iterating over the file")
+              pass
     return database
 
   def getPlayer(self, playerName):
@@ -111,43 +111,15 @@ class ScoreboardState(Scoreboard, State):
     return newPlayerSave
 
 if __name__ == "__main__":
-
-
   print("Test cases for DataScore model")
   state = State()
-
-
-  #Player example data
-  AndyPlayer = SaveState(
-    name="Andy",
-    score=40,
-    level=[2,1],
-    highScore=50,
-    questionsCompleted=3,
-    incorrectAmt=1,
-    correctAmt=10,
-    overallGrade=50,
-    loggedIn=True
-  )
-
-  #empty player/user data
-  EmptyPlayer = SaveState(
-    name="User",
-    score=0,
-    level=[0,0],
-    highScore=0,
-    questionsCompleted=0,
-    incorrectAmt=0,
-    correctAmt=0,
-    overallGrade=0,
-    loggedIn=False
-    )
-
 
   #example of loading all the save states using the information
   board = ScoreboardState()
   scoreboard : List[SaveState] = board.loadScore()
-  print(board.getPlayer("Andy"))
+  tes = sorted(scoreboard, key=lambda x: x.score, reverse=True)
 
+  for s in tes:
+    print(s)
 
 

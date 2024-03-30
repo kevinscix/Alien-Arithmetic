@@ -19,20 +19,13 @@ class LeaderboardState(State):
         scoreboardImagePath = os.path.join(currentPath, "..", "assets", "visuals", "pages - backgrounds", "student leaderboard page.png")
         backButtonPath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "logOutButton.png")
         levelSelectButtonPath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "levelSelectButton.png")
+        self.font_path = os.path.join(currentPath, "..","assets", "visuals", "fonts", "PressStart2P-Regular.ttf")
         self.scoreboardImage = pygame.image.load(os.path.normpath(scoreboardImagePath))
         self.scoreboardImage = pygame.transform.scale(self.scoreboardImage, (830, 600))
         self.backButtonImage = pygame.image.load(os.path.normpath(backButtonPath))
         self.backButtonImage = pygame.transform.scale(self.backButtonImage, (150, 100))
-        self.levelSelectImage = pygame.image.load(os.path.normpath(levelSelectButtonPath))
-        self.levelSelectImage = pygame.transform.scale(self.levelSelectImage, (245, 100))
-        
-        #loads leaderboard_data with the scores at the moment the state is made
 
-        # pull loaded data from scoreboard class .load function
-        # return a array of player class, these are player models that are validated
-        # can pull individual player data from this 
-        # create a subfunction separate the data by rows of player name, score and have they logged on
-        # then draw this in the def 0n_draw function
+
 
        # Back button 
         #needs to set up the correct location for and settings 
@@ -41,11 +34,7 @@ class LeaderboardState(State):
             self.change_state_menu, 
             ui_group=self.ui
         )
-        self.btn_level_select = button.ButtonPngIcon(
-            self.levelSelectImage, 
-            self.change_state_select, 
-            ui_group=self.ui
-        )
+
 
         self.leaderboard_data = []
         self.createBoard()
@@ -60,18 +49,15 @@ class LeaderboardState(State):
     def change_state_menu(self):
         from Interface.menu import MenuState
         self.engine.machine.next_state = MenuState(self.engine, self.user)
-    
-    def change_state_select(self):
-        from Interface.level import OuterLevelState
-        self.engine.machine.next_state = OuterLevelState(self.engine, self.user)
+
 
 
     def on_draw(self, surface):
         #draws the titleImage on surface
         surface.blit(self.scoreboardImage, (-15, 0))
 
-        y = 228
-        self.font = pygame.font.Font('freesansbold.ttf', 32)
+        y = 230
+        self.font = pygame.font.Font(self.font_path, 25)
 
         for i, player in enumerate(self.leaderboard_data[:5], start=1):
             # Create text surfaces for the player's name, score, and logged-in status
@@ -80,14 +66,13 @@ class LeaderboardState(State):
             
             surface.blit(name_surface, (175, y))
             surface.blit(score_surface, (490, y))
-            y += self.font.get_height() + 20
+            y += self.font.get_height() + 30
 
         mainScore_surface = self.font.render(str(self.user.name) + ' score: ' + str(self.user.score), True, "red")
         surface.blit(mainScore_surface, (250, 85))
 
     
 
-        self.btn_level_select.draw(surface, 275, 500)
         self.btn_back.draw(surface, 0, 500)
 
         pygame.display.flip()

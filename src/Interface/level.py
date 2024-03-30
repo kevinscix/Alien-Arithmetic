@@ -78,7 +78,8 @@ class OuterLevelState(State):
             self.change_state_exit,
             ui_group=self.ui
         )
-
+        from components.media import sfx
+        self.sfx = sfx()
 
 
         #determine max level
@@ -93,12 +94,14 @@ class OuterLevelState(State):
 
 
     def start_inner_state(self, mode):
+        self.sfx.button_sound()
         if  self.modes[mode] <= self.maxLevel:
             self.engine.machine.next_state = InnerLevelState(self.engine, mode, self.user)
 
         #write a error message here.... ill leave it here for now since not sure if we want it..
 
     def change_state_exit(self):
+        self.sfx.button_sound()
         from Interface.menu import MenuState
         self.engine.machine.next_state = MenuState(self.engine, self.user)
 
@@ -172,6 +175,8 @@ class InnerLevelState(State):
             self.change_state_exit,
             ui_group=self.ui
         )
+        from components.media import sfx
+        self.sfx = sfx()
 
         self.maxLevel = self.user.level[1]
         if self.maxLevel == 1:
@@ -184,6 +189,7 @@ class InnerLevelState(State):
         #and so on, must wait to understand how this work before we continue
 
     def start_game_state(self, level):
+        self.sfx.button_sound()
         #if level is up to the required maxLevel then we can change the state else return locked
         if level <= self.maxLevel:
             self.engine.machine.next_state = GameState(self.engine, self.user, self.mode, level)
@@ -191,6 +197,7 @@ class InnerLevelState(State):
         #return a error message function to write ont he screen the error...
 
     def change_state_exit(self):
+        self.sfx.button_sound()
         self.engine.machine.next_state = OuterLevelState(self.engine, self.user)
 
     def on_draw(self, surface):

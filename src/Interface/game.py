@@ -64,6 +64,8 @@ class GameState(State):
             self.change_state_pause,
             ui_group=self.ui
         )
+        from components.media import sfx
+        self.sfx = sfx()
 
         #game constants
         self.shots = []
@@ -99,6 +101,7 @@ class GameState(State):
 
     #only button that exsit on the screen
     def change_state_pause(self):
+        self.sfx.button_sound()
         self.pause = not self.pause
         pass
 

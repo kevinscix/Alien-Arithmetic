@@ -52,6 +52,8 @@ class instructorState(State):
             self.change_state_right, 
             ui_group=self.ui
         )
+        from components.media import sfx
+        self.sfx = sfx()
         self.leaderboard_data = []
         self.createBoard()
 
@@ -63,13 +65,17 @@ class instructorState(State):
         self.leaderboard_data = scores
 
     def change_state_menu(self):
+        self.sfx.button_sound()
         from Interface.login import LoginState
         self.engine.machine.next_state = LoginState(self.engine)
 
     def change_state_left(self):
+        self.sfx.button_sound()
         if self.currentPage > 0: 
             self.currentPage -= 1
+
     def change_state_right(self):
+        self.sfx.button_sound()
         leaderboard_data = self.createBoard()
         total_pages = (len(self.leaderboard_data) + 4) // 5  
         if self.currentPage + 1 < total_pages:  
@@ -117,7 +123,7 @@ class instructorState(State):
 
     def on_event(self, event):
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.change_state_menu:
+            if event.key == pygame.K_ESCAPE:
                 print("Returning to menu screen")
                 self.change_state_menu()
         self.ui.handle_event(event)

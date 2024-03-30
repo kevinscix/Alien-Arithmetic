@@ -50,18 +50,23 @@ class TutorialState(State):
             self.change_state_right, 
             ui_group=self.ui
         )
+        from components.media import sfx
+        self.sfx = sfx()
     
 
     def change_state_menu(self):
+        self.sfx.button_sound()
         from Interface.menu import MenuState
         self.engine.machine.next_state = MenuState(self.engine, self.user)
     
 
     def change_state_left(self):
+        self.sfx.button_sound()
         if self.currentPage == 1: 
             self.currentPage -= 1
 
     def change_state_right(self):
+        self.sfx.button_sound()
         if self.currentPage == 0:  
             self.currentPage += 1
 

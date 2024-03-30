@@ -35,7 +35,8 @@ class LeaderboardState(State):
             ui_group=self.ui
         )
 
-
+        from components.media import sfx
+        self.sfx = sfx()
         self.leaderboard_data = []
         self.createBoard()
 
@@ -47,6 +48,7 @@ class LeaderboardState(State):
         self.leaderboard_data = scores
 
     def change_state_menu(self):
+        self.sfx.button_sound()
         from Interface.menu import MenuState
         self.engine.machine.next_state = MenuState(self.engine, self.user)
 

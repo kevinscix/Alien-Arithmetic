@@ -2,6 +2,9 @@
 import os
 import random
 import pygame
+import unittest
+
+pygame.font.init()
 
 class Asteroid():
     # Class-level attributes
@@ -17,7 +20,7 @@ class Asteroid():
         self.secondOp : int
         self.correctAnswer : int
         self.size : float = 1     # placeholder value, this will be the default size before scaling
-
+        self.mode = mode
 
         # Calculate and set the correct answer to the question
         self.qAnswer = 0
@@ -28,13 +31,12 @@ class Asteroid():
         self.asteroidArr = []
         self.question_surface = ''
 
-        # Store the mode of the asteroid (1 for addition, 2 for subtraction, 3 for multiplication)
-        self.mode = mode
+
         self.font = pygame.font.Font('freesansbold.ttf', 32)
         self.incrementsize = 800 / self.numberOfAsteroids
 
         currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
-        asteroidImagePath = os.path.join(currentPath, "..", "components", "Images", "asteroid.png")
+        asteroidImagePath = os.path.join(currentPath, "..", "assets", "visuals", "level builder", "asteroid.png")
         self.asteroidImagePath = pygame.image.load(os.path.normpath(asteroidImagePath))
 
 
@@ -56,6 +58,9 @@ class Asteroid():
         elif self.mode == "multiply":
             # multiplication
             self.correctAnswer = self.firstOp * self.secondOp
+        else:
+            # sometimes this value is reached?
+            self.correctAnswer = 999    
 
     def create_asteroids(self, x, y, value, isCorrect):
         # scale it to smaller size and make it quadratic
@@ -70,7 +75,7 @@ class Asteroid():
             'speed': self.speed,
             'angle': 0,
             'correct' : isCorrect,
-            'destoryed' : False
+            'destroyed' : False
         }
 
     # .generate will create a list of asteriod dictionaries
@@ -111,9 +116,10 @@ class Asteroid():
                 # Ensure the incorrect answer is not a duplicate of the correct answer
                 while x in self.asteroidArr:
                     x = random.randint(self.minAsteroid, self.maxResultAsteroid)
-                self.asteroidArr.appelnd(self.create_asteroids(self.incrementsize * i, 0, x, False))
+                self.asteroidArr.append(self.create_asteroids(self.incrementsize * i, 0, x, False))
 
     def showEquation(self) -> str:
+        eq = ""
         if self.mode == "plus":
             eq = "%d + %d" % (self.firstOp, self.secondOp)
         elif self.mode == "minus":
@@ -136,16 +142,56 @@ class Asteroid():
 
 
 if __name__ == "__main__":
-    # Create an instance of the asteroid class
-    ass = Asteroid(1)  # mode: 1 (addition) x position: 2
-    ass.create_question()
-    print("size = ", ass.size)
-    print("speed = ", ass.speed)
-    ass.size_speed_scale(30)
-    print("size = ", ass.size)
-    print("speed = ", ass.speed)
+    # # Create an instance of the asteroid class
+    # ass = Asteroid(1)  # mode: 1 (addition) x position: 2
+    # ass.create_question()
+    # print("size = ", ass.size)
+    # print("speed = ", ass.speed)
+    # ass.size_speed_scale(30)
+    # print("size = ", ass.size)
+    # print("speed = ", ass.speed)
 
 
     # Generate asteroids with correct and incorrect answers
     # ass.generateAsteroids()
     # Print the array containing asteroid values
+
+
+    ass = Asteroid(1)
+    ass.create_question()
+    ass.generateAsteroids()
+    
+    for i in range(5):
+         print(ass.asteroidArr[i])
+    
+    for i in range(5):
+         print(ass.asteroidArr[i]["position"])
+
+    
+    ass.move_asteroids()
+    ass.move_asteroids()
+
+    for i in range(5):
+         print(ass.asteroidArr[i]["position"])
+
+    # print("should be false", ass.asteroidArr[0]["destroyed"])
+
+
+    class test_asteroid(unittest.TestCase):
+
+        def setUp(self):
+            self.asteroid = Asteroid(1)
+            self.asteroid.create_question()
+            self.asteroid.generateAsteroids()
+        
+        def test_move(self):
+            for i in range(5):
+                self.asteroid.move_asteroids()
+            self.assertEqual(self.asteroid.asteroidArr[0]["position"][1], 5, "position is wrong")
+
+        def test_collide(self):
+            for i in range (5):
+                self.assertEqual(self.asteroid.asteroidArr[i]["destroyed"], True, "not destroyed")
+            
+
+    unittest.main()

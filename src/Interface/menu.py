@@ -34,24 +34,24 @@ class MenuState(State):
         self.user : SaveState = user
 
         self.menuImagePath = os.path.join(currentPath, "..", "components", "Images", "menuPage.png")
-        startImagePath = os.path.join(currentPath, "..", "components", "Images", "startButton.png")
-        loadImagePath = os.path.join(currentPath, "..", "components", "Images", "loadButton.png")
-        tutorialImagePath = os.path.join(currentPath, "..", "components", "Images", "tutorialButton.png")
-        highscoresImagePath = os.path.join(currentPath, "..", "components", "Images", "leaderboardButton.png")
-        quitImagePath = os.path.join(currentPath, "..", "components", "Images", "exitButton.png")
+        startImagePath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "startButton.png")
+        loadImagePath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "loadButton.png")
+        tutorialImagePath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "tutorialButton.png")
+        highscoresImagePath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "leaderboardButton.png")
+        quitImagePath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "exitButton.png")
 
         self.menuImage = pygame.image.load(os.path.normpath(self.menuImagePath))
         self.menuImage= pygame.transform.scale(self.menuImage, (800, 600))
         self.start_image = pygame.image.load(os.path.normpath(startImagePath))
-        self.start_image = pygame.transform.scale(self.start_image, (265, 150))
+        self.start_image = pygame.transform.scale(self.start_image, (225, 100))
         self.load_image = pygame.image.load(os.path.normpath(loadImagePath))
-        self.load_image = pygame.transform.scale(self.load_image, (265, 155))
+        self.load_image = pygame.transform.scale(self.load_image, (225, 100))
         self.tutorial_image = pygame.image.load(os.path.normpath(tutorialImagePath))
-        self.tutorial_image = pygame.transform.scale(self.tutorial_image, (100, 130))
+        self.tutorial_image = pygame.transform.scale(self.tutorial_image, (75, 100))
         self.highscores_image = pygame.image.load(os.path.normpath(highscoresImagePath))
-        self.highscores_image = pygame.transform.scale(self.highscores_image, (260, 125))
+        self.highscores_image = pygame.transform.scale(self.highscores_image, (240, 100))
         self.quit_image = pygame.image.load(os.path.normpath(quitImagePath))
-        self.quit_image = pygame.transform.scale(self.quit_image, (175, 130))
+        self.quit_image = pygame.transform.scale(self.quit_image, (150, 105))
 
 
         # Start button
@@ -117,11 +117,11 @@ class MenuState(State):
         #change to real background?
         surface.blit(self.menuImage, (0, 0))
 
-        self.btn_start.draw(surface, 270, 151)
-        self.btn_load.draw(surface, 270, 303)
-        self.btn_tutorial.draw(surface, 695, 355)
-        self.btn_highscores.draw(surface, 540, 470)
-        self.btn_quit.draw(surface, 0, 470) 
+        self.btn_start.draw(surface, 290, 180)
+        self.btn_load.draw(surface, 290, 325)
+        self.btn_tutorial.draw(surface, 710, 373)
+        self.btn_highscores.draw(surface, 550, 487)
+        self.btn_quit.draw(surface, 5, 485) 
        
         pygame.display.flip()
 

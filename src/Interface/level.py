@@ -23,9 +23,9 @@ import pygame
 #need to talk to luca how this works
 #this is like a bridging state to the game state
 currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
-quitImagePath = os.path.join(currentPath, "..", "components", "Images", "exitButton.png")
+quitImagePath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "exitButton.png")
 quit_image = pygame.image.load(os.path.normpath(quitImagePath))
-quit_image = pygame.transform.scale(quit_image, (175, 130))
+quit_image = pygame.transform.scale(quit_image, (150, 105))
 
 class OuterLevelState(State):
     def __init__(self, engine, user):
@@ -38,18 +38,15 @@ class OuterLevelState(State):
         levelImagePath = os.path.join(currentPath, "..","components", "Images", "outerLevelSelect.png")
         self.levelSelect = pygame.image.load(os.path.normpath(levelImagePath))
         self.levelSelect= pygame.transform.scale(self.levelSelect, (800, 600))
-        xAsteroidPath = os.path.join(currentPath, "..","components", "Images", "xAsteroid.png")
+        xAsteroidPath = os.path.join(currentPath, "..", "assets", "visuals", "stage-level select", "xAsteroid.png")
         self.xAsteroid = pygame.image.load(os.path.normpath(xAsteroidPath))
-        self.xAsteroid= pygame.transform.scale(self.xAsteroid, (150, 145))
-        plusAsteroidPath = os.path.join(currentPath, "..","components", "Images", "plusAsteroid.png")
+        self.xAsteroid= pygame.transform.scale(self.xAsteroid, (125, 125))
+        plusAsteroidPath = os.path.join(currentPath, "..","assets", "visuals", "stage-level select", "plusAsteroid.png")
         self.plusAsteroid = pygame.image.load(os.path.normpath(plusAsteroidPath))
-        self.plusAsteroid= pygame.transform.scale(self.plusAsteroid, (205, 160))
-        minusAsteroidPath = os.path.join(currentPath, "..","components", "Images", "minusAsteroid.png")
+        self.plusAsteroid= pygame.transform.scale(self.plusAsteroid, (125, 125))
+        minusAsteroidPath = os.path.join(currentPath, "..","assets", "visuals", "stage-level select", "minusAsteroid.png")
         self.minusAsteroid = pygame.image.load(os.path.normpath(minusAsteroidPath))
-        self.minusAsteroid= pygame.transform.scale(self.minusAsteroid, (175, 180))
-
-
-        self.user : SaveModel = None
+        self.minusAsteroid= pygame.transform.scale(self.minusAsteroid, (125, 125))
 
        # Student Login button
         self.btn_level_x = button.ButtonPngIcon(
@@ -89,10 +86,10 @@ class OuterLevelState(State):
         #draws the titleImage on surface
         surface.blit(self.levelSelect , (0, 0))
 
-        self.btn_level_plus.draw(surface, 235, 15)
-        self.btn_level_minus.draw(surface, 408, 208)
-        self.btn_level_x.draw(surface, 238, 420)
-        self.btn_quit.draw(surface, 0, 470) 
+        self.btn_level_plus.draw(surface, 260, 30)
+        self.btn_level_minus.draw(surface, 415, 225)
+        self.btn_level_x.draw(surface, 260, 435)
+        self.btn_quit.draw(surface, 5, 485) 
 
 
         
@@ -115,18 +112,16 @@ class InnerLevelState(State):
         levelSelectPath = os.path.join(currentPath, "..", "components", "Images", "innerLevelSelect.png")
         self.levelSelect = pygame.image.load(os.path.normpath(levelSelectPath))
         self.levelSelect= pygame.transform.scale(self.levelSelect, (800, 600))
-        levelOnePath = os.path.join(currentPath, "..","components", "Images", "levelOne.png")
+        levelOnePath = os.path.join(currentPath, "..", "assets", "visuals", "stage-level select", "levelOne.png")
         self.levelOne = pygame.image.load(os.path.normpath(levelOnePath))
-        self.levelOne= pygame.transform.scale(self.levelOne, (150, 145))
-        levelTwoPath = os.path.join(currentPath, "..","components", "Images", "levelTwo.png")
+        self.levelOne= pygame.transform.scale(self.levelOne, (150, 125))
+        levelTwoPath = os.path.join(currentPath, "..","assets", "visuals", "stage-level select", "levelTwo.png")
         self.levelTwo = pygame.image.load(os.path.normpath(levelTwoPath))
-        self.levelTwo = pygame.transform.scale(self.levelTwo, (205, 160))
-        levelThreePath = os.path.join(currentPath, "..","components", "Images", "levelThree.png")
+        self.levelTwo = pygame.transform.scale(self.levelTwo, (150, 125))
+        levelThreePath = os.path.join(currentPath, "..","assets", "visuals", "stage-level select", "levelThree.png")
         self.levelThree = pygame.image.load(os.path.normpath(levelThreePath))
-        self.levelThree = pygame.transform.scale(self.levelThree, (175, 180))
+        self.levelThree = pygame.transform.scale(self.levelThree, (150, 125))
 
-
-        self.user : SaveModel = None
 
        # Student Login button
         self.btn_level_one = button.ButtonPngIcon(
@@ -143,7 +138,7 @@ class InnerLevelState(State):
 
         self.btn_level_three = button.ButtonPngIcon(
             self.levelThree, 
-            self.start_game_state(), 
+            lambda: self.start_game_state(), 
             ui_group=self.ui
         )
 
@@ -165,10 +160,10 @@ class InnerLevelState(State):
     def on_draw(self, surface):
         #draws the titleImage on surface
         surface.blit(self.levelSelect , (0, 0))
-        self.btn_level_one.draw(surface, 235, 15)
-        self.btn_level_two.draw(surface, 408, 208)
-        self.btn_level_three.draw(surface, 238, 420)
-        self.btn_quit.draw(surface, 0, 470) 
+        self.btn_level_one.draw(surface, 245, 35)
+        self.btn_level_two.draw(surface, 405, 238)
+        self.btn_level_three.draw(surface, 255, 445)
+        self.btn_quit.draw(surface, 5, 485) 
 
 
         #add the buttons we need should be 3 for the diff levels

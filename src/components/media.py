@@ -41,3 +41,8 @@ class sfx():
     def shoot_sound(self):
         pygame.mixer.music.load("../assets/audio/effects/potential shooting sound 1.wav")
         pygame.mixer()
+    
+if __name__ == "__main__":
+    # testing for music
+    print("music testing")
+    

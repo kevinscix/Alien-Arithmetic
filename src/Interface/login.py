@@ -23,17 +23,17 @@ class LoginState(State):
         super().__init__(engine)
 
         current_path = os.path.dirname(__file__)
-        student_login_path = os.path.join(current_path, "..", "components", "Images", "studentLogin.png")
-        teacher_login_image_path = os.path.join(current_path, "..", "components", "Images", "instructorLogin.png")
-        quit_game_image_path = os.path.join(current_path, "..", "components", "Images", "exitButton.png")
+        student_login_path = os.path.join(current_path, "..", "assets", "visuals", "buttons", "text buttons", "studentLogin.png")
+        teacher_login_image_path = os.path.join(current_path, "..", "assets", "visuals", "buttons", "text buttons", "instructorLogin.png")
+        quit_game_image_path = os.path.join(current_path, "..", "assets", "visuals", "buttons", "text buttons", "exitButton.png")
         loginImagePath = os.path.join(current_path, "..", "components", "Images", "titlePage.png")
 
         self.teacher_login_image = pygame.image.load(os.path.normpath(teacher_login_image_path))
-        self.teacher_login_image = pygame.transform.scale(self.teacher_login_image, (305, 145))
+        self.teacher_login_image = pygame.transform.scale(self.teacher_login_image, (250, 100))
         self.student_login_image = pygame.image.load(os.path.normpath(student_login_path))
-        self.student_login_image = pygame.transform.scale(self.student_login_image, (260, 151))
+        self.student_login_image = pygame.transform.scale(self.student_login_image, (200, 100))
         self.quit_game_image = pygame.image.load(os.path.normpath(quit_game_image_path))
-        self.quit_game_image = pygame.transform.scale(self.quit_game_image, (125, 70))
+        self.quit_game_image = pygame.transform.scale(self.quit_game_image, (100, 75))
         self.loginImage = pygame.image.load(os.path.normpath(loginImagePath))
         self.loginImage = pygame.transform.scale(self.loginImage, (800, 600))
 
@@ -103,14 +103,10 @@ class LoginState(State):
     def on_draw(self, surface):
         #draws the titleImage on surface
         surface.blit(self.loginImage, (0, 0))
-        self.btn_student_login.draw(surface, 108, 430)
-        self.btn_teacher_login.draw(surface, 410, 424)
+        self.btn_student_login.draw(surface, 125, 450)
+        self.btn_teacher_login.draw(surface, 427, 450)
         self.btn_quit_game.draw(surface, 0, 525)
-        # self.text_input.draw(surface, 200, 200)
-
-        # Demo(surface).run()
         pygame.draw.rect(surface, "gray31", pygame.Rect(200, 350, 400, 40))
-
         self.text_input.draw(surface, 200, 350)
 
 

@@ -31,7 +31,7 @@ class GameState(State):
         currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
         gameImagePath = os.path.join(currentPath, "..", "components", "Images", "gamePlay1.png")
         shotImagePath = os.path.join(current_dir, "..", "assets", "visuals", "projectiles", "red projectile icon.png")
-        pauseButtonPath = os.path.join(currentPath, "..", "components", "Images", "pauseButton.png")
+        pauseButtonPath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "pauseButton.png")
         playerPath = os.path.join(current_dir, "..", "assets", "visuals", "player ship", "ship red.png")
 
         self.gamePlay1Image = pygame.image.load(os.path.normpath(gameImagePath))
@@ -45,7 +45,6 @@ class GameState(State):
         self.pauseButton = pygame.image.load(os.path.normpath(pauseButtonPath))
         self.pauseButton = pygame.transform.scale(self.pauseButton, (65, 85))
 
-        self.user : SaveModel = None
 
         self.border = pygame.rect.Rect(0, 370, 800, 40)
         self.healthbar = pygame.rect.Rect(0, 0, 800, 40)
@@ -128,12 +127,14 @@ class GameState(State):
                         self.player.addPoints(1)
                         self.newRound()
                     else:
-                        if not asteroid['destoryed']:
+                        if not asteroid['destroyed']:
                             self.player.damage()
                             #call destory func here...
                             self.exAsteroids.append([asteroid, 0])
                             self.asteroidMaster.asteroidArr.remove(asteroid)
                             asteroid['destoryed'] = True
+
+                            asteroid['destroyed'] = True
 
                     return True
             return False
@@ -154,7 +155,6 @@ class GameState(State):
 
     def newRound(self):
         #remove current asteroid and shots
-
         if self.rounds > 0:
             print(self.player.points)
             self.asteroidMaster.asteroidArr = []
@@ -180,7 +180,7 @@ class GameState(State):
         #problem is the the surface is only passed on surface we can either hard code the width or heights to reduce calling this function
         #over and over again. for the sake of prototyping ill leave it here cause ill figure it out later
         surface.blit(self.gamePlay1Image, (0, 0))
-        self.btn_pause.draw(surface, 0, 520)
+        self.btn_pause.draw(surface, 0, 515)
 
         #moves the bullets down the screen
         self.move_shot()

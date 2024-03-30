@@ -121,7 +121,7 @@ if __name__ == "__main__":
   EmptyPlayer = SaveState(
     name="User",
     score=0,
-    level=[0,0,0],
+    level=[0,0],
     highScore=0,
     questionsCompleted=0,
     incorrectAmt=0,

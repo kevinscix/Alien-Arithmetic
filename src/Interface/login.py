@@ -151,6 +151,10 @@ class LoginState(State):
 
 
     def on_event(self, event):
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                print("Returning to menu screen")
+                self.quit_game()
         self.ui.handle_event(event)
 
         self.text_input._handle_event(event)
@@ -162,3 +166,4 @@ class LoginState(State):
             if not pressed[key] or not self.text_input.should_handle_key(key):
                 continue
             self.text_input.handle_key(key)
+        

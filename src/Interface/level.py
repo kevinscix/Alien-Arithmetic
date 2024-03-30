@@ -116,30 +116,13 @@ class OuterLevelState(State):
         pygame.display.flip()
 
     def on_event(self, event):
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                print("Returning to menu screen")
+                self.change_state_exit()
         self.ui.handle_event(event)
 
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_BACKSLASH:  # Check if the '\' key is pressed
-                if not self.developerMode:
-                    # Save the original user state and switch to Instructor mode
-                    self.originalUser = self.user
-                    self.user = SaveState(
-                        name="Instructor",
-                        score=0,
-                        level=[3,3],  # Max level for Instructor
-                        highScore=0,
-                        questionsCompleted=0,
-                        incorrectAmt=0,
-                        correctAmt=0,
-                        overallGrade=0,
-                        loggedIn=True
-                    )
-                    self.developerMode = True
-                else:
-                    # Revert to the original user state
-                    self.user = self.originalUser
-                    self.originalUser = None
-                    self.developerMode = False
+      
 
 class InnerLevelState(State):
     def __init__(self, engine, mode, user):
@@ -223,6 +206,10 @@ class InnerLevelState(State):
         pygame.display.flip()
 
     def on_event(self, event):
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                print("Returning to menu screen")
+                self.change_state_exit()
         self.ui.handle_event(event)
 
 

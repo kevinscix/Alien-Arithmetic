@@ -117,7 +117,7 @@ class instructorState(State):
 
     def on_event(self, event):
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RETURN:
+            if event.key == pygame.change_state_menu:
                 print("Returning to menu screen")
-                self.go_back_menu()
+                self.change_state_menu()
         self.ui.handle_event(event)

@@ -149,6 +149,10 @@ class MenuState(State):
         pygame.display.flip()
 
     def on_event(self, event):
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                print("Returning to menu screen")
+                self.change_state_exit()
         #theres no keyboard condition or still need to be determined for menu
         self.ui.handle_event(event)
 

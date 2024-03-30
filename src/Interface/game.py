@@ -262,6 +262,11 @@ class GameState(State):
                 if shot:
                     self.shots.append(shot)
                     self.sfx.shoot_sound()
+            if event.key == pygame.K_ESCAPE:
+                print("Returning to menu screen")
+                self.change_state_menu()
+            if event.key == pygame.K_p:
+                self.change_state_pause()
 
         self.ui.handle_event(event)
 

@@ -25,7 +25,8 @@ class LeaderboardState(State):
         self.backButtonImage = pygame.transform.scale(self.backButtonImage, (150, 100))
         self.levelSelectImage = pygame.image.load(os.path.normpath(levelSelectButtonPath))
         self.levelSelectImage = pygame.transform.scale(self.levelSelectImage, (245, 100))
-
+        
+        #loads leaderboard_data with the scores at the moment the state is made
 
         # pull loaded data from scoreboard class .load function
         # return a array of player class, these are player models that are validated
@@ -45,14 +46,16 @@ class LeaderboardState(State):
             self.change_state_select, 
             ui_group=self.ui
         )
-    
+
+        self.leaderboard_data = []
+        self.createBoard()
+
     def createBoard(self):
         from Interface.modules.state import ScoreboardState, SaveState
         self.scoreboard = ScoreboardState()
         scores : List[SaveState] = self.scoreboard.loadScore()
-        sorted_scores = sorted(scores, key=lambda s: s.score, reverse=True)
-
-        return sorted_scores
+        self.leaderboard_data = []
+        self.leaderboard_data = scores
 
     def change_state_menu(self):
         from Interface.menu import MenuState
@@ -67,11 +70,10 @@ class LeaderboardState(State):
         #draws the titleImage on surface
         surface.blit(self.scoreboardImage, (-15, 0))
 
-        leaderboard_data = self.createBoard()
         y = 228
         self.font = pygame.font.Font('freesansbold.ttf', 32)
 
-        for i, player in enumerate(leaderboard_data[:5], start=1):
+        for i, player in enumerate(self.leaderboard_data[:5], start=1):
             # Create text surfaces for the player's name, score, and logged-in status
             name_surface = self.font.render(f"{i}.{player.name}", True, (255, 255, 255))
             score_surface = self.font.render(str(player.score), True, (255, 255, 255))

@@ -80,13 +80,16 @@ class ScoreboardState(Scoreboard, State):
     for root, dirs, files in os.walk(os.path.join(src_dir, 'saves/')):
         for file in files:
             try:
-              user = SaveState.model_validate_json(self.load_settings(file))
-              database.append(user)
+              print(file)
+              if not file == ".DS_Store":
+                user = SaveState.model_validate_json(self.load_settings(file))
+                database.append(user)
             except:
-                
+              print(file)
               print("will catch the error when we return nonetype after iterating over the file")
               pass
-    return database
+    return sorted(database, key=lambda x: x.score, reverse=True)
+
 
   def getPlayer(self, playerName):
     saves = self.loadScore()
@@ -117,9 +120,6 @@ if __name__ == "__main__":
   #example of loading all the save states using the information
   board = ScoreboardState()
   scoreboard : List[SaveState] = board.loadScore()
-  tes = sorted(scoreboard, key=lambda x: x.score, reverse=True)
 
-  for s in tes:
+  for s in scoreboard:
     print(s)
-
-

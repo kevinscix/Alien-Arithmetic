@@ -16,6 +16,7 @@ class instructorState(State):
         #UI
         self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter    
         parent_path = os.path.dirname(os.path.dirname(__file__))
+        
         instructor_image_path = os.path.join(parent_path, "assets", "visuals", "pages - backgrounds", "instructor leaderboard page.png")
         back_button_path = os.path.join(parent_path, "assets", "visuals", "buttons", "text buttons", "logOutButton.png")
         left_button_path = os.path.join(parent_path,"assets", "visuals", "buttons", "text buttons", "left button.png")

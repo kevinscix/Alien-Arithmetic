@@ -16,15 +16,16 @@ class LeaderboardState(State):
         self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter    
         self.user = user
         current_path = os.path.dirname(__file__)  
+        parent_dir = os.path.dirname(current_path)  # Moves up to 'interface'
+
         scoreboard_image_path = os.path.join(current_path, "..", "assets", "visuals", "pages - backgrounds", "student leaderboard page.png")
         back_button_path = os.path.join(current_path, "..", "assets", "visuals", "buttons", "text buttons", "exitButton.png")
         level_select_button_path = os.path.join(current_path, "..", "assets", "visuals", "buttons", "text buttons", "levelSelectButton.png")
-        self.font_path = os.path.join(current_path, "..","assets", "visuals", "fonts", "PressStart2P-Regular.ttf")
+        self.font_path = os.path.join(parent_dir, "assets", "visuals", "fonts", "PressStart2P-Regular.ttf")
         self.scoreboard_image = pygame.image.load(os.path.normpath(scoreboard_image_path))
         self.scoreboard_image = pygame.transform.scale(self.scoreboard_image, (830, 600))
         self.back_button_image = pygame.image.load(os.path.normpath(back_button_path))
         self.back_button_image = pygame.transform.scale(self.back_button_image, (150, 100))
-
 
 
        # Back button 

@@ -33,11 +33,13 @@ class GameState(State):
 
         #make this into a utils function?
         currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
+        parent_dir = os.path.dirname(currentPath)  # Moves up to 'interface'
+
         shotImagePath = os.path.join(current_dir, "..", "assets", "visuals", "projectiles", "red projectile icon.png")
         pauseButtonPath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "pauseButton.png")
         playButtonPath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "resume button pix.png")
 
-        self.font_path = os.path.join(currentPath, "..","assets", "visuals", "fonts", "PressStart2P-Regular.ttf")
+        self.font_path = os.path.join(parent_dir, "assets", "visuals", "fonts", "PressStart2P-Regular.ttf")
 
         self.gamePlay1Image = pygame.transform.scale(self.settings['background'], (WIDTH, HEIGHT))
         self.playerImage = pygame.transform.scale(self.settings['ship'], (200, 200))

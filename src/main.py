@@ -3,7 +3,6 @@ from components.gameGUI import GameGUI
 import os
 
 
-
 MENU = 0
 LOGIN = 1
 TEACHER = 2

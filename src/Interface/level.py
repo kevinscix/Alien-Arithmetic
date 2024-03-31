@@ -1,29 +1,16 @@
 import os
 import sys
-
+import pygame
 #change directory
-current_dir = os.path.dirname(__file__)
-parent_dir = os.path.dirname(current_dir)  # Moves up to 'interface'
-src_dir = os.path.dirname(parent_dir)  # Moves up to 'src'
+src_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))  
 sys.path.append(src_dir)
-
 from Interface.state_machine import State
 from Interface.modules.state import SaveState
 from Interface.game import GameState
-
 from PygameUIKit import Group, button
-import pygame
-#use this to generate an asteroid list/dict might need to change
 
-
-#this file is a quick scehem of how a state would look like for login and sign in state!
-
-#this isn't importing properly???? ill figure it out or someone else can i give up
-
-#need to talk to luca how this works
-#this is like a bridging state to the game state
-currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
-quitImagePath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "exitButton.png")
+parent_dir = os.path.dirname(os.path.dirname(__file__))  
+quitImagePath = os.path.join(parent_dir, "assets", "visuals", "buttons", "text buttons", "exitButton.png")
 quit_image = pygame.image.load(os.path.normpath(quitImagePath))
 quit_image = pygame.transform.scale(quit_image, (150, 105))
 
@@ -31,22 +18,22 @@ class OuterLevelState(State):
     def __init__(self, engine, user):
         super().__init__(engine)
         #UI
-        self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter
+        self.ui = Group()  
         self.user : SaveState = user
 
         #make this into a utils function?
-        levelImagePath = os.path.join(currentPath, "..", "assets", "visuals", "pages - backgrounds", "asteroid page.png")
-        self.levelSelect = pygame.image.load(os.path.normpath(levelImagePath))
-        self.levelSelect= pygame.transform.scale(self.levelSelect, (800, 600))
-        xAsteroidPath = os.path.join(currentPath, "..", "assets", "visuals", "stage-level select", "xAsteroid.png")
-        self.xAsteroid = pygame.image.load(os.path.normpath(xAsteroidPath))
-        self.xAsteroid= pygame.transform.scale(self.xAsteroid, (125, 125))
-        plusAsteroidPath = os.path.join(currentPath, "..","assets", "visuals", "stage-level select", "plusAsteroid.png")
-        self.plusAsteroid = pygame.image.load(os.path.normpath(plusAsteroidPath))
-        self.plusAsteroid= pygame.transform.scale(self.plusAsteroid, (125, 125))
-        minusAsteroidPath = os.path.join(currentPath, "..","assets", "visuals", "stage-level select", "minusAsteroid.png")
-        self.minusAsteroid = pygame.image.load(os.path.normpath(minusAsteroidPath))
-        self.minusAsteroid= pygame.transform.scale(self.minusAsteroid, (125, 125))
+        level_image_path = os.path.join(parent_dir, "assets", "visuals", "pages - backgrounds", "asteroid page.png")
+        self.level_select = pygame.image.load(os.path.normpath(level_image_path))
+        self.level_select= pygame.transform.scale(self.level_select, (800, 600))
+        x_asteroid_path = os.path.join(parent_dir, "assets", "visuals", "stage-level select", "xAsteroid.png")
+        self.x_asteroid = pygame.image.load(os.path.normpath(x_asteroid_path))
+        self.x_asteroid= pygame.transform.scale(self.x_asteroid, (125, 125))
+        plus_asteroid_path = os.path.join(parent_dir,"assets", "visuals", "stage-level select", "plusAsteroid.png")
+        self.plus_asteroid = pygame.image.load(os.path.normpath(plus_asteroid_path))
+        self.plus_asteroid= pygame.transform.scale(self.plus_asteroid, (125, 125))
+        minus_asteroid_path = os.path.join(parent_dir,"assets", "visuals", "stage-level select", "minusAsteroid.png")
+        self.minus_asteroid = pygame.image.load(os.path.normpath(minus_asteroid_path))
+        self.minus_asteroid= pygame.transform.scale(self.minus_asteroid, (125, 125))
 
         self.modes = {
             "plus" : 1,
@@ -56,19 +43,19 @@ class OuterLevelState(State):
 
        # Student Login button
         self.btn_level_plus = button.ButtonPngIcon(
-            self.plusAsteroid,
+            self.plus_asteroid,
             lambda: self.start_inner_state("plus"),
             ui_group=self.ui
         )
 
         self.btn_level_minus = button.ButtonPngIcon(
-            self.minusAsteroid,
+            self.minus_asteroid,
             lambda: self.start_inner_state("minus"),
             ui_group=self.ui
         )
 
         self.btn_level_x = button.ButtonPngIcon(
-            self.xAsteroid,
+            self.x_asteroid,
             lambda: self.start_inner_state("multiply"),
             ui_group=self.ui
         )
@@ -78,16 +65,18 @@ class OuterLevelState(State):
             self.change_state_exit,
             ui_group=self.ui
         )
-        from components.media import sfx
+        from components.media import music, sfx
+        self.music = music()
+        self.music.menu_music()
         self.sfx = sfx()
 
 
         #determine max level
-        self.maxLevel = self.user.level[0]
-        if self.maxLevel == 1:
+        self.max_level = self.user.level[0]
+        if self.max_level == 1:
             self.btn_level_minus.hover_color = "red"
             self.btn_level_x.hover_color = "red"
-        elif self.maxLevel == 2:
+        elif self.max_level == 2:
             self.btn_level_x.hover_color = "red"
 
 
@@ -95,10 +84,9 @@ class OuterLevelState(State):
 
     def start_inner_state(self, mode):
         self.sfx.button_sound()
-        if  self.modes[mode] <= self.maxLevel:
+        if  self.modes[mode] <= self.max_level:
             self.engine.machine.next_state = InnerLevelState(self.engine, mode, self.user)
 
-        #write a error message here.... ill leave it here for now since not sure if we want it..
 
     def change_state_exit(self):
         self.sfx.button_sound()
@@ -106,8 +94,7 @@ class OuterLevelState(State):
         self.engine.machine.next_state = MenuState(self.engine, self.user)
 
     def on_draw(self, surface):
-        #draws the titleImage on surface
-        surface.blit(self.levelSelect , (0, 0))
+        surface.blit(self.level_select , (0, 0))
 
         self.btn_level_plus.draw(surface, 260, 30)
         self.btn_level_minus.draw(surface, 415, 225)
@@ -138,8 +125,8 @@ class InnerLevelState(State):
         #make this into a utils function?
 
         levelSelectPath = os.path.join(currentPath, "..", "assets", "visuals", "pages - backgrounds", "planet page.png")
-        self.levelSelect = pygame.image.load(os.path.normpath(levelSelectPath))
-        self.levelSelect= pygame.transform.scale(self.levelSelect, (800, 600))
+        self.level_select = pygame.image.load(os.path.normpath(levelSelectPath))
+        self.level_select= pygame.transform.scale(self.level_select, (800, 600))
         levelOnePath = os.path.join(currentPath, "..", "assets", "visuals", "stage-level select", "levelOne.png")
         self.levelOne = pygame.image.load(os.path.normpath(levelOnePath))
         self.levelOne= pygame.transform.scale(self.levelOne, (150, 125))
@@ -178,11 +165,11 @@ class InnerLevelState(State):
         from components.media import sfx
         self.sfx = sfx()
 
-        self.maxLevel = self.user.level[1]
-        if self.maxLevel == 1:
+        self.max_level = self.user.level[1]
+        if self.max_level == 1:
             self.btn_level_two.hover_color = "red"
             self.btn_level_three.hover_color = "red"
-        elif self.maxLevel == 2:
+        elif self.max_level == 2:
             self.btn_level_three.hover_color = "red"
 
 
@@ -191,7 +178,7 @@ class InnerLevelState(State):
     def start_game_state(self, level):
         self.sfx.button_sound()
         #if level is up to the required maxLevel then we can change the state else return locked
-        if level <= self.maxLevel:
+        if level <= self.max_level:
             self.engine.machine.next_state = GameState(self.engine, self.user, self.mode, level)
 
         #return a error message function to write ont he screen the error...
@@ -202,7 +189,7 @@ class InnerLevelState(State):
 
     def on_draw(self, surface):
         #draws the titleImage on surface
-        surface.blit(self.levelSelect , (0, 0))
+        surface.blit(self.level_select , (0, 0))
         self.btn_level_one.draw(surface, 245, 35)
         self.btn_level_two.draw(surface, 405, 238)
         self.btn_level_three.draw(surface, 255, 445)

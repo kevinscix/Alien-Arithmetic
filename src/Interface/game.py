@@ -75,8 +75,6 @@ class GameState(State):
         )
 
 
-        from components.media import sfx
-        self.sfx = sfx()
 
         #game constants
         self.shots = []

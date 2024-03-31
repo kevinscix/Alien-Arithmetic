@@ -144,7 +144,7 @@ class Asteroid():
     def showEquation(self) -> str:
         eq = "none"
         if self.mode == "plus":
-            eq = "%d+%d" % (self.first_op, self.second_op)
+            eq = "%d+%d=" % (self.first_op, self.second_op)
         elif self.mode == "minus":
             eq = "%d-%d=" % (self.first_op, self.second_op)
         elif self.mode == "multiply":

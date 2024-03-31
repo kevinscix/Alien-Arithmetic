@@ -49,11 +49,17 @@ class SaveModel(BaseModel):
 
     #question
     highScore : int
-    questionsCompleted : int
+    questionsCompleted : int #
     incorrectAmt : int
-    correctAmt : int
+    correctAmt : int #
     overallGrade : int
     loggedIn : bool
+
+    def addOneCorrect(self):
+      self.questionsCompleted += 1
+
+    def addOneQuestion(self):
+      self.questionsCompleted += 1
 
     def setName(self, name: str) -> None:
       self.name = name

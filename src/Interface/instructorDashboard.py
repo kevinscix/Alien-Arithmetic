@@ -15,22 +15,21 @@ class instructorState(State):
 
         #UI
         self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter    
-        parentPath = os.path.dirname(os.path.dirname(__file__))
-        instructorImagePath = os.path.join(parentPath, "assets", "visuals", "pages - backgrounds", "instructor leaderboard page.png")
-        backButtonPath = os.path.join(parentPath, "assets", "visuals", "buttons", "text buttons", "logOutButton.png")
-        leftButtonPath = os.path.join(parentPath,"assets", "visuals", "buttons", "text buttons", "left button.png")
-        rightButtonPath = os.path.join(parentPath,"assets", "visuals", "buttons", "text buttons", "right button.png")
-        self.font_path = os.path.join(parentPath, "assets", "visuals", "fonts", "PressStart2P-Regular.ttf")
+        parent_path = os.path.dirname(os.path.dirname(__file__))
+        instructor_image_path = os.path.join(parent_path, "assets", "visuals", "pages - backgrounds", "instructor leaderboard page.png")
+        back_button_path = os.path.join(parent_path, "assets", "visuals", "buttons", "text buttons", "logOutButton.png")
+        left_button_path = os.path.join(parent_path,"assets", "visuals", "buttons", "text buttons", "left button.png")
+        right_button_path = os.path.join(parent_path,"assets", "visuals", "buttons", "text buttons", "right button.png")
+        self.font_path = os.path.join(parent_path, "assets", "visuals", "fonts", "PressStart2P-Regular.ttf")
 
-        self.instructorImage = pygame.image.load(os.path.normpath(instructorImagePath))
-        self.instructorImage = pygame.transform.scale(self.instructorImage, (840, 600))
-        self.backButtonImage = pygame.image.load(os.path.normpath(backButtonPath))
-        self.backButtonImage = pygame.transform.scale(self.backButtonImage, (150, 100))
-        self.leftButtonImage = pygame.image.load(os.path.normpath(leftButtonPath))
-        self.leftButtonImage = pygame.transform.scale(self.leftButtonImage, (75, 100))
-        self.rightButtonImage = pygame.image.load(os.path.normpath(rightButtonPath))
-        self.rightButtonImage = pygame.transform.scale(self.rightButtonImage, (75, 100))
-
+        self.instructor_image = pygame.image.load(os.path.normpath(instructor_image_path))
+        self.instructor_image = pygame.transform.scale(self.instructor_image, (840, 600))
+        self.back_button_image = pygame.image.load(os.path.normpath(back_button_path))
+        self.back_button_image = pygame.transform.scale(self.back_button_image, (150, 100))
+        self.left_button_image = pygame.image.load(os.path.normpath(left_button_path))
+        self.left_button_image = pygame.transform.scale(self.left_button_image, (75, 100))
+        self.right_button_image = pygame.image.load(os.path.normpath(right_button_path))
+        self.right_button_image = pygame.transform.scale(self.right_button_image, (75, 100))
 
 
 
@@ -38,17 +37,17 @@ class instructorState(State):
        # Back button 
         #needs to set up the correct location for and settings 
         self.btn_back = button.ButtonPngIcon(
-            self.backButtonImage, 
+            self.back_button_image, 
             self.change_state_menu, 
             ui_group=self.ui
         )
         self.btn_left = button.ButtonPngIcon(
-            self.leftButtonImage, 
+            self.left_button_image, 
             self.change_state_left, 
             ui_group=self.ui
         )
         self.btn_right = button.ButtonPngIcon(
-            self.rightButtonImage, 
+            self.right_button_image, 
             self.change_state_right, 
             ui_group=self.ui
         )
@@ -83,7 +82,7 @@ class instructorState(State):
 
     def on_draw(self, surface):
         #draws the titleImage on surface
-        surface.blit(self.instructorImage, (-25, 0))
+        surface.blit(self.instructor_image, (-25, 0))
 
         leaderboard_data = self.createBoard()
         y = 200

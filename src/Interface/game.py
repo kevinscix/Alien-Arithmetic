@@ -242,7 +242,8 @@ class GameState(State):
         #problem is the the surface is only passed on surface we can either hard code the width or heights to reduce calling this function
         #over and over again. for the sake of prototyping ill leave it here cause ill figure it out later
         surface.blit(self.gamePlay1Image, (0, 0))
-        self.btn_pause.draw(surface, 0, 515)
+        if self.ended == False:
+            self.btn_pause.draw(surface, 0, 515)
 
         #stops incrementing the moving shots
         if not self.pause:
@@ -282,8 +283,8 @@ class GameState(State):
         #when still not ended
         if not self.ended:
             self.updateHealthBar()
-            pygame.draw.rect(surface, "gray31",  pygame.rect.Rect(330, 520, 145, 80))
-            surface.blit(self.asteroidMaster.question_surface, [350, 550])
+            pygame.draw.rect(surface, "gray31",  pygame.rect.Rect(310, 520, 165, 80))
+            surface.blit(self.asteroidMaster.question_surface, [325, 550])
             surface.blit(self.playerImage, self.player_pos)
             pygame.draw.rect(surface, "green", self.healthbar)
         else:
@@ -302,7 +303,7 @@ class GameState(State):
                     self.sfx.shoot_sound()
             if event.key == pygame.K_ESCAPE:
                 print("Returning to menu screen")
-                self.change_state_menu()
+                self.change_state_level()
             if event.key == pygame.K_p:
                 self.btn_pause._on_click()
 

@@ -1,0 +1,279 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module game</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>game</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/Users/andy/Desktop/Projects/2024/group55/src/Interface/game.py">/Users/andy/Desktop/Projects/2024/group55/src/Interface/game.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="PygameUIKit.button.html">PygameUIKit.button</a><br>
+</td><td width="25%" valign=top><a href="os.html">os</a><br>
+</td><td width="25%" valign=top><a href="pygame.html">pygame</a><br>
+</td><td width="25%" valign=top><a href="sys.html">sys</a><br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="Interface.state_machine.html#State">Interface.state_machine.State</a>(<a href="builtins.html#object">builtins.object</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="game.html#GameState">GameState</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="GameState">class <strong>GameState</strong></a>(<a href="Interface.state_machine.html#State">Interface.state_machine.State</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#GameState">GameState</a>(engine,&nbsp;user,&nbsp;mode,&nbsp;level)<br>
+&nbsp;<br>
+Represents&nbsp;the&nbsp;game&nbsp;state&nbsp;for&nbsp;login&nbsp;and&nbsp;sign-in&nbsp;functionalities.<br>
+&nbsp;<br>
+This&nbsp;class&nbsp;inherits&nbsp;from&nbsp;the&nbsp;<a href="Interface.state_machine.html#State">State</a>&nbsp;class&nbsp;and&nbsp;provides&nbsp;functionality&nbsp;for&nbsp;game&nbsp;states.<br>
+&nbsp;<br>
+Attributes:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ui&nbsp;(Group):&nbsp;A&nbsp;group&nbsp;to&nbsp;hold&nbsp;all&nbsp;the&nbsp;UI&nbsp;elements.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;settings&nbsp;(dict):&nbsp;Settings&nbsp;for&nbsp;the&nbsp;game.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;(SaveState):&nbsp;Represents&nbsp;the&nbsp;user's&nbsp;state.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;level&nbsp;(int):&nbsp;The&nbsp;current&nbsp;level&nbsp;of&nbsp;the&nbsp;game.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;player&nbsp;(Player):&nbsp;Represents&nbsp;the&nbsp;player&nbsp;object.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pause&nbsp;(bool):&nbsp;Represents&nbsp;the&nbsp;pause&nbsp;state&nbsp;of&nbsp;the&nbsp;game.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;btn_pause&nbsp;(ButtonTwoStates):&nbsp;Button&nbsp;to&nbsp;pause/resume&nbsp;the&nbsp;game.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;btn_level&nbsp;(ButtonPngIcon):&nbsp;Button&nbsp;to&nbsp;change&nbsp;the&nbsp;game&nbsp;level.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;shots&nbsp;(List[dict]):&nbsp;List&nbsp;of&nbsp;bullets&nbsp;shot&nbsp;by&nbsp;the&nbsp;player.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;exAsteroids&nbsp;(List[list]):&nbsp;List&nbsp;of&nbsp;exploded&nbsp;asteroids.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;rounds&nbsp;(int):&nbsp;Number&nbsp;of&nbsp;rounds&nbsp;in&nbsp;the&nbsp;game.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;player_pos&nbsp;(List[int]):&nbsp;Position&nbsp;of&nbsp;the&nbsp;player.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;asteroidMaster&nbsp;(Asteroid):&nbsp;Manages&nbsp;asteroids&nbsp;in&nbsp;the&nbsp;game.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;explosion_animation&nbsp;(List[pygame.Surface]):&nbsp;List&nbsp;of&nbsp;explosion&nbsp;animation&nbsp;frames.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;music&nbsp;(object):&nbsp;Represents&nbsp;game&nbsp;music.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sfx&nbsp;(object):&nbsp;Represents&nbsp;sound&nbsp;effects.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pause_surface&nbsp;(pygame.Surface):&nbsp;Surface&nbsp;for&nbsp;displaying&nbsp;"PAUSED"&nbsp;text.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ended&nbsp;(bool):&nbsp;Represents&nbsp;whether&nbsp;the&nbsp;game&nbsp;has&nbsp;ended.<br>
+&nbsp;<br>
+Methods:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;change_state_level:&nbsp;Changes&nbsp;the&nbsp;game&nbsp;state&nbsp;to&nbsp;the&nbsp;level&nbsp;selection&nbsp;state.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;change_state_pause:&nbsp;Toggles&nbsp;the&nbsp;pause&nbsp;state&nbsp;of&nbsp;the&nbsp;game.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;create_shot:&nbsp;Creates&nbsp;a&nbsp;bullet&nbsp;shot&nbsp;by&nbsp;the&nbsp;player.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;move_shot:&nbsp;Moves&nbsp;the&nbsp;bullets&nbsp;on&nbsp;the&nbsp;screen.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;remove_shot:&nbsp;Removes&nbsp;bullets&nbsp;that&nbsp;have&nbsp;moved&nbsp;off&nbsp;the&nbsp;screen.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;get_rect:&nbsp;Returns&nbsp;the&nbsp;rectangle&nbsp;bounding&nbsp;the&nbsp;object.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;shot_collided:&nbsp;Checks&nbsp;if&nbsp;a&nbsp;bullet&nbsp;has&nbsp;collided&nbsp;with&nbsp;an&nbsp;asteroid.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;border_collided:&nbsp;Checks&nbsp;if&nbsp;an&nbsp;asteroid&nbsp;has&nbsp;collided&nbsp;with&nbsp;the&nbsp;border.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;updateHealthBar:&nbsp;Updates&nbsp;the&nbsp;health&nbsp;bar&nbsp;of&nbsp;the&nbsp;player.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;newRound:&nbsp;Starts&nbsp;a&nbsp;new&nbsp;round&nbsp;in&nbsp;the&nbsp;game.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;onGameEnd:&nbsp;Handles&nbsp;the&nbsp;game&nbsp;end&nbsp;event.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;onGameWin:&nbsp;Handles&nbsp;the&nbsp;game&nbsp;win&nbsp;event.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;on_draw:&nbsp;Draws&nbsp;the&nbsp;game&nbsp;elements&nbsp;on&nbsp;the&nbsp;screen.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;on_event:&nbsp;Handles&nbsp;the&nbsp;game&nbsp;events.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;handle_movement:&nbsp;Handles&nbsp;player&nbsp;movement&nbsp;in&nbsp;the&nbsp;game.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="game.html#GameState">GameState</a></dd>
+<dd><a href="Interface.state_machine.html#State">Interface.state_machine.State</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="GameState-__init__"><strong>__init__</strong></a>(self, engine, user, mode, level)</dt><dd><tt>Initializes&nbsp;a&nbsp;<a href="#GameState">GameState</a>&nbsp;object.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;engine:&nbsp;The&nbsp;game&nbsp;engine.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;(SaveState):&nbsp;The&nbsp;user's&nbsp;state.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;mode:&nbsp;The&nbsp;game&nbsp;mode.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;level:&nbsp;The&nbsp;current&nbsp;level&nbsp;of&nbsp;the&nbsp;game.</tt></dd></dl>
+
+<dl><dt><a name="GameState-border_collided"><strong>border_collided</strong></a>(self)</dt><dd><tt>Checks&nbsp;if&nbsp;an&nbsp;asteroid&nbsp;collided&nbsp;with&nbsp;the&nbsp;border.<br>
+&nbsp;<br>
+This&nbsp;method&nbsp;checks&nbsp;if&nbsp;any&nbsp;asteroid&nbsp;collided&nbsp;with&nbsp;the&nbsp;border&nbsp;of&nbsp;the&nbsp;game&nbsp;screen.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bool:&nbsp;True&nbsp;if&nbsp;a&nbsp;collision&nbsp;occurred,&nbsp;False&nbsp;otherwise.</tt></dd></dl>
+
+<dl><dt><a name="GameState-change_state_level"><strong>change_state_level</strong></a>(self)</dt><dd><tt>Changes&nbsp;the&nbsp;game&nbsp;state&nbsp;to&nbsp;the&nbsp;level&nbsp;selection&nbsp;state.<br>
+&nbsp;<br>
+This&nbsp;method&nbsp;changes&nbsp;the&nbsp;game&nbsp;state&nbsp;to&nbsp;the&nbsp;level&nbsp;selection&nbsp;state<br>
+by&nbsp;setting&nbsp;the&nbsp;next&nbsp;state&nbsp;of&nbsp;the&nbsp;state&nbsp;machine&nbsp;to&nbsp;the&nbsp;OuterLevelState.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None</tt></dd></dl>
+
+<dl><dt><a name="GameState-change_state_pause"><strong>change_state_pause</strong></a>(self)</dt><dd><tt>Toggles&nbsp;the&nbsp;pause&nbsp;state&nbsp;of&nbsp;the&nbsp;game.<br>
+&nbsp;<br>
+This&nbsp;method&nbsp;toggles&nbsp;the&nbsp;pause&nbsp;state&nbsp;of&nbsp;the&nbsp;game&nbsp;by<br>
+switching&nbsp;the&nbsp;value&nbsp;of&nbsp;the&nbsp;pause&nbsp;attribute.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None</tt></dd></dl>
+
+<dl><dt><a name="GameState-create_shot"><strong>create_shot</strong></a>(self, player_pos)</dt><dd><tt>Creates&nbsp;a&nbsp;bullet&nbsp;shot&nbsp;by&nbsp;the&nbsp;player.<br>
+&nbsp;<br>
+This&nbsp;method&nbsp;creates&nbsp;a&nbsp;bullet&nbsp;shot&nbsp;by&nbsp;the&nbsp;player&nbsp;at&nbsp;the&nbsp;specified&nbsp;position.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;player_pos&nbsp;(List[int]):&nbsp;The&nbsp;position&nbsp;of&nbsp;the&nbsp;player.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;A&nbsp;dictionary&nbsp;containing&nbsp;the&nbsp;details&nbsp;of&nbsp;the&nbsp;created&nbsp;shot.</tt></dd></dl>
+
+<dl><dt><a name="GameState-get_rect"><strong>get_rect</strong></a>(self, obj)</dt><dd><tt>Returns&nbsp;the&nbsp;rectangle&nbsp;bounding&nbsp;the&nbsp;object.<br>
+&nbsp;<br>
+This&nbsp;method&nbsp;returns&nbsp;the&nbsp;rectangle&nbsp;bounding&nbsp;the&nbsp;object.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;obj&nbsp;(dict):&nbsp;The&nbsp;object&nbsp;for&nbsp;which&nbsp;the&nbsp;rectangle&nbsp;is&nbsp;to&nbsp;be&nbsp;calculated.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pygame.Rect:&nbsp;The&nbsp;rectangle&nbsp;bounding&nbsp;the&nbsp;object.</tt></dd></dl>
+
+<dl><dt><a name="GameState-handle_movement"><strong>handle_movement</strong></a>(self)</dt><dd><tt>Handles&nbsp;player&nbsp;movement.<br>
+&nbsp;<br>
+This&nbsp;method&nbsp;handles&nbsp;player&nbsp;movement&nbsp;based&nbsp;on&nbsp;the&nbsp;keyboard&nbsp;input.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None</tt></dd></dl>
+
+<dl><dt><a name="GameState-move_shot"><strong>move_shot</strong></a>(self)</dt><dd><tt>Moves&nbsp;the&nbsp;bullets&nbsp;on&nbsp;the&nbsp;screen.<br>
+&nbsp;<br>
+This&nbsp;method&nbsp;moves&nbsp;the&nbsp;bullets&nbsp;on&nbsp;the&nbsp;screen&nbsp;upwards.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None</tt></dd></dl>
+
+<dl><dt><a name="GameState-newRound"><strong>newRound</strong></a>(self)</dt><dd><tt>Starts&nbsp;a&nbsp;new&nbsp;round&nbsp;of&nbsp;the&nbsp;game.<br>
+&nbsp;<br>
+This&nbsp;method&nbsp;starts&nbsp;a&nbsp;new&nbsp;round&nbsp;of&nbsp;the&nbsp;game&nbsp;by&nbsp;generating&nbsp;new&nbsp;asteroids<br>
+and&nbsp;resetting&nbsp;round-related&nbsp;variables.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None</tt></dd></dl>
+
+<dl><dt><a name="GameState-onGameEnd"><strong>onGameEnd</strong></a>(self)</dt><dd><tt>Handles&nbsp;game&nbsp;ending.<br>
+&nbsp;<br>
+This&nbsp;method&nbsp;handles&nbsp;the&nbsp;end&nbsp;of&nbsp;the&nbsp;game&nbsp;by&nbsp;resetting&nbsp;variables,&nbsp;saving&nbsp;user&nbsp;data,<br>
+and&nbsp;preparing&nbsp;for&nbsp;a&nbsp;return&nbsp;to&nbsp;the&nbsp;level&nbsp;selection&nbsp;screen.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None</tt></dd></dl>
+
+<dl><dt><a name="GameState-onGameWin"><strong>onGameWin</strong></a>(self)</dt><dd><tt>Handles&nbsp;game&nbsp;win.<br>
+&nbsp;<br>
+This&nbsp;method&nbsp;handles&nbsp;the&nbsp;win&nbsp;condition&nbsp;of&nbsp;the&nbsp;game&nbsp;by&nbsp;updating&nbsp;user&nbsp;data,<br>
+advancing&nbsp;the&nbsp;level,&nbsp;and&nbsp;preparing&nbsp;for&nbsp;a&nbsp;return&nbsp;to&nbsp;the&nbsp;level&nbsp;selection&nbsp;screen.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None</tt></dd></dl>
+
+<dl><dt><a name="GameState-on_draw"><strong>on_draw</strong></a>(self, surface)</dt><dd><tt>Draws&nbsp;the&nbsp;game&nbsp;elements&nbsp;on&nbsp;the&nbsp;screen.<br>
+&nbsp;<br>
+This&nbsp;method&nbsp;draws&nbsp;various&nbsp;game&nbsp;elements,&nbsp;including&nbsp;background,&nbsp;player,&nbsp;asteroids,<br>
+health&nbsp;bar,&nbsp;and&nbsp;UI&nbsp;buttons,&nbsp;on&nbsp;the&nbsp;provided&nbsp;surface.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;surface&nbsp;(pygame.Surface):&nbsp;The&nbsp;surface&nbsp;to&nbsp;draw&nbsp;the&nbsp;game&nbsp;elements&nbsp;on.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None</tt></dd></dl>
+
+<dl><dt><a name="GameState-on_event"><strong>on_event</strong></a>(self, event)</dt><dd><tt>Handles&nbsp;user&nbsp;events.<br>
+&nbsp;<br>
+This&nbsp;method&nbsp;handles&nbsp;user&nbsp;events&nbsp;such&nbsp;as&nbsp;key&nbsp;presses&nbsp;and&nbsp;button&nbsp;clicks.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;event&nbsp;(pygame.event.Event):&nbsp;The&nbsp;event&nbsp;to&nbsp;handle.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None</tt></dd></dl>
+
+<dl><dt><a name="GameState-remove_shot"><strong>remove_shot</strong></a>(self)</dt><dd><tt>Removes&nbsp;bullets&nbsp;that&nbsp;have&nbsp;moved&nbsp;off&nbsp;the&nbsp;screen.<br>
+&nbsp;<br>
+This&nbsp;method&nbsp;removes&nbsp;bullets&nbsp;that&nbsp;have&nbsp;moved&nbsp;off&nbsp;the&nbsp;top&nbsp;of&nbsp;the&nbsp;screen.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None</tt></dd></dl>
+
+<dl><dt><a name="GameState-shot_collided"><strong>shot_collided</strong></a>(self)</dt><dd><tt>Checks&nbsp;if&nbsp;a&nbsp;shot&nbsp;collided&nbsp;with&nbsp;an&nbsp;asteroid.<br>
+&nbsp;<br>
+This&nbsp;method&nbsp;checks&nbsp;if&nbsp;the&nbsp;player's&nbsp;shot&nbsp;has&nbsp;collided&nbsp;with&nbsp;any&nbsp;asteroid.<br>
+If&nbsp;a&nbsp;collision&nbsp;is&nbsp;detected,&nbsp;appropriate&nbsp;actions&nbsp;are&nbsp;taken,&nbsp;such&nbsp;as&nbsp;updating<br>
+player's&nbsp;score&nbsp;and&nbsp;health,&nbsp;removing&nbsp;the&nbsp;shot&nbsp;and&nbsp;asteroid,&nbsp;and&nbsp;playing&nbsp;sound&nbsp;effects.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bool:&nbsp;True&nbsp;if&nbsp;a&nbsp;collision&nbsp;occurred,&nbsp;False&nbsp;otherwise.</tt></dd></dl>
+
+<dl><dt><a name="GameState-updateHealthBar"><strong>updateHealthBar</strong></a>(self)</dt><dd><tt>Updates&nbsp;the&nbsp;health&nbsp;bar&nbsp;based&nbsp;on&nbsp;the&nbsp;player's&nbsp;health.<br>
+&nbsp;<br>
+This&nbsp;method&nbsp;updates&nbsp;the&nbsp;health&nbsp;bar&nbsp;width&nbsp;based&nbsp;on&nbsp;the&nbsp;player's&nbsp;health&nbsp;scale.<br>
+If&nbsp;the&nbsp;player's&nbsp;health&nbsp;reaches&nbsp;zero,&nbsp;the&nbsp;game&nbsp;ends.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="Interface.state_machine.html#State">Interface.state_machine.State</a>:<br>
+<dl><dt><a name="GameState-on_update"><strong>on_update</strong></a>(self, delta)</dt><dd><tt>Method&nbsp;called&nbsp;to&nbsp;update&nbsp;the&nbsp;state.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;delta:&nbsp;The&nbsp;time&nbsp;elapsed&nbsp;since&nbsp;the&nbsp;last&nbsp;update.</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="Interface.state_machine.html#State">Interface.state_machine.State</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table>
+</body></html>

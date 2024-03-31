@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module asteroid</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>asteroid</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/Users/andy/Desktop/Projects/2024/group55/src/components/asteroid.py">/Users/andy/Desktop/Projects/2024/group55/src/components/asteroid.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="os.html">os</a><br>
+</td><td width="25%" valign=top><a href="pygame.html">pygame</a><br>
+</td><td width="25%" valign=top><a href="random.html">random</a><br>
+</td><td width="25%" valign=top><a href="unittest.html">unittest</a><br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="asteroid.html#Asteroid">Asteroid</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Asteroid">class <strong>Asteroid</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Asteroid">Asteroid</a>(mode,&nbsp;level)&nbsp;-&amp;gt;&nbsp;None<br>
+&nbsp;<br>
+<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Asteroid-__init__"><strong>__init__</strong></a>(self, mode, level) -&gt; None</dt><dd><tt>Initializes&nbsp;<a href="#Asteroid">Asteroid</a>&nbsp;<a href="builtins.html#object">object</a>.<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;mode&nbsp;(str):&nbsp;Game&nbsp;mode&nbsp;('plus',&nbsp;'minus',&nbsp;'multiply').<br>
+&nbsp;&nbsp;&nbsp;&nbsp;level&nbsp;(int):&nbsp;Game&nbsp;level.</tt></dd></dl>
+
+<dl><dt><a name="Asteroid-create_asteroids"><strong>create_asteroids</strong></a>(self, x, y, value, isCorrect)</dt><dd><tt>Creates&nbsp;an&nbsp;asteroid.<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;(int):&nbsp;X-coordinate&nbsp;of&nbsp;the&nbsp;asteroid.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;(int):&nbsp;Y-coordinate&nbsp;of&nbsp;the&nbsp;asteroid.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;(int):&nbsp;Value&nbsp;displayed&nbsp;on&nbsp;the&nbsp;asteroid.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;isCorrect&nbsp;(bool):&nbsp;Indicates&nbsp;whether&nbsp;the&nbsp;asteroid&nbsp;represents&nbsp;the&nbsp;correct&nbsp;answer.<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dict:&nbsp;Dictionary&nbsp;representing&nbsp;the&nbsp;asteroid.</tt></dd></dl>
+
+<dl><dt><a name="Asteroid-create_question"><strong>create_question</strong></a>(self)</dt><dd><tt>Generates&nbsp;a&nbsp;random&nbsp;arithmetic&nbsp;question.</tt></dd></dl>
+
+<dl><dt><a name="Asteroid-create_question_surface"><strong>create_question_surface</strong></a>(self)</dt><dd><tt>Creates&nbsp;the&nbsp;surface&nbsp;for&nbsp;displaying&nbsp;the&nbsp;equation.</tt></dd></dl>
+
+<dl><dt><a name="Asteroid-generateAsteroids"><strong>generateAsteroids</strong></a>(self)</dt><dd><tt>Generates&nbsp;asteroids&nbsp;with&nbsp;correct&nbsp;and&nbsp;incorrect&nbsp;answers.</tt></dd></dl>
+
+<dl><dt><a name="Asteroid-move_asteroids"><strong>move_asteroids</strong></a>(self)</dt><dd><tt>Moves&nbsp;all&nbsp;asteroids&nbsp;downward&nbsp;by&nbsp;the&nbsp;current&nbsp;speed.</tt></dd></dl>
+
+<dl><dt><a name="Asteroid-showEquation"><strong>showEquation</strong></a>(self) -&gt; str</dt><dd><tt>Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;str:&nbsp;Equation&nbsp;string.</tt></dd></dl>
+
+<dl><dt><a name="Asteroid-size_speed_scale"><strong>size_speed_scale</strong></a>(self, value) -&gt; None</dt><dd><tt>Scales&nbsp;the&nbsp;size&nbsp;and&nbsp;speed&nbsp;of&nbsp;the&nbsp;asteroid.<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;(float):&nbsp;Value&nbsp;used&nbsp;for&nbsp;scaling.</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table>
+</body></html>

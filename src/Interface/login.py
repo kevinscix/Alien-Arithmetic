@@ -133,49 +133,75 @@ class LoginState(State):
         if self.text_input.get_text() == "2212Admin": # Password for instructor 
             self.engine.machine.next_state = instructorState(self.engine)
         else:
-            #
             msg = {
                     'message' :  self.font.render("Wrong password", True, (255, 0, 0)),
                 }
             self.error_messages = msg
 
     def quit_game(self):
-       self.sfx.button_sound()
+        """
+        Exits the game cleanly by stopping all Pygame modules.
 
-       pygame.quit()
+        This method is triggered when the quit button is clicked or ESC key is pressed.
+        """
+        self.sfx.button_sound()
+
+        pygame.quit()
 
 
     def on_draw(self, surface):
-        #draws the titleImage on surface
+        """
+        Draws the login state's UI elements onto the given surface.
+
+        This includes the background, buttons, text input field, and any error messages.
+
+        Args:
+            surface: The Pygame surface to draw the UI elements on.
+        """
+        # Draw background image
         surface.blit(self.loginImage, (0, 0))
         self.btn_student_login.draw(surface, 125, 450)
         self.btn_teacher_login.draw(surface, 427, 450)
         self.btn_quit_game.draw(surface, 0, 525)
+        # Draw UI elements: student login, instructor login, and quit game buttons
         pygame.draw.rect(surface, "gray31", pygame.Rect(180, 350, 400, 34))
         self.text_input.draw(surface, 180, 350)
 
+        # Draw any error messages
         try:
             surface.blit(self.error_messages['message'], [190,400])
         except:
-            #no errors happens
+            # No error messages to display
             pass
         pygame.display.flip()
 
 
     def on_event(self, event):
+        """
+        Handles events such as keyboard input and button clicks within the login state.
+
+        This method processes user interactions and triggers corresponding actions, such as
+        changing states or updating the text input field.
+
+        Args:
+            event: The Pygame event to handle.
+        """
         if event.type == pygame.KEYDOWN:
+            # Exit the game if the ESC key is pressed
             if event.key == pygame.K_ESCAPE:
                 print("Returning to menu screen")
                 self.quit_game()
+            # Attempts to login as a student when the Enter key is pressed
             if event.key == pygame.K_RETURN:
                 self.change_state_student()
         self.ui.handle_event(event)
-
+        # Pass the event to the UI elements for further processing
         self.text_input._handle_event(event)
+        # Additional logic for text input handling (e.g., key presses for username/password)
         if not self.text_input.active:
             return
-        pressed = pygame.key.get_pressed()
-
+        for key in [pygame.K_BACKSPACE, pygame.K_LEFT, pygame.K_RIGHT] + [i for i in range(32, 127)]:
+            pressed = pygame.key.get_pressed()
         for key in [pygame.K_BACKSPACE, pygame.K_LEFT, pygame.K_RIGHT] + [i for i in range(32, 127)]:
             if not pressed[key] or not self.text_input.should_handle_key(key):
                 continue

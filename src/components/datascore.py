@@ -15,15 +15,31 @@ class SaveModel(BaseModel):
     correctAmt : int #
 
     def addOneCorrect(self):
+      """
+      Increments the number of correct answers by one.
+      """
       self.correctAmt += 1
 
     def addOneQuestion(self):
+      """
+      Increments the number of questions completed by one.
+      """
       self.questionsCompleted += 1
 
     def setName(self, name: str) -> None:
+      """
+        Sets the name of the player.
+      Args:
+        name (str): Name of the player.
+      """
       self.name = name
 
     def setQuestionsCompleted(self, questions) -> None:
+      """
+        Sets the number of questions completed by the player.
+        Args:
+            questions (int): Number of questions completed.
+        """
       self.questionsCompleted = questions
 
 if __name__ == "__main__":

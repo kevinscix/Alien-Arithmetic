@@ -9,6 +9,12 @@ class Asteroid():
 
     # Constructor method
     def __init__(self, mode, level) -> None:
+        """
+        Initializes Asteroid object.
+        Args:
+            mode (str): Game mode ('plus', 'minus', 'multiply').
+            level (int): Game level.
+        """
         self.max_asteroid : int = 10
         self.min_asteroid : int = 1
         self.max_result_asteroid : int = self.max_asteroid * self.max_asteroid
@@ -50,8 +56,9 @@ class Asteroid():
 
 
     def create_question(self):
-         # generate answer based on mode
-
+        """
+        Generates a random arithmetic question.
+        """
         self.first_op = random.randint(self.min_asteroid, self.max_asteroid)
         self.second_op = random.randint(self.min_asteroid, self.max_asteroid)
 
@@ -70,6 +77,16 @@ class Asteroid():
             self.second_answer = 999
 
     def create_asteroids(self, x, y, value, isCorrect):
+        """
+        Creates an asteroid.
+        Args:
+            x (int): X-coordinate of the asteroid.
+            y (int): Y-coordinate of the asteroid.
+            value (int): Value displayed on the asteroid.
+            isCorrect (bool): Indicates whether the asteroid represents the correct answer.
+        Returns:
+            dict: Dictionary representing the asteroid.
+        """
         # scale it to smaller size and make it quadratic
         surf = pygame.transform.scale(self.asteroidImagePath, (70, 70))
         number_surface = self.font.render((str(value)), True, (0, 0, 0))
@@ -87,20 +104,16 @@ class Asteroid():
 
     # changes Y axis position by speed amount
     def move_asteroids(self):
+        """
+        Moves all asteroids downward by the current speed.
+        """
         for asteroid in self.asteroid_arr:
             asteroid['position'][1] += self.speed
 
-    # Method to generate asteroids with correct and incorrect answers
     def generateAsteroids(self):
-
-        #generate the first correct answer
-        #[answer]
-        #generate the rest of the incorrect answers
-        # for loop -1 the number of asteroids
-        # rnd int if not answer and not in asteroid
-        # store value in the array
-        # for loop that creates an incorrect answer for each asteroid
-
+        """
+        Generates asteroids with correct and incorrect answers.
+        """
         self.create_question()
         self.create_question_surface()
 
@@ -142,6 +155,10 @@ class Asteroid():
                 self.asteroid_arr.append(self.create_asteroids(self.incrementsize * i, 0, x, False))
 
     def showEquation(self) -> str:
+        """
+        Returns:
+            str: Equation string.
+        """
         eq = "none"
         if self.mode == "plus":
             eq = "%d+%d=" % (self.first_op, self.second_op)
@@ -153,9 +170,17 @@ class Asteroid():
         return eq
 
     def create_question_surface(self):
+        """
+        Creates the surface for displaying the equation.
+        """
         self.question_surface = self.font.render(self.showEquation(), True, (0, 0, 0))
 
     def size_speed_scale(self, value) -> None:
+        """
+        Scales the size and speed of the asteroid.
+        Args:
+            value (float): Value used for scaling.
+        """
         size_scalar = value * 0.02 + 1
         speed_scalar = 1 - (size_scalar / 10)
         self.size = self.size * size_scalar

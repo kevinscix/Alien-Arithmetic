@@ -3,6 +3,9 @@ from PygameUIKit import Group, button
 
 class GameGUI:
     def __init__(self, window, start_callback, quit_callback, load_callback, tutorial_callback, highscores_callback, studentLogin_callback, teacherLogin_callback):
+        """
+        Initializes the GameGUI object.
+        """
         self.window = window
         self.start_callback = start_callback
         self.load_callback = load_callback
@@ -100,7 +103,11 @@ class GameGUI:
         )
 
     def update_visibility(self, game_state):
-        # Update button visibility based on game_state
+        """
+        Updates button visibility based on the game state.
+        Args:
+            game_state (int): Current game state.
+        """        
         if game_state == 0:  # MENU state
             self.visibility = {
                 "studentLogin": True,
@@ -147,10 +154,18 @@ class GameGUI:
             }
         
     def handle_events(self, events):
+        """
+        Handles Pygame events for UI interaction.
+        Args:
+            events: List of Pygame events.
+        """
         for event in events:
             self.ui.handle_event(event)
 
     def draw(self):
+        """
+        Draws the UI elements on the Pygame window.
+        """
         button_spacing = 60
         start_y = self.window.get_height() // 2 - (button_spacing * 2)  # Start drawing from this y-coordinate
         if self.visibility["studentLogin"]:

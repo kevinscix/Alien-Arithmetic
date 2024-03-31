@@ -100,7 +100,7 @@ class LoginState(State):
                 self.engine.machine.next_state = MenuState(self.engine, self.instructor)
             elif len(self.text_input.get_text()) > 7:
                 msg = {
-                    'message' : self.font.render("Exceeds maxium text input", True, (255, 0, 0)),
+                    'message' : self.font.render("Exceeds max name", True, (255, 0, 0)),
                 }
                 self.error_messages = msg
                 print("too big")

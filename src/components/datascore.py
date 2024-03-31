@@ -1,60 +1,45 @@
 #AndyD
 from pydantic import BaseModel
-from typing import Dict
+from typing import List
 import unittest
 
 #represents a single data model for a player to be filled out per user
 #might be user to call this the user model
+class SaveModel(BaseModel):
+    name : str
+    score : int
+    level : List[int]
 
-class DataScore(BaseModel):
-  name : str
-  highScore : int
-  questionsCompleted : int
-  incorrectAmt : int
-  correctAmt : int
-  overallGrade : int
-  loggedIn : bool
+    #question
+    questionsCompleted : int #
+    correctAmt : int #
 
+    def addOneCorrect(self):
+      self.correctAmt += 1
 
-  def setName(self, name: str) -> None:
-    self.name = name
+    def addOneQuestion(self):
+      self.questionsCompleted += 1
 
-  def setHighScore(self, score: int) -> None:
-    self.highScore = score
+    def setName(self, name: str) -> None:
+      self.name = name
 
-  def setQuestionsCompleted(self, questions) -> None:
-    self.questionsCompleted = questions
+    def setHighScore(self, score: int) -> None:
+      self.highScore = score
 
-
-  # # Do we need to create these each time?
-  # def getPlayer(self, player: str) -> None:
+    def setQuestionsCompleted(self, questions) -> None:
+      self.questionsCompleted = questions
 
 if __name__ == "__main__":
   print("Test cases for DataScore model")
-  AndyScore = DataScore(
-    name="Andy",
-    highScore=100,
-    questionsCompleted=5,
-    incorrectAmt=10,
-    correctAmt=30,
-    overallGrade=40,
-    loggedIn=True
-  )
+  AndyScore = SaveModel(name="Andy", score=100, level=[1,2], questionsCompleted=5,correctAmt=30)
 
 
 # automated testing
 
   class test_datascore(unittest.TestCase):
       def setUp(self):
-          self.data = DataScore(
-               name="Andy",
-               highScore=100,
-               questionsCompleted=5,
-               incorrectAmt=10,
-               correctAmt=30,
-               overallGrade=40,
-               loggedIn=True
-              )
+          self.data = SaveModel(name="Jackson", score=100, level=[1,2], questionsCompleted=5,correctAmt=30)
+
       def test_setName(self):
          self.data.setName("Jackson")
          self.assertEqual(self.data.name, "Jackson", "name is not set")

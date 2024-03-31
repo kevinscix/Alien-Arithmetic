@@ -4,40 +4,37 @@ from typing import Dict
 import unittest
 
 #represents a single data model for a player to be filled out per user
-#might be user to call this the user model
 
 class DataScore(BaseModel):
   name : str
-  highScore : int
-  questionsCompleted : int
-  incorrectAmt : int
-  correctAmt : int
-  overallGrade : int
-  loggedIn : bool
+  high_score : int
+  questions_completed : int
+  incorrect_amt : int
+  correct_amt : int
+  overall_grade : int
+  logged_in : bool
 
 
-  def setName(self, name: str) -> None:
+  def set_name(self, name: str) -> None:
     self.name = name
 
-  def setHighScore(self, score: int) -> None:
-    self.highScore = score
+  def set_high_score(self, score: int) -> None:
+    self.high_score = score
 
-  def setQuestionsCompleted(self, questions) -> None:
-    self.questionsCompleted = questions
+  def set_questions_completed(self, questions) -> None:
+    self.questions_completed = questions
 
 
   def fields(self) -> list:
     fields = list()
     fields.append(self.name)
-    fields.append(self.highScore)
-    fields.append(self.questionsCompleted)
-    fields.append(self.incorrectAmt)
-    fields.append(self.correctAmt)
-    fields.append(self.overallGrade)
-    fields.append(self.loggedIn)
+    fields.append(self.high_score)
+    fields.append(self.questions_completed)
+    fields.append(self.incorrect_amt)
+    fields.append(self.correct_amt)
+    fields.append(self.overall_grade)
+    fields.append(self.logged_in)
     return fields
-  # # Do we need to create these each time?
-  # def getPlayer(self, player: str) -> None:
 
 if __name__ == "__main__":
   print("Test cases for DataScore model")
@@ -66,16 +63,17 @@ if __name__ == "__main__":
                overallGrade=40,
                loggedIn=True
               )
+
       def test_setName(self):
-         self.data.setName("Jackson")
+         self.data.set_name("Jackson")
          self.assertEqual(self.data.name, "Jackson", "name is not set")
       
       def test_setHighScore(self):
-         self.data.setHighScore(10)
+         self.data.set_high_score(10)
          self.assertEqual(self.data.highScore, 10, "high score not changed")
       
       def test_setQuestionsCompleted(self):
-         self.data.setQuestionsCompleted(10)
-         self.assertEqual(self.data.questionsCompleted, 10, "questions completed not updated")
+         self.data.set_questions_completed(10)
+         self.assertEqual(self.data.questions_completed, 10, "questions completed not updated")
 
   unittest.main()

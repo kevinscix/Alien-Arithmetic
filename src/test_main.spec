@@ -1,12 +1,22 @@
 # -*- mode: python ; coding: utf-8 -*-
 
+import os
+
+# Get the directory of the current script
+current_dir = os.path.dirname(os.path.abspath('test_main.spec'))
+
+# Construct the relative paths to 'assets' and 'saves'
+assets_path = os.path.join(current_dir, '..', 'src', 'assets')
+saves_path = os.path.join(current_dir, '..', 'src', 'saves')
 
 a = Analysis(
     ['test_main.py'],
     pathex=[],
     binaries=[],
     datas=[
-        ('/Users/andy/Desktop/Projects/2024/group55/src/assets', 'assets'), ('/Users/andy/Desktop/Projects/2024/group55/src/saves', 'saves')],
+        (assets_path, 'assets'), 
+        (saves_path, 'saves')
+    ],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

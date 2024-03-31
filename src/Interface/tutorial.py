@@ -85,4 +85,8 @@ class TutorialState(State):
             if event.key == pygame.K_ESCAPE:
                 print("Returning to menu screen")
                 self.change_state_menu()
+            if event.key == pygame.K_RIGHT:
+                self.change_state_right()
+            if event.key == pygame.K_LEFT:
+                self.change_state_left()
         self.ui.handle_event(event)

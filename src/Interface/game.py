@@ -155,7 +155,7 @@ class GameState(State):
     def shot_collided(self):
         try:
             shot_rect = self.get_rect(self.shots[0])
-            for asteroid in self.asteroidMaster.asteroidArr:
+            for asteroid in self.asteroidMaster.asteroid_arr:
                 if shot_rect.colliderect(self.get_rect(asteroid)):
                     self.shots = []
                     self.user.addOneQuestion()
@@ -172,7 +172,7 @@ class GameState(State):
                             self.player.damage()
                             #call destory func here...
                             self.exAsteroids.append([asteroid, 0])
-                            self.asteroidMaster.asteroidArr.remove(asteroid)
+                            self.asteroidMaster.asteroid_arr.remove(asteroid)
                             self.sfx.explosion_sound()
                             asteroid['destroyed'] = True
                     return True
@@ -181,7 +181,7 @@ class GameState(State):
             pass
 
     def border_collided(self):
-        for asteroid in self.asteroidMaster.asteroidArr:
+        for asteroid in self.asteroidMaster.asteroid_arr:
             if self.border.colliderect(self.get_rect(asteroid)):
                 return True
         return False
@@ -195,7 +195,7 @@ class GameState(State):
         #remove current asteroid and shots
         if self.rounds > 0:
             print(self.player.points)
-            self.asteroidMaster.asteroidArr = []
+            self.asteroidMaster.asteroid_arr = []
             self.asteroidMaster.generateAsteroids()
             self.rounds -= 1
         else:
@@ -206,7 +206,7 @@ class GameState(State):
         #empty all variables
         self.shots = []
         self.exAsteroids = []
-        self.asteroidMaster.asteroidArr = []
+        self.asteroidMaster.asteroid_arr = []
         self.gamePlay1Image = pygame.transform.scale(self.settings['over'], (800, 600))
         self.user.save_settings(self.user.model_dump_json(), self.user.name)
         
@@ -217,7 +217,7 @@ class GameState(State):
         #empty all variables
         self.shots = []
         self.exAsteroids = []
-        self.asteroidMaster.asteroidArr = []
+        self.asteroidMaster.asteroid_arr = []
 
         #increment the level by up
         self.gamePlay1Image = pygame.transform.scale(self.settings['level'], (800, 600))
@@ -256,7 +256,7 @@ class GameState(State):
         for shot in self.shots:
             surface.blit(shot['surface'], shot['position'])
 
-        for asteroid in self.asteroidMaster.asteroidArr:
+        for asteroid in self.asteroidMaster.asteroid_arr:
             surface.blit(asteroid['surface'], asteroid['position'])
             surface.blit(asteroid['number_surface'], [asteroid['position'][0] + 15, asteroid['position'][1] + 15])
 

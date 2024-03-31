@@ -26,10 +26,10 @@ class TutorialState(State):
         self.back_button_image = pygame.image.load(os.path.normpath(back_button_path))
         self.back_button_image = pygame.transform.scale(self.back_button_image, (150, 100))
         left_button_path = os.path.join(current_path, "..","assets", "visuals", "buttons", "text buttons", "left button.png")
-        left_button_path = os.path.join(current_path, "..", "assets", "visuals", "buttons", "text buttons", "right button.png")
+        right_button_path = os.path.join(current_path, "..", "assets", "visuals", "buttons", "text buttons", "right button.png")
         self.left_button_image = pygame.image.load(os.path.normpath(left_button_path))
         self.left_button_image = pygame.transform.scale(self.left_button_image, (75, 100))
-        self.right_button_image = pygame.image.load(os.path.normpath(left_button_path))
+        self.right_button_image = pygame.image.load(os.path.normpath(right_button_path))
         self.right_button_image = pygame.transform.scale(self.right_button_image, (75, 100))
 
        # Back button 

@@ -27,10 +27,10 @@ class TutorialState(State):
         self.back_button_image = pygame.transform.scale(self.back_button_image, (150, 100))
         left_button_path = os.path.join(current_path, "..","assets", "visuals", "buttons", "text buttons", "left button.png")
         left_button_path = os.path.join(current_path, "..", "assets", "visuals", "buttons", "text buttons", "right button.png")
-        self.leftButtonImage = pygame.image.load(os.path.normpath(left_button_path))
-        self.leftButtonImage = pygame.transform.scale(self.leftButtonImage, (75, 100))
-        self.rightButtonImage = pygame.image.load(os.path.normpath(left_button_path))
-        self.rightButtonImage = pygame.transform.scale(self.rightButtonImage, (75, 100))
+        self.left_button_image = pygame.image.load(os.path.normpath(left_button_path))
+        self.left_button_image = pygame.transform.scale(self.left_button_image, (75, 100))
+        self.right_button_image = pygame.image.load(os.path.normpath(left_button_path))
+        self.right_button_image = pygame.transform.scale(self.right_button_image, (75, 100))
 
        # Back button 
         #needs to set up the correct location for and settings 
@@ -41,12 +41,12 @@ class TutorialState(State):
         )
 
         self.btn_left = button.ButtonPngIcon(
-            self.leftButtonImage, 
+            self.left_button_image, 
             self.change_state_left, 
             ui_group=self.ui
         )
         self.btn_right = button.ButtonPngIcon(
-            self.rightButtonImage, 
+            self.right_button_image, 
             self.change_state_right, 
             ui_group=self.ui
         )

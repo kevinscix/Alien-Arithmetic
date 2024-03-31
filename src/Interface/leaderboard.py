@@ -27,7 +27,6 @@ class LeaderboardState(State):
         self.back_button_image = pygame.image.load(os.path.normpath(back_button_path))
         self.back_button_image = pygame.transform.scale(self.back_button_image, (150, 100))
 
-
        # Back button 
         #needs to set up the correct location for and settings 
         self.btn_back = button.ButtonPngIcon(

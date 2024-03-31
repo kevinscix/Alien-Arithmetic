@@ -20,7 +20,58 @@ from settings import Settings
 #this isn't importing properly???? ill figure it out or someone else can i give up
 
 class GameState(State):
+    """
+    Represents the game state for login and sign-in functionalities.
+
+    This class inherits from the State class and provides functionality for game states.
+
+    Attributes:
+        ui (Group): A group to hold all the UI elements.
+        settings (dict): Settings for the game.
+        user (SaveState): Represents the user's state.
+        level (int): The current level of the game.
+        player (Player): Represents the player object.
+        pause (bool): Represents the pause state of the game.
+        btn_pause (ButtonTwoStates): Button to pause/resume the game.
+        btn_level (ButtonPngIcon): Button to change the game level.
+        shots (List[dict]): List of bullets shot by the player.
+        exAsteroids (List[list]): List of exploded asteroids.
+        rounds (int): Number of rounds in the game.
+        player_pos (List[int]): Position of the player.
+        asteroidMaster (Asteroid): Manages asteroids in the game.
+        explosion_animation (List[pygame.Surface]): List of explosion animation frames.
+        music (object): Represents game music.
+        sfx (object): Represents sound effects.
+        pause_surface (pygame.Surface): Surface for displaying "PAUSED" text.
+        ended (bool): Represents whether the game has ended.
+
+    Methods:
+        change_state_level: Changes the game state to the level selection state.
+        change_state_pause: Toggles the pause state of the game.
+        create_shot: Creates a bullet shot by the player.
+        move_shot: Moves the bullets on the screen.
+        remove_shot: Removes bullets that have moved off the screen.
+        get_rect: Returns the rectangle bounding the object.
+        shot_collided: Checks if a bullet has collided with an asteroid.
+        border_collided: Checks if an asteroid has collided with the border.
+        updateHealthBar: Updates the health bar of the player.
+        newRound: Starts a new round in the game.
+        onGameEnd: Handles the game end event.
+        onGameWin: Handles the game win event.
+        on_draw: Draws the game elements on the screen.
+        on_event: Handles the game events.
+        handle_movement: Handles player movement in the game.
+    """
     def __init__(self, engine, user, mode, level):
+        """
+        Initializes a GameState object.
+
+        Args:
+            engine: The game engine.
+            user (SaveState): The user's state.
+            mode: The game mode.
+            level: The current level of the game.
+        """
         super().__init__(engine)
         #UI
         self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter
@@ -116,18 +167,53 @@ class GameState(State):
 
 
     def change_state_level(self):
+        """
+        Changes the game state to the level selection state.
+
+        This method changes the game state to the level selection state
+        by setting the next state of the state machine to the OuterLevelState.
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
         from Interface.level import OuterLevelState
         self.sfx.button_sound()
         self.engine.machine.next_state = OuterLevelState(self.engine, self.user)
 
     #only button that exsit on the screen
     def change_state_pause(self):
+        """
+        Toggles the pause state of the game.
+
+        This method toggles the pause state of the game by
+        switching the value of the pause attribute.
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
         self.sfx.button_sound()
         self.pause = not self.pause
         pass
 
     #Game specific functions
     def create_shot(self, player_pos):
+        """
+        Creates a bullet shot by the player.
+
+        This method creates a bullet shot by the player at the specified position.
+
+        Args:
+            player_pos (List[int]): The position of the player.
+
+        Returns:
+            dict: A dictionary containing the details of the created shot.
+        """
         #limits the number of bullets on screen to one
         if not (len(self.shots) > 0):
             bullet_pos = [player_pos[0] + 75, player_pos[1]]
@@ -139,22 +225,68 @@ class GameState(State):
             }
 
     def move_shot(self):
+        """
+        Moves the bullets on the screen.
+
+        This method moves the bullets on the screen upwards.
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
         for shot in self.shots:
             shot['position'][1] -= shot['speed']
 
 
     def remove_shot(self):
+        """
+        Removes bullets that have moved off the screen.
+
+        This method removes bullets that have moved off the top of the screen.
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
         for shot in self.shots:
             if shot['position'][1] < 0:
                 self.shots.remove(shot)
 
     def get_rect(self, obj):
+        """
+        Returns the rectangle bounding the object.
+
+        This method returns the rectangle bounding the object.
+
+        Args:
+            obj (dict): The object for which the rectangle is to be calculated.
+
+        Returns:
+            pygame.Rect: The rectangle bounding the object.
+        """
         return pygame.Rect(obj['position'][0],
                         obj['position'][1],
                         obj['surface'].get_width(),
                         obj['surface'].get_height())
 
     def shot_collided(self):
+        """
+        Checks if a shot collided with an asteroid.
+
+        This method checks if the player's shot has collided with any asteroid.
+        If a collision is detected, appropriate actions are taken, such as updating
+        player's score and health, removing the shot and asteroid, and playing sound effects.
+
+        Args:
+            None
+
+        Returns:
+            bool: True if a collision occurred, False otherwise.
+        """
         try:
             shot_rect = self.get_rect(self.shots[0])
             for asteroid in self.asteroidMaster.asteroid_arr:
@@ -183,17 +315,52 @@ class GameState(State):
             pass
 
     def border_collided(self):
+        """
+        Checks if an asteroid collided with the border.
+
+        This method checks if any asteroid collided with the border of the game screen.
+
+        Args:
+            None
+
+        Returns:
+            bool: True if a collision occurred, False otherwise.
+        """
         for asteroid in self.asteroidMaster.asteroid_arr:
             if self.border.colliderect(self.get_rect(asteroid)):
                 return True
         return False
 
     def updateHealthBar(self):
+        """
+        Updates the health bar based on the player's health.
+
+        This method updates the health bar width based on the player's health scale.
+        If the player's health reaches zero, the game ends.
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
         self.healthbar.width = 800 * self.player.healthScale()
         if self.healthbar.width == 0:
             self.onGameEnd()
 
     def newRound(self):
+        """
+        Starts a new round of the game.
+
+        This method starts a new round of the game by generating new asteroids
+        and resetting round-related variables.
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
         #remove current asteroid and shots
         if self.rounds > 0:
             print(self.player.points)
@@ -204,6 +371,18 @@ class GameState(State):
             self.onGameWin()
 
     def onGameEnd(self):
+        """
+        Handles game ending.
+
+        This method handles the end of the game by resetting variables, saving user data,
+        and preparing for a return to the level selection screen.
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
         self.ended = True
         #empty all variables
         self.shots = []
@@ -219,6 +398,18 @@ class GameState(State):
         #return user to level
 
     def onGameWin(self):
+        """
+        Handles game win.
+
+        This method handles the win condition of the game by updating user data,
+        advancing the level, and preparing for a return to the level selection screen.
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
         self.ended = True
         #empty all variables
         self.shots = []
@@ -230,6 +421,7 @@ class GameState(State):
 
         self.user.score += self.player.points
 
+        #chekcs the level of the current level to increment accordingly
         if self.level == 3:
             if self.user.level[0] == 3:
                 print("FINISHED LAST LEVEL")
@@ -246,16 +438,24 @@ class GameState(State):
         self.user.save_settings(self.user.model_dump_json(), self.user.name)
 
     def on_draw(self, surface):
-        #pops the screen up
-        #problem is the the surface is only passed on surface we can either hard code the width or heights to reduce calling this function
-        #over and over again. for the sake of prototyping ill leave it here cause ill figure it out later
+        """
+        Draws the game elements on the screen.
+
+        This method draws various game elements, including background, player, asteroids,
+        health bar, and UI buttons, on the provided surface.
+
+        Args:
+            surface (pygame.Surface): The surface to draw the game elements on.
+
+        Returns:
+            None
+        """
         surface.blit(self.gamePlay1Image, (0, 0))
         if self.ended == False:
             self.btn_pause.draw(surface, 0, 515)
 
         #stops incrementing the moving shots
         if not self.pause:
-            #moves the bullets down the screen
             self.move_shot()
             self.remove_shot()
             self.asteroidMaster.move_asteroids()
@@ -280,12 +480,16 @@ class GameState(State):
                 self.exAsteroids.remove(asteroid)
 
 
+        #theres no keyboard condition or still need to be determined for menu
         self.shot_collided()
+
+        #checks the shot_collided()
         if self.border_collided():
             self.player.removePoints()
             self.player.damage()
             self.newRound()
 
+            
         #when still not ended
         if not self.ended:
             self.updateHealthBar()
@@ -300,7 +504,18 @@ class GameState(State):
 
 
     def on_event(self, event):
-        #theres no keyboard condition or still need to be determined for menu
+        """
+        Handles user events.
+
+        This method handles user events such as key presses and button clicks.
+
+        Args:
+            event (pygame.event.Event): The event to handle.
+
+        Returns:
+            None
+        """
+
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_SPACE:
                 shot = self.create_shot(player_pos=self.player_pos)
@@ -317,6 +532,18 @@ class GameState(State):
 
 
     def handle_movement(self):
+        """
+        Handles player movement.
+
+        This method handles player movement based on the keyboard input.
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
+
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT] and self.player_pos[0] > -40:
             self.player_pos[0] -= self.player_speed

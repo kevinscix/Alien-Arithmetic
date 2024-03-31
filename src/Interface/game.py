@@ -15,9 +15,6 @@ from PygameUIKit import Group, button
 import pygame
 
 from settings import Settings
-#this file is a quick scehem of how a state would look like for login and sign in state!
-
-#this isn't importing properly???? ill figure it out or someone else can i give up
 
 class GameState(State):
     """
@@ -73,8 +70,8 @@ class GameState(State):
             level: The current level of the game.
         """
         super().__init__(engine)
-        #UI
-        self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter
+        #UI Group to manage UI elements
+        self.ui = Group()  
         WIDTH, HEIGHT = 800, 600
 
         self.settings = Settings().getbackground()
@@ -82,24 +79,16 @@ class GameState(State):
         self.user : SaveState = user
         self.level = level
 
-        #make this into a utils function?
-        currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
-        parent_dir = os.path.dirname(currentPath)  # Moves up to 'interface'
-
-        shotImagePath = os.path.join(current_dir, "..", "assets", "visuals", "projectiles", "red projectile icon.png")
-        pauseButtonPath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "pauseButton.png")
-        playButtonPath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "resume button pix.png")
+        parent_dir = os.path.dirname(os.path.dirname(__file__))  
+        pauseButtonPath = os.path.join(parent_dir, "assets", "visuals", "buttons", "text buttons", "pauseButton.png")
+        playButtonPath = os.path.join(parent_dir, "assets", "visuals", "buttons", "text buttons", "resume button pix.png")
 
         self.font_path = os.path.join(parent_dir, "assets", "visuals", "fonts", "PressStart2P-Regular.ttf")
 
         self.gamePlay1Image = pygame.transform.scale(self.settings['background'], (WIDTH, HEIGHT))
         self.playerImage = pygame.transform.scale(self.settings['ship'], (200, 200))
-
-        #we need someone to load in the bullets
         self.shotImage = self.settings['shot']
         self.shotImage = pygame.transform.scale(self.shotImage, (50, 50))
-
-
         self.pauseButton = pygame.image.load(os.path.normpath(pauseButtonPath))
         self.pauseButton = pygame.transform.scale(self.pauseButton, (65, 85))
         self.playButton = pygame.image.load(os.path.normpath(playButtonPath))
@@ -108,7 +97,6 @@ class GameState(State):
         self.border = pygame.rect.Rect(0, 370, 800, 40)
         self.healthbar = pygame.rect.Rect(0, 0, 800, 10)
         self.player = Player()
-
         self.pause : bool = False
        # Start button
         self.btn_pause = button.ButtonTwoStates(
@@ -118,7 +106,7 @@ class GameState(State):
             ui_group=self.ui
         )
 
-        levelButtonPath = os.path.join(currentPath, "..", "assets", "visuals", "buttons", "text buttons", "levelSelectButton.png")
+        levelButtonPath = os.path.join(parent_dir, "assets", "visuals", "buttons", "text buttons", "levelSelectButton.png")
         self.levelButton = pygame.image.load(os.path.normpath(levelButtonPath))
         self.levelButton = pygame.transform.scale(self.levelButton, (200, 80))
         self.btn_level = button.ButtonPngIcon(

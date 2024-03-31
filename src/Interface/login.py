@@ -1,32 +1,38 @@
 import sys
 import os
-
-
+import pygame
 from Interface.state_machine import State
 from Interface.menu import MenuState
 from Interface.instructorDashboard import instructorState
-
-from PygameUIKit import Group, button, text_input
-import pygame
-
-#this file is a quick scehem of how a state would look like for login and sign in state!
-
-#this isn't importing properly???? ill figure it out or someone else can i give up
 from Interface.modules.state import SaveState
+from PygameUIKit import Group, button, text_input
 
 class LoginState(State):
+    """
+    Represents the login state of the application, providing interfaces for user authentication.
+    
+    This state allows users to log in as either students or instructors, providing different
+    functionalities based on the role. It also provides a quit option to exit the application.
+    """
     def __init__(self, engine):
+        """
+        Initializes the LoginState with necessary UI components and assets.
+
+        Args:
+            engine: The game engine instance responsible for managing states.
+        """
         super().__init__(engine)
+        # Resolve paths for assets
+        parent_dir = os.path.dirname(os.path.dirname(__file__))  
 
-        current_path = os.path.dirname(__file__)
-        parent_dir = os.path.dirname(current_path)  # Moves up to 'interface'
-
-        student_login_path = os.path.join(current_path, "..", "assets", "visuals", "buttons", "text buttons", "studentLogin.png")
-        teacher_login_image_path = os.path.join(current_path, "..", "assets", "visuals", "buttons", "text buttons", "instructorLogin.png")
-        quit_game_image_path = os.path.join(current_path, "..", "assets", "visuals", "buttons", "text buttons", "exitButton.png")
-        loginImagePath = os.path.join(current_path, "..", "assets", "visuals", "pages - backgrounds", "log in page.png")
+        # Paths for UI elements such as buttons and backgrounds
+        student_login_path = os.path.join(parent_dir, "assets", "visuals", "buttons", "text buttons", "studentLogin.png")
+        teacher_login_image_path = os.path.join(parent_dir, "assets", "visuals", "buttons", "text buttons", "instructorLogin.png")
+        quit_game_image_path = os.path.join(parent_dir, "assets", "visuals", "buttons", "text buttons", "exitButton.png")
+        loginImagePath = os.path.join(parent_dir, "assets", "visuals", "pages - backgrounds", "log in page.png")
+        # Path for the font used in the login screen
         self.font_path = os.path.join(parent_dir,"assets", "visuals", "fonts", "PressStart2P-Regular.ttf")
-
+        # Load images and scale them to appropriate sizes
         self.teacher_login_image = pygame.image.load(os.path.normpath(teacher_login_image_path))
         self.teacher_login_image = pygame.transform.scale(self.teacher_login_image, (250, 100))
         self.student_login_image = pygame.image.load(os.path.normpath(student_login_path))
@@ -36,16 +42,14 @@ class LoginState(State):
         self.loginImage = pygame.image.load(os.path.normpath(loginImagePath))
         self.loginImage = pygame.transform.scale(self.loginImage, (800, 600))
 
-        #UI
-        self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter
-        #make this into a utils function?
-        currentPath = os.path.dirname(__file__)  # __file__ is the path to the current script
+        #UI Group to manage UI elements
+        self.ui = Group() 
 
-
+        # Define default instructor state for quick access
         self.instructor : SaveState = SaveState(
             name="Instructor",
             score=000,
-            level=[3,3], #max level so they have access to all
+            level=[3,3], # Max level so they have access to all levels
             highScore=0000,
             questionsCompleted=000,
             incorrectAmt=0000,
@@ -55,8 +59,8 @@ class LoginState(State):
         )
 
         self.font = pygame.font.Font(self.font_path, 25)
-
-        self.student : SaveState = None
+        
+        # Initialize UI components like buttons and text inputs
         self.text_input = text_input.TextInput(placeholder="Username/Password",
                                                fixed_width=400,
                                                border_radius=2,
@@ -79,28 +83,30 @@ class LoginState(State):
             ui_group=self.ui
         )
 
-        self.error_messages = []
+        self.error_messages = [] # For displaying error messages to the user
 
 
-        #music
+        # Initialize background music and sound effects
         from components.media import music, sfx
-
         self.music = music()
         self.music.menu_music()
         self.sfx = sfx()
 
     #pulls the player data with the empty player pull function
     def change_state_student(self):
+        """
+        Changes the current state to a student-specific state, after validating user input.
+        
+        If the user input is valid, the state is changed to a student-specific menu state.
+        Otherwise, error messages are updated to reflect the issue.
+        """
         self.sfx.button_sound()
-
         from Interface.modules.state import ScoreboardState
         bo = ScoreboardState()
-        #if no text then don't let the users enter...
-        #do we want an error system here
         if self.text_input.get_text():
-            if self.text_input.get_text() == "dev123":
+            if self.text_input.get_text() == "dev123": # Developer mode password
                 self.engine.machine.next_state = MenuState(self.engine, self.instructor)
-            elif len(self.text_input.get_text()) > 7:
+            elif len(self.text_input.get_text()) > 7: # 
                 msg = {
                     'message' : self.font.render("Exceeds max name 7", True, (255, 0, 0)),
                 }
@@ -108,9 +114,6 @@ class LoginState(State):
                 print("too big")
             else:
                 Player = bo.getPlayer(playerName=self.text_input.get_text())
-                #should be like  self.engine.machine.next_state = MENUSTATE(self.engine, self.instructor)
-                #need to add an error message popup
-
                 self.engine.machine.next_state = MenuState(self.engine, Player)
         else:
             msg = {
@@ -120,10 +123,17 @@ class LoginState(State):
 
     #loads a instrctor model
     def change_state_instructor(self):
+        """
+        Changes the current state to an instructor-specific state after verifying the password.
+
+        The instructor state provides different functionalities tailored for instructors. If the
+        password input does not match the expected value, an error message is displayed.
+        """
         self.sfx.button_sound()
-        if self.text_input.get_text() == "yourMom": #temp password
+        if self.text_input.get_text() == "2212Admin": # Password for instructor 
             self.engine.machine.next_state = instructorState(self.engine)
         else:
+            #
             msg = {
                     'message' :  self.font.render("Wrong password", True, (255, 0, 0)),
                 }

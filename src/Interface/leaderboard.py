@@ -61,16 +61,13 @@ class LeaderboardState(State):
         self.font = pygame.font.Font(self.font_path, 25)
 
         for i, player in enumerate(self.leaderboard_data[:5], start=1):
-            if player.name == "Instructor":
-                continue
-            else:
-                # Create text surfaces for the player's name, score, and logged-in status
-                name_surface = self.font.render(f"{i}.{player.name}", True, (255, 255, 255))
-                score_surface = self.font.render(str(player.score), True, (255, 255, 255))
-                
-                surface.blit(name_surface, (175, y))
-                surface.blit(score_surface, (490, y))
-                y += self.font.get_height() + 30
+            # Create text surfaces for the player's name, score, and logged-in status
+            name_surface = self.font.render(f"{i}.{player.name}", True, (255, 255, 255))
+            score_surface = self.font.render(str(player.score), True, (255, 255, 255))
+            
+            surface.blit(name_surface, (175, y))
+            surface.blit(score_surface, (490, y))
+            y += self.font.get_height() + 30
 
         main_score_surface = self.font.render(str(self.user.name) + ' score: ' + str(self.user.score), True, "red")
         surface.blit(main_score_surface, (160, 100))

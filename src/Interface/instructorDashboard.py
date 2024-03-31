@@ -62,6 +62,9 @@ class instructorState(State):
         scores : List[SaveState] = self.scoreboard.loadScore()
         self.leaderboard_data = []
         self.leaderboard_data = scores
+        self.start_index = self.currentPage * 5
+        self.end_index = self.start_index + 5
+        self.displayed_scores = self.leaderboard_data[self.start_index:self.end_index]
 
     def change_state_menu(self):
         self.sfx.button_sound()
@@ -92,11 +95,9 @@ class instructorState(State):
         #to a function that will change its numbers either 
         #+5 or -5 based on left or right button
         try:
-            start_index = self.currentPage * 5
-            end_index = start_index + 5
-            displayed_scores = self.leaderboard_data[start_index:end_index]
+           
             
-            for i, player in enumerate(displayed_scores, start=start_index + 1):
+            for i, player in enumerate(self.displayed_scores, start=self.start_index + 1):
                 name_surface = self.font.render(f"{player.name}", True, (255, 255, 255))
                 level_surface = self.font.render(f"{player.level}", True, (255, 255, 255))
                 completed_surface = self.font.render(f"{player.questionsCompleted}", True, (255, 255, 255))
@@ -108,6 +109,7 @@ class instructorState(State):
                 surface.blit(correct_surface, (370, y))
                 surface.blit(score_surface, (590, y))
                 y += self.font.get_height() + 40
+
         except:
             pass
 

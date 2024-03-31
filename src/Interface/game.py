@@ -158,12 +158,14 @@ class GameState(State):
             for asteroid in self.asteroidMaster.asteroidArr:
                 if shot_rect.colliderect(self.get_rect(asteroid)):
                     self.shots = []
+                    self.user.addOneQuestion()
                     #write logic about point gain and lost for health if correct or not
                     if asteroid['correct']:
                         #gain health gain store
                         #how should we draw the health bar onto the screen
                         #remove asteroids and start new level
-                        self.player.addPoints(10)
+                        self.player.addPoints()
+                        self.user.addOneCorrect()
                         self.newRound()
                     else:
                         if not asteroid['destroyed']:
@@ -173,7 +175,6 @@ class GameState(State):
                             self.asteroidMaster.asteroidArr.remove(asteroid)
                             self.sfx.explosion_sound()
                             asteroid['destroyed'] = True
-
                     return True
             return False
         except:
@@ -207,8 +208,8 @@ class GameState(State):
         self.exAsteroids = []
         self.asteroidMaster.asteroidArr = []
         self.gamePlay1Image = pygame.transform.scale(self.settings['over'], (800, 600))
-
-        pass
+        self.user.save_settings(self.user.model_dump_json(), self.user.name)
+        
         #return user to level
 
     def onGameWin(self):
@@ -220,7 +221,6 @@ class GameState(State):
 
         #increment the level by up
         self.gamePlay1Image = pygame.transform.scale(self.settings['level'], (800, 600))
-
 
         self.user.score += self.player.points
 
@@ -234,7 +234,6 @@ class GameState(State):
             self.user.level[1] += 1
 
         self.user.save_settings(self.user.model_dump_json(), self.user.name)
-        print(self.user)
 
     def on_draw(self, surface):
         #pops the screen up
@@ -260,8 +259,6 @@ class GameState(State):
         for asteroid in self.asteroidMaster.asteroidArr:
             surface.blit(asteroid['surface'], asteroid['position'])
             surface.blit(asteroid['number_surface'], [asteroid['position'][0] + 15, asteroid['position'][1] + 15])
-
-
 
         #draws the dead asteroids animation
         for asteroid in self.exAsteroids:

@@ -3,7 +3,7 @@ import random
 import pygame
 import unittest
 
-pygame.font.init()
+pygame.font.init() # Initializes Pygame's font module.
 
 class Asteroid():
 
@@ -15,11 +15,12 @@ class Asteroid():
             mode (str): Game mode ('plus', 'minus', 'multiply').
             level (int): Game level.
         """
+        # Define bounds for asteroid values and calculate max result for multiplication mode.
         self.max_asteroid : int = 10
         self.min_asteroid : int = 1
         self.max_result_asteroid : int = self.max_asteroid * self.max_asteroid
 
-        #offset is used to center the asteroid to center
+        # Set the number of asteroids and offset based on the game level.
         if level == 1:
             self.number_of_asteroids = 3
             self.offset = 70
@@ -32,7 +33,7 @@ class Asteroid():
         else:
             self.number_of_asteroids = 5
 
-
+        # Speed at which asteroids move, and initial values for arithmetic operations.
         self.speed : float = 1    # how many pixels the asteroid will move by each loop, not final
         self.first_op : int
         self.second_op : int

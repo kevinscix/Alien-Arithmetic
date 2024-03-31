@@ -202,6 +202,13 @@ class GameState(State):
             self.onGameWin()
 
     def onGameEnd(self):
+        self.ended = True
+        #empty all variables
+        self.shots = []
+        self.exAsteroids = []
+        self.asteroidMaster.asteroidArr = []
+        self.gamePlay1Image = pygame.transform.scale(self.settings['over'], (800, 600))
+
         pass
         #return user to level
 

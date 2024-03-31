@@ -21,6 +21,12 @@ class Settings():
     redLevelUp = os.path.join(current_dir,"assets", "visuals", "pages - backgrounds", "level up red.png")
     yellowLevelUp = os.path.join(current_dir,"assets", "visuals", "pages - backgrounds", "level up yellow.png")
 
+
+    blueOver = os.path.join(current_dir,"assets", "visuals", "pages - backgrounds", "game over blue.png")
+    redOver = os.path.join(current_dir,"assets", "visuals", "pages - backgrounds", "game over red.png")
+    yellowOver = os.path.join(current_dir,"assets", "visuals", "pages - backgrounds", "game over yellow.png")
+
+
     redShot = os.path.join(current_dir, "assets", "visuals", "projectiles", "red projectile icon.png")
     blueShot = os.path.join(current_dir, "assets", "visuals", "projectiles", "blue projectile icon.png")
     yellowShot = os.path.join(current_dir, "assets", "visuals", "projectiles", "yellow projectile icon.png")
@@ -31,18 +37,21 @@ class Settings():
         'ship' :  pygame.image.load(os.path.normpath(redship)),
         'background' : pygame.image.load(os.path.normpath(redBackground)),
         'level' : pygame.image.load(os.path.normpath(redLevelUp)),
+        'over' : pygame.image.load(os.path.normpath(redOver)),
         'shot' : pygame.image.load(os.path.normpath(redShot))
       },
       {
         'ship' : pygame.image.load(os.path.normpath(blueship)),
         'background' : pygame.image.load(os.path.normpath(blueBackground)),
         'level' : pygame.image.load(os.path.normpath(blueLevelUp)),
+        'over' : pygame.image.load(os.path.normpath(blueOver)),
         'shot' : pygame.image.load(os.path.normpath(blueShot))
       },
       {
         'ship' : pygame.image.load(os.path.normpath(yellowship)),
         'background' : pygame.image.load(os.path.normpath(yellowBackground)),
         'level' : pygame.image.load(os.path.normpath(yellowLevelUp)),
+        'over' : pygame.image.load(os.path.normpath(yellowOver)),
         'shot' : pygame.image.load(os.path.normpath(yellowShot))
       }
     ]

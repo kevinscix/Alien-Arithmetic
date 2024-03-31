@@ -19,11 +19,13 @@ class LoginState(State):
         super().__init__(engine)
 
         current_path = os.path.dirname(__file__)
+        parent_dir = os.path.dirname(current_path)  # Moves up to 'interface'
+
         student_login_path = os.path.join(current_path, "..", "assets", "visuals", "buttons", "text buttons", "studentLogin.png")
         teacher_login_image_path = os.path.join(current_path, "..", "assets", "visuals", "buttons", "text buttons", "instructorLogin.png")
         quit_game_image_path = os.path.join(current_path, "..", "assets", "visuals", "buttons", "text buttons", "exitButton.png")
         loginImagePath = os.path.join(current_path, "..", "assets", "visuals", "pages - backgrounds", "log in page.png")
-        self.font_path = os.path.join(current_path, "..","assets", "visuals", "fonts", "PressStart2P-Regular.ttf")
+        self.font_path = os.path.join(parent_dir,"assets", "visuals", "fonts", "PressStart2P-Regular.ttf")
 
         self.teacher_login_image = pygame.image.load(os.path.normpath(teacher_login_image_path))
         self.teacher_login_image = pygame.transform.scale(self.teacher_login_image, (250, 100))

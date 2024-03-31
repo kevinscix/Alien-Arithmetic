@@ -5,7 +5,8 @@ a = Analysis(
     ['test_main.py'],
     pathex=[],
     binaries=[],
-    datas=[],
+    datas=[
+        ('/Users/andy/Desktop/Projects/2024/group55/src/assets', 'assets'), ('/Users/andy/Desktop/Projects/2024/group55/src/saves', 'saves')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

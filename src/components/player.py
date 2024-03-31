@@ -28,9 +28,11 @@ class Player():
         return self.health
 
     # returns the points of the player
-    def addPoints(self, addPoints : int) -> None:
-        self.points += addPoints
+    def addPoints(self) -> None:
+        self.points += 10
 
+    def removePoints(self):
+        self.points -= 10
     def setPoints(self, points : int) -> None:
        self.points = points
 

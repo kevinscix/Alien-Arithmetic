@@ -10,7 +10,7 @@ from pydantic import BaseModel
 import json
 from components.scoreboard import Scoreboard
 from typing import List
-
+from components.datascore import DataScore
 
 
 #this file represents the possible states which these objects should have

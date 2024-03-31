@@ -26,16 +26,6 @@ class DataScore(BaseModel):
     self.questionsCompleted = questions
 
 
-  def fields(self) -> list:
-    fields = list()
-    fields.append(self.name)
-    fields.append(self.highScore)
-    fields.append(self.questionsCompleted)
-    fields.append(self.incorrectAmt)
-    fields.append(self.correctAmt)
-    fields.append(self.overallGrade)
-    fields.append(self.loggedIn)
-    return fields
   # # Do we need to create these each time?
   # def getPlayer(self, player: str) -> None:
 
@@ -51,7 +41,6 @@ if __name__ == "__main__":
     loggedIn=True
   )
 
-  print(AndyScore.fields())
 
 # automated testing
 

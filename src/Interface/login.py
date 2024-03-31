@@ -100,7 +100,7 @@ class LoginState(State):
                 self.engine.machine.next_state = MenuState(self.engine, self.instructor)
             elif len(self.text_input.get_text()) > 7:
                 msg = {
-                    'message' : self.font.render("Exceeds max name", True, (255, 0, 0)),
+                    'message' : self.font.render("Exceeds max name 7", True, (255, 0, 0)),
                 }
                 self.error_messages = msg
                 print("too big")
@@ -155,6 +155,8 @@ class LoginState(State):
             if event.key == pygame.K_ESCAPE:
                 print("Returning to menu screen")
                 self.quit_game()
+            if event.key == pygame.K_RETURN:
+                self.change_state_student()
         self.ui.handle_event(event)
 
         self.text_input._handle_event(event)

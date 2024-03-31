@@ -4,8 +4,6 @@ import pygame
 from typing import List
 import os
 
-#comments
-# do we need any interactions from this state
 
 
 class LeaderboardState(State):
@@ -16,7 +14,7 @@ class LeaderboardState(State):
         self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter    
         self.user = user
         current_path = os.path.dirname(__file__)  
-        parent_dir = os.path.dirname(current_path)  # Moves up to 'interface'
+        parent_dir = os.path.dirname(current_path)  
 
         scoreboard_image_path = os.path.join(current_path, "..", "assets", "visuals", "pages - backgrounds", "student leaderboard page.png")
         back_button_path = os.path.join(current_path, "..", "assets", "visuals", "buttons", "text buttons", "exitButton.png")

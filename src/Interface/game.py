@@ -1,12 +1,5 @@
 import os
 import sys
-
-#change directory
-current_dir = os.path.dirname(__file__)
-parent_dir = os.path.dirname(current_dir)  # Moves up to 'interface'
-src_dir = os.path.dirname(parent_dir)  # Moves up to 'src'
-sys.path.append(src_dir)
-
 from Interface.state_machine import State
 from Interface.modules.state import SaveState
 from components.asteroid import Asteroid

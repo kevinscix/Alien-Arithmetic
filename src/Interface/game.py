@@ -272,7 +272,7 @@ class GameState(State):
 
         self.shot_collided()
         if self.border_collided():
-            self.player.addPoints(-10)
+            self.player.removePoints()
             self.player.damage()
             self.newRound()
 

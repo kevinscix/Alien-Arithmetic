@@ -307,7 +307,7 @@ class GameState(State):
                     self.sfx.shoot_sound()
             if event.key == pygame.K_ESCAPE:
                 print("Returning to menu screen")
-                self.change_state_level()
+                self.onGameEnd()
             if event.key == pygame.K_p:
                 self.btn_pause._on_click()
 

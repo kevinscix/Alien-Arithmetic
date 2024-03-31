@@ -93,11 +93,11 @@ class GameState(State):
         self.asteroidMaster = Asteroid(mode, level)
         self.asteroidMaster.generateAsteroids()
 
-        self.explosionAnimatation = []
+        self.explosion_animation = []
         for i in range(7):
-            explosionFramePath = os.path.join(parent_dir, "assets", "visuals", "explosion!!!!!", "explosion frames", "explosion{}.png".format(str(i + 1)))
-            frame = pygame.image.load(explosionFramePath).convert_alpha()
-            self.explosionAnimatation.append(pygame.transform.scale(frame, (60, 60)))
+            explosion_frame_ath = os.path.join(parent_dir, "assets", "visuals", "explosion!!!!!", "explosion frames", "explosion{}.png".format(str(i + 1)))
+            frame = pygame.image.load(explosion_frame_ath).convert_alpha()
+            self.explosion_animation.append(pygame.transform.scale(frame, (60, 60)))
 
          #music
         from components.media import music, sfx
@@ -262,10 +262,10 @@ class GameState(State):
 
         #draws the dead asteroids animation
         for asteroid in self.exAsteroids:
-            surface.blit(self.explosionAnimatation[int(asteroid[1])], asteroid[0]['position'])
+            surface.blit(self.explosion_animation[int(asteroid[1])], asteroid[0]['position'])
             asteroid[1] += 0.2
 
-            if asteroid[1] >= len(self.explosionAnimatation):
+            if asteroid[1] >= len(self.explosion_animation):
                # "animation cycle is finished remove from list should despawn here..."
                 self.exAsteroids.remove(asteroid)
 

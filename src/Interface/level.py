@@ -1,13 +1,12 @@
 import os
 import sys
 import pygame
-#change directory
+from PygameUIKit import Group, button
 src_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))  
 sys.path.append(src_dir)
 from Interface.state_machine import State
 from Interface.modules.state import SaveState
 from Interface.game import GameState
-from PygameUIKit import Group, button
 
 parent_dir = os.path.dirname(os.path.dirname(__file__))  
 quitImagePath = os.path.join(parent_dir, "assets", "visuals", "buttons", "text buttons", "exitButton.png")
@@ -124,16 +123,16 @@ class InnerLevelState(State):
         self.ui = Group()  # Create a group to hold all the ui elements. This is filled with the ui elements below thanks to the ui_group parameter
         #make this into a utils function?
 
-        levelSelectPath = os.path.join(currentPath, "..", "assets", "visuals", "pages - backgrounds", "planet page.png")
+        levelSelectPath = os.path.join(parent_dir, "assets", "visuals", "pages - backgrounds", "planet page.png")
         self.level_select = pygame.image.load(os.path.normpath(levelSelectPath))
         self.level_select= pygame.transform.scale(self.level_select, (800, 600))
-        levelOnePath = os.path.join(currentPath, "..", "assets", "visuals", "stage-level select", "levelOne.png")
+        levelOnePath = os.path.join(parent_dir, "assets", "visuals", "stage-level select", "levelOne.png")
         self.levelOne = pygame.image.load(os.path.normpath(levelOnePath))
         self.levelOne= pygame.transform.scale(self.levelOne, (150, 125))
-        levelTwoPath = os.path.join(currentPath, "..","assets", "visuals", "stage-level select", "levelTwo.png")
+        levelTwoPath = os.path.join(parent_dir,"assets", "visuals", "stage-level select", "levelTwo.png")
         self.levelTwo = pygame.image.load(os.path.normpath(levelTwoPath))
         self.levelTwo = pygame.transform.scale(self.levelTwo, (150, 125))
-        levelThreePath = os.path.join(currentPath, "..","assets", "visuals", "stage-level select", "levelThree.png")
+        levelThreePath = os.path.join(parent_dir,"assets", "visuals", "stage-level select", "levelThree.png")
         self.levelThree = pygame.image.load(os.path.normpath(levelThreePath))
         self.levelThree = pygame.transform.scale(self.levelThree, (150, 125))
 

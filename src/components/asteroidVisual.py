@@ -42,10 +42,6 @@ class asteroidVisual(asteroid): # causes an error with module when asteroid is i
         return position
     
 
-    
-
-
-
 if __name__ == "__main__":
     ass1 = asteroidVisual(90, 50, 3)
     pos = ass1.getPos()

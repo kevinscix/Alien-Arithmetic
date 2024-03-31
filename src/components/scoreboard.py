@@ -1,4 +1,3 @@
-#Emily & Andy
 from components.datascore import SaveModel
 from pydantic import BaseModel
 from typing import Dict, Optional, List
@@ -6,10 +5,6 @@ from Interface.state_machine import State, DisplayEngine
 import json
 import os
 import unittest
-
-
-#we should clarify the logic for this file, it doesnt really make senses now
-#I reread what we wrote here
 
 #model representation of what the scoreboard 
 class Scoreboard(BaseModel):
@@ -40,9 +35,6 @@ class Scoreboard(BaseModel):
     for name, score in self.board.items():
       print(f"Name: {name}, Score: {score}")
 
-  # def showScores(self):
-  #   print(self.board)
-
   def getPlayer(self, name : str) -> SaveModel:
         score = self.board.get(name)
         if score:
@@ -50,11 +42,6 @@ class Scoreboard(BaseModel):
         else:
             print(f"No player with the name {name} found.")
         return score
-
-  # def getPlayer(self, name : str) -> SaveModel:
-  #   score = self.board[name]
-  #   print(score)
-  #   return score
 
 class ScoreboardState(State):
     def __init__(self, engine):
@@ -130,71 +117,24 @@ class ScoreboardState(State):
 
 
 #unit testing
-
-# class TestScoreboard(unittest.TestCase):
-
-#     def setUp(self):
-#         # Initialize the Scoreboard object
-#         self.scoreboard = Scoreboard()
-
-#     def test_initialization(self):
-#         # Test that the Scoreboard is initialized with default values
-#         self.assertIsNone(self.scoreboard.numberPlayer, "numberPlayer should initially be None")
-#         self.assertIsNone(self.scoreboard.userType, "userType should initially be None")
-
-#     def test_add_score(self):
-#         # Assuming there's a method to add a score which we'll need to define based on actual implementation
-#         pass
-
-#     def test_get_player_info(self):
-#         # Assuming there's a method to get player information which we'll need to define based on actual implementation
-#         pass
-
-# if __name__ == "__main__":
-#     unittest.main()
-    
 class TestScoreboard(unittest.TestCase):
-
     def setUp(self):
-        # Initialize the Scoreboard object
-        self.scoreboard = Scoreboard()
-        # Assuming the Scoreboard class can handle multiple players, represented in some form of collection
+        self.board = Scoreboard()
 
-    def test_initialization(self):
-        # Test that the Scoreboard is initialized properly
-        self.assertIsInstance(self.scoreboard, Scoreboard, "Scoreboard instance is not created correctly")
+    def test_isPlayer_True(self):
+        self.board.userType = 1
+        self.assertTrue(self.board.isPlayer(), "isPlayer should return True for userType 1")
 
-    def test_add_score(self):
-        # Test adding a score for a new player
-        self.scoreboard.add_score("Emily", 100)
-        player_info = self.scoreboard.get_player_info("Emily")
-        self.assertEqual(player_info['score'], 100, "Score for Emily was not added correctly")
+    def test_isInstructor_True(self):
+        self.board.userType = 0
+        self.assertTrue(self.board.isInstructor(), "isInstructor should return True for userType 0")
 
-        # Test updating the score for an existing player
-        self.scoreboard.add_score("Emily", 150)
-        updated_info = self.scoreboard.get_player_info("Emily")
-        self.assertEqual(updated_info['score'], 150, "Score for Emily was not updated correctly")
+    def test_getPlayer_Found(self):
+        test_player = SaveModel(name="Test", score=100)
+        self.board.board = {"Test": test_player}
+        result = self.board.getPlayer("Test")
+        self.assertIsNotNone(result, "getPlayer should return a player when the name matches")
+        self.assertEqual(result.name, "Test", "getPlayer returned incorrect player details")
 
-    def test_get_player_info(self):
-        # Test retrieving player information
-        self.scoreboard.add_score("Bob", 200)
-        bob_info = self.scoreboard.get_player_info("Bob")
-        self.assertEqual(bob_info['score'], 200, "Failed to retrieve correct score for Bob")
-
-    def test_remove_player(self):
-        # Testing the method to remove a player
-        self.scoreboard.add_score("Emily", 50)
-        self.scoreboard.remove_player("Emily")
-        with self.assertRaises(KeyError):
-            self.scoreboard.get_player_info("Emily")
-
-    def test_list_scores(self):
-        # Testing the method to list all scores
-        self.scoreboard.add_score("Emily", 100)
-        self.scoreboard.add_score("Bob", 200)
-        scores = self.scoreboard.list_scores()
-        self.assertIn(("Emily", 100), scores, "Alice's score is not listed correctly")
-        self.assertIn(("Bob", 200), scores, "Bob's score is not listed correctly")
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

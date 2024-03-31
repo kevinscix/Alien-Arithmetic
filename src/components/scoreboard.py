@@ -1,5 +1,5 @@
 #Emily & Andy
-from components.datascore import DataScore
+from components.datascore import SaveModel
 from pydantic import BaseModel
 from typing import Dict, Optional, List
 from Interface.state_machine import State, DisplayEngine
@@ -21,11 +21,11 @@ class Scoreboard(BaseModel):
   #current player
   score : Optional[int] = None
 
-  #currentPlayer : DataScore
-  board : Optional[DataScore] = None
+  #currentPlayer : SaveModel
+  board : Optional[SaveModel] = None
 
-  # currentPlayer : DataScore --
-  board : Dict[str, DataScore] = {}
+  # currentPlayer : SaveModel --
+  board : Dict[str, SaveModel] = {}
 
   #returns 0 if user is true or 1 if user is false 
   def isPlayer(self):
@@ -43,7 +43,7 @@ class Scoreboard(BaseModel):
   # def showScores(self):
   #   print(self.board)
 
-  def getPlayer(self, name : str) -> DataScore:
+  def getPlayer(self, name : str) -> SaveModel:
         score = self.board.get(name)
         if score:
             print(score)
@@ -51,7 +51,7 @@ class Scoreboard(BaseModel):
             print(f"No player with the name {name} found.")
         return score
 
-  # def getPlayer(self, name : str) -> DataScore:
+  # def getPlayer(self, name : str) -> SaveModel:
   #   score = self.board[name]
   #   print(score)
   #   return score
@@ -72,7 +72,7 @@ class ScoreboardState(State):
     def isInstructor(self) -> bool:
         return self.engine.current_player_type == "instructor"
 
-    def getPlayer(self, name: str) -> Optional[DataScore]:
+    def getPlayer(self, name: str) -> Optional[SaveModel]:
         for score in self.scores:
             if score.name == name:
                 return score
@@ -88,7 +88,7 @@ class ScoreboardState(State):
                     try:
                         with open(os.path.join(root, file), 'r') as f:
                             score_data = json.load(f)
-                        data_score = DataScore(**score_data)
+                        data_score = SaveModel(**score_data)
                         database.append(data_score)
                         if data_score.name == self.engine.current_player:
                             self.current_player_score = data_score

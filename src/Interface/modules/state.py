@@ -10,7 +10,7 @@ from pydantic import BaseModel
 import json
 from components.scoreboard import Scoreboard
 from typing import List
-from components.datascore import DataScore
+from components.datascore import SaveModel
 
 
 #this file represents the possible states which these objects should have
@@ -39,32 +39,6 @@ class State():
             return None
 
 #I want to make this change but I will keep this for now
-
-#this is the actual contents of the basemodel of the content we want
-#handles the level, access level, and maybe logged in?
-class SaveModel(BaseModel):
-    name : str
-    score : int
-    level : List[int]
-
-    #question
-    questionsCompleted : int #
-    correctAmt : int #
-
-    def addOneCorrect(self):
-      self.correctAmt += 1
-
-    def addOneQuestion(self):
-      self.questionsCompleted += 1
-
-    def setName(self, name: str) -> None:
-      self.name = name
-
-    def setHighScore(self, score: int) -> None:
-      self.highScore = score
-
-    def setQuestionsCompleted(self, questions) -> None:
-      self.questionsCompleted = questions
 
 class SaveState(SaveModel, State):
   def __str__(self) -> str:

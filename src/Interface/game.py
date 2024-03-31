@@ -210,6 +210,10 @@ class GameState(State):
         self.gamePlay1Image = pygame.transform.scale(self.settings['over'], (800, 600))
         self.user.save_settings(self.user.model_dump_json(), self.user.name)
         
+        #offset for the start
+        self.user.correctAmt -= 1
+        self.user.questionsCompleted -= 1
+        self.user.score -= 10
         #return user to level
 
     def onGameWin(self):
@@ -232,7 +236,11 @@ class GameState(State):
                 self.user.level[1] = 1
         elif self.level < 3:
             self.user.level[1] += 1
-
+        
+        #offset for the start
+        self.user.correctAmt -= 1
+        self.user.questionsCompleted -= 1
+        self.user.score -= 10
         self.user.save_settings(self.user.model_dump_json(), self.user.name)
 
     def on_draw(self, surface):
@@ -299,7 +307,7 @@ class GameState(State):
                     self.sfx.shoot_sound()
             if event.key == pygame.K_ESCAPE:
                 print("Returning to menu screen")
-                self.change_state_level()
+                self.onGameEnd()
             if event.key == pygame.K_p:
                 self.btn_pause._on_click()
 

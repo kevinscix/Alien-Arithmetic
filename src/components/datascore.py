@@ -23,9 +23,6 @@ class SaveModel(BaseModel):
     def setName(self, name: str) -> None:
       self.name = name
 
-    def setHighScore(self, score: int) -> None:
-      self.highScore = score
-
     def setQuestionsCompleted(self, questions) -> None:
       self.questionsCompleted = questions
 
@@ -43,10 +40,6 @@ if __name__ == "__main__":
       def test_setName(self):
          self.data.setName("Jackson")
          self.assertEqual(self.data.name, "Jackson", "name is not set")
-      
-      def test_setHighScore(self):
-         self.data.setHighScore(10)
-         self.assertEqual(self.data.highScore, 10, "high score not changed")
       
       def test_setQuestionsCompleted(self):
          self.data.setQuestionsCompleted(10)

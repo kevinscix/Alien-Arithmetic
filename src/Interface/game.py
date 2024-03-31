@@ -117,6 +117,7 @@ class GameState(State):
 
     def change_state_level(self):
         from Interface.level import OuterLevelState
+        self.sfx.button_sound()
         self.engine.machine.next_state = OuterLevelState(self.engine, self.user)
 
     #only button that exsit on the screen

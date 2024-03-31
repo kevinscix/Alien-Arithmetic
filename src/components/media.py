@@ -3,8 +3,8 @@ import sys
 import os
 
 current_dir = os.path.dirname(__file__)
-parent_dir = os.path.dirname(current_dir)  # Moves up to 'interface'
-src_dir = os.path.dirname(parent_dir)  # Moves up to 'src'
+parent_dir = os.path.dirname(current_dir)  
+src_dir = os.path.dirname(parent_dir)  
 sys.path.append(src_dir)
 
 class music():

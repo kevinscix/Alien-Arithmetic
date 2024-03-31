@@ -48,15 +48,11 @@ class SaveModel(BaseModel):
     level : List[int]
 
     #question
-    highScore : int
     questionsCompleted : int #
-    incorrectAmt : int
     correctAmt : int #
-    overallGrade : int
-    loggedIn : bool
 
     def addOneCorrect(self):
-      self.questionsCompleted += 1
+      self.correctAmt += 1
 
     def addOneQuestion(self):
       self.questionsCompleted += 1

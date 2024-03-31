@@ -275,12 +275,12 @@ class GameState(State):
         #when still not ended
         if not self.ended:
             self.updateHealthBar()
-            pygame.draw.rect(surface, "gray",  pygame.rect.Rect(335, 535, 135, 50))
-            surface.blit(self.asteroidMaster.question_surface, [350, 545])
+            pygame.draw.rect(surface, "gray31",  pygame.rect.Rect(330, 520, 145, 80))
+            surface.blit(self.asteroidMaster.question_surface, [350, 550])
             surface.blit(self.playerImage, self.player_pos)
             pygame.draw.rect(surface, "green", self.healthbar)
         else:
-            self.btn_level.draw(surface, 300, 250)
+            self.btn_level.draw(surface, 300, 500)
 
         pygame.display.flip()
 

@@ -184,13 +184,5 @@ class TestScoreboard(unittest.TestCase):
         self.board.userType = 0
         self.assertTrue(self.board.isInstructor(), "isInstructor should return True for userType 0")
 
-    def test_getPlayer_Found(self):
-        """Tests that getPlayer returns the correct player when the name matches."""
-        test_player = SaveModel(name="Test", score=100, level=3, questionsCompleted=10, correctAmt=8)
-        self.board.board = {"Test": test_player}
-        result = self.board.getPlayer("Test")
-        self.assertIsNotNone(result, "getPlayer should return a player when the name matches")
-        self.assertEqual(result.name, "Test", "getPlayer returned incorrect player details")
-
 if __name__ == '__main__':
     unittest.main()

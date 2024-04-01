@@ -184,5 +184,27 @@ class TestScoreboard(unittest.TestCase):
         self.board.userType = 0
         self.assertTrue(self.board.isInstructor(), "isInstructor should return True for userType 0")
 
+    def test_getPlayer_NotFound(self):
+        """Tests that getPlayer returns None when the name does not match any player."""
+        self.board.board = {"Emily": SaveModel(name="Emily", score=100, level=[1], questionsCompleted=10, correctAmt=8)}
+        result = self.board.getPlayer("NonExistentPlayer")
+        self.assertIsNone(result, "getPlayer should return None for a non-existent player")
+
+    def test_getPlayer_InvalidName(self):
+        """Tests that getPlayer handles invalid names gracefully."""
+        self.board.board = {"ValidName": SaveModel(name="ValidName", score=65, level=[1], questionsCompleted=10, correctAmt=5)}
+        result = self.board.getPlayer("")
+        self.assertIsNone(result, "getPlayer should return None for invalid player names")
+
+    def test_getPlayer_WithMultiplePlayers(self):
+        """Tests that getPlayer accurately retrieves the correct player among multiple."""
+        player_one = SaveModel(name="Emily", score=80, level=[2], questionsCompleted=15, correctAmt=12)
+        player_two = SaveModel(name="Kevin", score=90, level=[3], questionsCompleted=20, correctAmt=18)
+        self.board.board = {"Emily": player_one, "Kevin": player_two}
+        result = self.board.getPlayer("Kevin")
+        self.assertIsNotNone(result, "getPlayer should accurately retrieve a player among multiple")
+        self.assertEqual(result.name, "Kevin", "getPlayer returned the wrong player details among multiple players")
+
+
 if __name__ == '__main__':
     unittest.main()

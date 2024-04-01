@@ -1,18 +1,25 @@
-#Emily & Andy
+import os
+import sys
+import json
+import unittest
+parent_dir = os.path.dirname(os.path.dirname(__file__))
+sys.path.append(parent_dir)
 from components.datascore import SaveModel
 from pydantic import BaseModel
 from typing import Dict, Optional, List
 from Interface.state_machine import State, DisplayEngine
-import json
-import os
-import unittest
-
-
-#we should clarify the logic for this file, it doesnt really make senses now
-#I reread what we wrote here
 
 #model representation of what the scoreboard 
 class Scoreboard(BaseModel):
+  """
+    Represents a scoreboard for tracking player scores within the game. 
+
+    Attributes:
+        numberPlayer (Optional[int]): Total number of players.
+        userType (Optional[int]): Type of user, where 1 represents a player and 0 an instructor.
+        score (Optional[int]): The current player's score.
+        board (Dict[str, SaveModel]): A dictionary mapping player names to their SaveModel instances.
+    """
 
   #total players
   numberPlayer : Optional[int] = None
@@ -29,34 +36,46 @@ class Scoreboard(BaseModel):
 
   #returns 0 if user is true or 1 if user is false 
   def isPlayer(self):
+    """Checks if the current user is a player."""
     if self.userType == 1:
       return True
 
   def isInstructor(self):
+    """Checks if the current user is an instructor."""
     if self.userType == 0:
       return True
     
   def showScores(self):
+    """Prints the names and scores of all players in the scoreboard."""
     for name, score in self.board.items():
       print(f"Name: {name}, Score: {score}")
 
-  # def showScores(self):
-  #   print(self.board)
-
   def getPlayer(self, name : str) -> SaveModel:
-        score = self.board.get(name)
-        if score:
-            print(score)
-        else:
-            print(f"No player with the name {name} found.")
-        return score
+    """
+    Retrieves a player's SaveModel by name.
 
-  # def getPlayer(self, name : str) -> SaveModel:
-  #   score = self.board[name]
-  #   print(score)
-  #   return score
+    Args:
+        name (str): The name of the player.
+
+    Returns:
+        Optional[SaveModel]: The SaveModel of the player if found, otherwise None.
+    """
+    score = self.board.get(name)
+    if score:
+        print(score)
+    else:
+        print(f"No player with the name {name} found.")
+    return score
 
 class ScoreboardState(State):
+    """
+    Represents the state in the game where the scoreboard is displayed.
+
+    Attributes:
+        engine (DisplayEngine): The game engine instance.
+        scores (List[SaveModel]): A list of all player scores.
+        current_player_score (Optional[SaveModel]): The current player's score, if available.
+    """
     def __init__(self, engine):
         super().__init__(engine)
         self.scores = []
@@ -70,6 +89,7 @@ class ScoreboardState(State):
         return self.engine.current_player_type == "player"
 
     def isInstructor(self) -> bool:
+       
         return self.engine.current_player_type == "instructor"
 
     def getPlayer(self, name: str) -> Optional[SaveModel]:
@@ -79,7 +99,8 @@ class ScoreboardState(State):
         return None
 
     def load_scores(self):
-        src_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # Path to the 'src' directory
+        """Loads player scores from saved files into the scoreboard."""
+        src_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  
         database = []
 
         for root, dirs, files in os.walk(os.path.join(src_dir, 'saves/')):
@@ -98,6 +119,12 @@ class ScoreboardState(State):
         self.scores = sorted(database, key=lambda x: x.score, reverse=True)
 
     def get_leaderboard(self):
+        """
+        Retrieves the top scores for display on the leaderboard.
+
+        Returns:
+            List[SaveModel]: A list of top player scores.
+        """
         top_scores = self.scores[:5]
 
         if self.current_player_score and self.current_player_score not in top_scores:
@@ -106,6 +133,12 @@ class ScoreboardState(State):
         return top_scores
 
     def display_leaderboard(self, screen):
+        """
+        Renders the leaderboard on the provided screen.
+
+        Args:
+            screen: The screen or surface to render the leaderboard on.
+        """
         leaderboard = self.get_leaderboard()
         x = 20
         y = 20
@@ -116,85 +149,62 @@ class ScoreboardState(State):
             y += self.font.get_height() + 10
 
     def on_draw(self, surface):
+        """
+        Draws the state's UI elements onto the given surface.
+
+        Args:
+            surface: The surface to draw the UI elements on.
+        """
         # Draw the background image
         surface.blit(self.scoreboardImage, (0, 0))
-
         # Draw the leaderboard
         self.display_leaderboard(surface)
-
         # Draw buttons
         self.btn_level_select.draw(surface, 275, 500)
         self.btn_back.draw(surface, 0, 500)
-
         pygame.display.flip()
 
 
 #unit testing
-
-# class TestScoreboard(unittest.TestCase):
-
-#     def setUp(self):
-#         # Initialize the Scoreboard object
-#         self.scoreboard = Scoreboard()
-
-#     def test_initialization(self):
-#         # Test that the Scoreboard is initialized with default values
-#         self.assertIsNone(self.scoreboard.numberPlayer, "numberPlayer should initially be None")
-#         self.assertIsNone(self.scoreboard.userType, "userType should initially be None")
-
-#     def test_add_score(self):
-#         # Assuming there's a method to add a score which we'll need to define based on actual implementation
-#         pass
-
-#     def test_get_player_info(self):
-#         # Assuming there's a method to get player information which we'll need to define based on actual implementation
-#         pass
-
-# if __name__ == "__main__":
-#     unittest.main()
-    
 class TestScoreboard(unittest.TestCase):
-
+    """
+    A set of unit tests for the Scoreboard class.
+    """
     def setUp(self):
-        # Initialize the Scoreboard object
-        self.scoreboard = Scoreboard()
-        # Assuming the Scoreboard class can handle multiple players, represented in some form of collection
+        """Sets up the test environment before each test."""
+        self.board = Scoreboard()
 
-    def test_initialization(self):
-        # Test that the Scoreboard is initialized properly
-        self.assertIsInstance(self.scoreboard, Scoreboard, "Scoreboard instance is not created correctly")
+    def test_isPlayer_True(self):
+        """Tests that isPlayer returns True when userType is set to 1."""
+        self.board.userType = 1
+        self.assertTrue(self.board.isPlayer(), "isPlayer should return True for userType 1")
 
-    def test_add_score(self):
-        # Test adding a score for a new player
-        self.scoreboard.add_score("Emily", 100)
-        player_info = self.scoreboard.get_player_info("Emily")
-        self.assertEqual(player_info['score'], 100, "Score for Emily was not added correctly")
+    def test_isInstructor_True(self):
+        """Tests that isInstructor returns True when userType is set to 0."""
+        self.board.userType = 0
+        self.assertTrue(self.board.isInstructor(), "isInstructor should return True for userType 0")
 
-        # Test updating the score for an existing player
-        self.scoreboard.add_score("Emily", 150)
-        updated_info = self.scoreboard.get_player_info("Emily")
-        self.assertEqual(updated_info['score'], 150, "Score for Emily was not updated correctly")
+    def test_getPlayer_NotFound(self):
+        """Tests that getPlayer returns None when the name does not match any player."""
+        self.board.board = {"Emily": SaveModel(name="Emily", score=100, level=[1], questionsCompleted=10, correctAmt=8)}
+        result = self.board.getPlayer("NonExistentPlayer")
+        self.assertIsNone(result, "getPlayer should return None for a non-existent player")
 
-    def test_get_player_info(self):
-        # Test retrieving player information
-        self.scoreboard.add_score("Bob", 200)
-        bob_info = self.scoreboard.get_player_info("Bob")
-        self.assertEqual(bob_info['score'], 200, "Failed to retrieve correct score for Bob")
+    def test_getPlayer_InvalidName(self):
+        """Tests that getPlayer handles invalid names gracefully."""
+        self.board.board = {"ValidName": SaveModel(name="ValidName", score=65, level=[1], questionsCompleted=10, correctAmt=5)}
+        result = self.board.getPlayer("")
+        self.assertIsNone(result, "getPlayer should return None for invalid player names")
 
-    def test_remove_player(self):
-        # Testing the method to remove a player
-        self.scoreboard.add_score("Emily", 50)
-        self.scoreboard.remove_player("Emily")
-        with self.assertRaises(KeyError):
-            self.scoreboard.get_player_info("Emily")
+    def test_getPlayer_WithMultiplePlayers(self):
+        """Tests that getPlayer accurately retrieves the correct player among multiple."""
+        player_one = SaveModel(name="Emily", score=80, level=[2], questionsCompleted=15, correctAmt=12)
+        player_two = SaveModel(name="Kevin", score=90, level=[3], questionsCompleted=20, correctAmt=18)
+        self.board.board = {"Emily": player_one, "Kevin": player_two}
+        result = self.board.getPlayer("Kevin")
+        self.assertIsNotNone(result, "getPlayer should accurately retrieve a player among multiple")
+        self.assertEqual(result.name, "Kevin", "getPlayer returned the wrong player details among multiple players")
 
-    def test_list_scores(self):
-        # Testing the method to list all scores
-        self.scoreboard.add_score("Emily", 100)
-        self.scoreboard.add_score("Bob", 200)
-        scores = self.scoreboard.list_scores()
-        self.assertIn(("Emily", 100), scores, "Alice's score is not listed correctly")
-        self.assertIn(("Bob", 200), scores, "Bob's score is not listed correctly")
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

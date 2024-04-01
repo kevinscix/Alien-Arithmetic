@@ -64,7 +64,7 @@ class GameState(State):
         """
         super().__init__(engine)
         #UI Group to manage UI elements
-        self.ui = Group()  
+        self.ui = Group()
         WIDTH, HEIGHT = 800, 600
 
         self.settings = Settings().getbackground()
@@ -72,7 +72,7 @@ class GameState(State):
         self.user : SaveState = user
         self.level = level
 
-        parent_dir = os.path.dirname(os.path.dirname(__file__))  
+        parent_dir = os.path.dirname(os.path.dirname(__file__))
         pauseButtonPath = os.path.join(parent_dir, "assets", "visuals", "buttons", "text buttons", "pauseButton.png")
         playButtonPath = os.path.join(parent_dir, "assets", "visuals", "buttons", "text buttons", "resume button pix.png")
 
@@ -371,7 +371,7 @@ class GameState(State):
         self.asteroidMaster.asteroid_arr = []
         self.gamePlay1Image = pygame.transform.scale(self.settings['over'], (800, 600))
         self.user.save_settings(self.user.model_dump_json(), self.user.name)
-        
+
         #offset for the start
         self.user.correctAmt -= 1
         self.user.questionsCompleted -= 1
@@ -411,7 +411,7 @@ class GameState(State):
                 self.user.level[1] = 1
         elif self.level < 3:
             self.user.level[1] += 1
-        
+
         #offset for the start
         self.user.correctAmt -= 1
         self.user.questionsCompleted -= 1
@@ -468,9 +468,10 @@ class GameState(State):
         if self.border_collided():
             self.player.removePoints()
             self.player.damage()
+            self.user.addOneQuestion()
             self.newRound()
 
-            
+
         #when still not ended
         if not self.ended:
             self.updateHealthBar()

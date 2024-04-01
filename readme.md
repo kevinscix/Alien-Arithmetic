@@ -34,22 +34,30 @@ Our educational game's main focus is creating an educational and entertaining ex
 
 ### CONTROLS
 
-In game controls:\
-    left and right arrow key to move\
-    space bar to shoot bullet\
-    P to pause\
-    ESC to quit level\
-Tutorial page:\
-    left and right arrow key to move between pages\
-    ESC to return to previous page\
-Instructor Dashboard:\
-    left and right to move between pages\
-    ESC to return to previous page\
-Login Page:\
+In game controls:
+
+    left and right arrow key to move
+    space bar to shoot bullet
+    P to pause
+    ESC to quit level
+
+Tutorial page:
+
+    left and right arrow key to move between pages
+    ESC to return to previous page
+Instructor Dashboard:
+
+    left and right to move between pages
+    ESC to return to previous page
+
+Login Page:
+
     Enter to login as student
-    ESC to quit game\
-Other pages:\
-    ESC to return to previous page\
+    ESC to quit game
+
+Other pages:
+
+    ESC to return to previous page
 
 #### File Formats
 File format for storing game data will be in a text file.

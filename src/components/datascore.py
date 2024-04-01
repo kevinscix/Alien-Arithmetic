@@ -8,7 +8,6 @@ class SaveModel(BaseModel):
     name : str
     score : int
     level : List[int]
-
     #question
     questionsCompleted : int #
     correctAmt : int #

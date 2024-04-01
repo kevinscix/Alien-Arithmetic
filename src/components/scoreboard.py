@@ -186,7 +186,7 @@ class TestScoreboard(unittest.TestCase):
 
     def test_getPlayer_Found(self):
         """Tests that getPlayer returns the correct player when the name matches."""
-        test_player = SaveModel(name="Test", score=100)
+        test_player = SaveModel(name="Test", score=100, level=3, questionsCompleted=10, correctAmt=8)
         self.board.board = {"Test": test_player}
         result = self.board.getPlayer("Test")
         self.assertIsNotNone(result, "getPlayer should return a player when the name matches")

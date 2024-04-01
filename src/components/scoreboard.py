@@ -1,16 +1,25 @@
-from datascore import SaveModel
-from pydantic import BaseModel
-from typing import Dict, Optional, List
 import os
 import sys
-parent_dir = os.path.dirname(os.path.dirname(__file__))
-sys.path.append(parent_dir)
-from Interface.state_machine import State, DisplayEngine
 import json
 import unittest
+parent_dir = os.path.dirname(os.path.dirname(__file__))
+sys.path.append(parent_dir)
+from components.datascore import SaveModel
+from pydantic import BaseModel
+from typing import Dict, Optional, List
+from Interface.state_machine import State, DisplayEngine
 
 #model representation of what the scoreboard 
 class Scoreboard(BaseModel):
+  """
+    Represents a scoreboard for tracking player scores within the game. 
+
+    Attributes:
+        numberPlayer (Optional[int]): Total number of players.
+        userType (Optional[int]): Type of user, where 1 represents a player and 0 an instructor.
+        score (Optional[int]): The current player's score.
+        board (Dict[str, SaveModel]): A dictionary mapping player names to their SaveModel instances.
+    """
 
   #total players
   numberPlayer : Optional[int] = None
@@ -27,26 +36,46 @@ class Scoreboard(BaseModel):
 
   #returns 0 if user is true or 1 if user is false 
   def isPlayer(self):
+    """Checks if the current user is a player."""
     if self.userType == 1:
       return True
 
   def isInstructor(self):
+    """Checks if the current user is an instructor."""
     if self.userType == 0:
       return True
     
   def showScores(self):
+    """Prints the names and scores of all players in the scoreboard."""
     for name, score in self.board.items():
       print(f"Name: {name}, Score: {score}")
 
   def getPlayer(self, name : str) -> SaveModel:
-        score = self.board.get(name)
-        if score:
-            print(score)
-        else:
-            print(f"No player with the name {name} found.")
-        return score
+    """
+    Retrieves a player's SaveModel by name.
+
+    Args:
+        name (str): The name of the player.
+
+    Returns:
+        Optional[SaveModel]: The SaveModel of the player if found, otherwise None.
+    """
+    score = self.board.get(name)
+    if score:
+        print(score)
+    else:
+        print(f"No player with the name {name} found.")
+    return score
 
 class ScoreboardState(State):
+    """
+    Represents the state in the game where the scoreboard is displayed.
+
+    Attributes:
+        engine (DisplayEngine): The game engine instance.
+        scores (List[SaveModel]): A list of all player scores.
+        current_player_score (Optional[SaveModel]): The current player's score, if available.
+    """
     def __init__(self, engine):
         super().__init__(engine)
         self.scores = []
@@ -60,6 +89,7 @@ class ScoreboardState(State):
         return self.engine.current_player_type == "player"
 
     def isInstructor(self) -> bool:
+       
         return self.engine.current_player_type == "instructor"
 
     def getPlayer(self, name: str) -> Optional[SaveModel]:
@@ -69,6 +99,7 @@ class ScoreboardState(State):
         return None
 
     def load_scores(self):
+        """Loads player scores from saved files into the scoreboard."""
         src_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  
         database = []
 
@@ -88,6 +119,12 @@ class ScoreboardState(State):
         self.scores = sorted(database, key=lambda x: x.score, reverse=True)
 
     def get_leaderboard(self):
+        """
+        Retrieves the top scores for display on the leaderboard.
+
+        Returns:
+            List[SaveModel]: A list of top player scores.
+        """
         top_scores = self.scores[:5]
 
         if self.current_player_score and self.current_player_score not in top_scores:
@@ -96,6 +133,12 @@ class ScoreboardState(State):
         return top_scores
 
     def display_leaderboard(self, screen):
+        """
+        Renders the leaderboard on the provided screen.
+
+        Args:
+            screen: The screen or surface to render the leaderboard on.
+        """
         leaderboard = self.get_leaderboard()
         x = 20
         y = 20
@@ -106,33 +149,43 @@ class ScoreboardState(State):
             y += self.font.get_height() + 10
 
     def on_draw(self, surface):
+        """
+        Draws the state's UI elements onto the given surface.
+
+        Args:
+            surface: The surface to draw the UI elements on.
+        """
         # Draw the background image
         surface.blit(self.scoreboardImage, (0, 0))
-
         # Draw the leaderboard
         self.display_leaderboard(surface)
-
         # Draw buttons
         self.btn_level_select.draw(surface, 275, 500)
         self.btn_back.draw(surface, 0, 500)
-
         pygame.display.flip()
 
 
 #unit testing
 class TestScoreboard(unittest.TestCase):
+    """
+    A set of unit tests for the Scoreboard class.
+    """
     def setUp(self):
+        """Sets up the test environment before each test."""
         self.board = Scoreboard()
 
     def test_isPlayer_True(self):
+        """Tests that isPlayer returns True when userType is set to 1."""
         self.board.userType = 1
         self.assertTrue(self.board.isPlayer(), "isPlayer should return True for userType 1")
 
     def test_isInstructor_True(self):
+        """Tests that isInstructor returns True when userType is set to 0."""
         self.board.userType = 0
         self.assertTrue(self.board.isInstructor(), "isInstructor should return True for userType 0")
 
     def test_getPlayer_Found(self):
+        """Tests that getPlayer returns the correct player when the name matches."""
         test_player = SaveModel(name="Test", score=100)
         self.board.board = {"Test": test_player}
         result = self.board.getPlayer("Test")

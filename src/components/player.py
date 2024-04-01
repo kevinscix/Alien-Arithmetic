@@ -64,6 +64,8 @@ class Player():
             removePoints (int): The number of points to add.
         """
         self.points -= 10
+        if self.points < 0:
+            self.points = 0
 
 
     def setPoints(self, points : int) -> None:

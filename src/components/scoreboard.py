@@ -1,9 +1,12 @@
-from components.datascore import SaveModel
+from datascore import SaveModel
 from pydantic import BaseModel
 from typing import Dict, Optional, List
+import os
+import sys
+parent_dir = os.path.dirname(os.path.dirname(__file__))
+sys.path.append(parent_dir)
 from Interface.state_machine import State, DisplayEngine
 import json
-import os
 import unittest
 
 #model representation of what the scoreboard 
@@ -66,7 +69,7 @@ class ScoreboardState(State):
         return None
 
     def load_scores(self):
-        src_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # Path to the 'src' directory
+        src_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  
         database = []
 
         for root, dirs, files in os.walk(os.path.join(src_dir, 'saves/')):

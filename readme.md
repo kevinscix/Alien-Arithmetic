@@ -28,6 +28,8 @@ cmd : python -m pyinstaller main.spec
 If you have conflicts reach out and I'll help create a virtual environment. You guys shouldn't have any since most of you have not done a lot of python programming so it should be fine.
 
 ## Description
+
+Game created in CS2212 at University of Western Ontario
 Our educational game's main focus is creating an educational and entertaining experience for young children. This game's goal is to teach kids simple math (basic addition, subtraction, multiplication, division) with visually stimulating imagery and game play. Our game takes inspiration from the classic Space Invaders, where the player must destroy the obstacle corresponding to the answer of a given math equation. The player will control a ship with a math equation appearing on the screen. Asteroids will start approaching the player's ship, each with a different number on it. The player must destroy the asteroid with the correct number on it to continue, where the process repeats.
 
 ## FAQ
